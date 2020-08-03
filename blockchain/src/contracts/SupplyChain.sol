@@ -106,8 +106,5 @@ contract SupplyChain {
         packageMapping[uniqueId].ordertime = now;
     
         return uniqueId;
-    }
-    
-    
-    
+    }    
 }
