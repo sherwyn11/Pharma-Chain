@@ -2277,12 +2277,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x6E1f54bf121A4f6dCa6cEFdc61894675f9F2b69A",
-      "transactionHash": "0xdc837be35c5baaabfe4f4155858e9562560b651bfcc5a4d154f74e48fb6b4504"
+      "address": "0x94b5dE113c41B9E9DC6f32b849dB38e7de0b2658",
+      "transactionHash": "0x4ef89b23a3c91da7e76eac0e3b6997f9c57048724ff5230fe28c1268c6ff709b"
     }
   },
   "schemaVersion": "3.2.2",
-  "updatedAt": "2020-08-08T08:47:19.009Z",
+  "updatedAt": "2020-08-08T09:41:07.278Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Library for managing addresses assigned to a Role.",

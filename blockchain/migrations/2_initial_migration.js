@@ -1,8 +1,8 @@
-var SupplyChain = artifacts.require('blockchain/src/contracts/SupplyChain.sol');
-var Customer = artifacts.require('blockchain/src/contracts/Customer.sol');
-var Manufacturer = artifacts.require('blockchain/src/contracts/Manufacturer.sol');
-var Retailer = artifacts.require('blockchain/src/contracts/Retailer.sol');
-var Roles = artifacts.require('blockchain/src/contracts/Roles.sol');
+var SupplyChain = artifacts.require('SupplyChain');
+var Customer = artifacts.require('Customer');
+var Manufacturer = artifacts.require('Manufacturer');
+var Retailer = artifacts.require('Retailer');
+var Roles = artifacts.require('Roles');
 
 module.exports = function(deployer) {
   deployer.deploy(SupplyChain);
