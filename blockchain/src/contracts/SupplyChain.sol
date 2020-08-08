@@ -1,12 +1,18 @@
 pragma solidity ^0.6.6;
 
+import './Customer.sol';
+import './Manufacturer.sol';
+import './Retailer.sol';
+import './Supplier.sol';
+
+
 contract SupplyChain {
     
     address Owner;
     
     struct package{
         bool isUidGenerated;
-        uint itemid;
+        address itemid;
         string itemname;
         string transitstatus;
         uint orderstatus;
