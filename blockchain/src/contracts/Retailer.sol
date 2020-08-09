@@ -1,45 +1,30 @@
 pragma solidity ^0.6.6;
 
-import "./Roles.sol";
-
 
 contract Retailer {
 
-    using Roles for Roles.Role;
-
-    event RetailerAdded(address indexed account);
-    event RetailerRemoved(address indexed account);
-
-    Roles.Role private retailers;
-
-    constructor() public {
-        _addRetailer(msg.sender);
+    struct retailer {
+        string locationAddress;
+        string retailerName;
+        address rid;
+        uint pNo; 
     }
 
-    modifier onlyRetailer() {
-        require(isRetailer(msg.sender), "Sender not authorized");
-        _;
+    mapping (address => retailer) public retailerMap;
+    mapping (address => mapping (uint => address)) public retailProductMap;
+
+    constructor() public {}
+
+    function createRetailer(string mexmory _name, string memory _addressName) public {
+        address _rid = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
+        retailerMap[msg.sender] = retailer(_addressName, _name, _rid, 0);
     }
 
-    function isRetailer(address account) public view returns(bool) {
-        return retailers.has(account);
-    }
+    function addProductToRetailer(string memory _itemName, string memory _latitude, string memory _longitude, uint _quantity) public returns(address) {
+        address _id = createProduct(_itemName, _latitude, _longitude, _quantity);
+        retailProductMap[msg.sender][retailerMap[msg.sender].pNo] = _id;
+        retailerMap[msg.sender].pNo += 1;
 
-    function addRetailer(address account) public onlyRetailer {
-        _addRetailer(account);
-    }
-
-    function renounceRetailer(address account) public onlyRetailer {
-        _removeRetailer(account);
-    }
-
-    function _addRetailer(address account) internal {
-        retailers.add(account);
-        emit RetailerAdded(account);
-    }
-
-    function _removeRetailer(address account) internal {
-        retailers.remove(account);
-        emit RetailerRemoved(account);
+        return _id;
     }
 }

@@ -1,24 +1,21 @@
 pragma solidity ^0.6.6;
 
-import './Customer.sol';
 import './Manufacturer.sol';
-import './Retailer.sol';
-import './Supplier.sol';
+import './Product.sol';
 
-
-contract SupplyChain {
+contract SupplyChain is Manufacturer {
     
     address Owner;
     
-    struct package{
+    struct orders {
         bool isUidGenerated;
         address itemid;
         string itemname;
         string transitstatus;
-        uint orderstatus;
-        
+        uint orderstatus; /// 1 -> Order Recieved, 2 -> Order Shipped, 3 -> Order Delivered, 4 -> Order Cancelled
         address customer;
         uint ordertime;
+        uint quantity;
         
         address carrier1;
         uint carrier1_time;
@@ -31,7 +28,7 @@ contract SupplyChain {
         
     }
     
-    mapping(address => package) public packageMapping;
+    mapping(address => orders) public orderMap;
     mapping(address => bool) public carriers;
     
     constructor() public {
@@ -53,64 +50,66 @@ contract SupplyChain {
         return "Carrier status is updated!";
     }
 
-    function CancelOrder(address _uniqueId) public returns (string memory){
-        require(packageMapping[_uniqueId].isUidGenerated);
-        require(packageMapping[_uniqueId].customer == msg.sender);
+    function CancelOrder(address _orderId) public returns (string memory){
+        require(orderMap[_orderId].isUidGenerated);
+        require(orderMap[_orderId].customer == msg.sender);
         
-        packageMapping[_uniqueId].orderstatus = 4;
-        packageMapping[_uniqueId].transitstatus = "Order cancelled!";
+        orderMap[_orderId].orderstatus = 4;
+        orderMap[_orderId].transitstatus = "Order cancelled!";
         
         return "Order cancelled!";
     }
     
-    function Carrier1Report(address _uniqueId, string memory _transitStatus) public{
-        require(packageMapping[_uniqueId].isUidGenerated);
+    function Carrier1Report(address _orderId, string memory _transitStatus) public{
+        require(orderMap[_orderId].isUidGenerated);
         require(carriers[msg.sender]);
-        require(packageMapping[_uniqueId].orderstatus == 1);
+        require(orderMap[_orderId].orderstatus == 1);
         
-        packageMapping[_uniqueId].transitstatus = _transitStatus;
-        packageMapping[_uniqueId].carrier1 = msg.sender;
-        packageMapping[_uniqueId].carrier1_time = now;
-        packageMapping[_uniqueId].orderstatus = 2;
+        orderMap[_orderId].transitstatus = _transitStatus;
+        orderMap[_orderId].carrier1 = msg.sender;
+        orderMap[_orderId].carrier1_time = now;
+        orderMap[_orderId].orderstatus = 2;
         
     }
     
-    function Carrier2Report(address _uniqueId, string memory _transitStatus) public{
-        require(packageMapping[_uniqueId].isUidGenerated);
+    function Carrier2Report(address _orderId, string memory _transitStatus) public{
+        require(orderMap[_orderId].isUidGenerated);
         require(carriers[msg.sender]);
-        require(packageMapping[_uniqueId].orderstatus == 2);
+        require(orderMap[_orderId].orderstatus == 2);
         
-        packageMapping[_uniqueId].transitstatus = _transitStatus;
-        packageMapping[_uniqueId].carrier2 = msg.sender;
-        packageMapping[_uniqueId].carrier2_time = now;
+        orderMap[_orderId].transitstatus = _transitStatus;
+        orderMap[_orderId].carrier2 = msg.sender;
+        orderMap[_orderId].carrier2_time = now;
 
     }
     
-    function Carrier3Report(address _uniqueId, string memory _transitStatus)public{
-        require(packageMapping[_uniqueId].isUidGenerated);
+    function Carrier3Report(address _orderId, string memory _transitStatus)public{
+        require(orderMap[_orderId].isUidGenerated);
         require(carriers[msg.sender]);
-        require(packageMapping[_uniqueId].orderstatus == 2);
+        require(orderMap[_orderId].orderstatus == 2);
         
-        packageMapping[_uniqueId].transitstatus = _transitStatus;
-        packageMapping[_uniqueId].carrier3 = msg.sender;
-        packageMapping[_uniqueId].carrier3_time = now;
-        packageMapping[_uniqueId].orderstatus = 3;
+        orderMap[_orderId].transitstatus = _transitStatus;
+        orderMap[_orderId].carrier3 = msg.sender;
+        orderMap[_orderId].carrier3_time = now;
+        orderMap[_orderId].orderstatus = 3;
         
     }
 
     
-    function OrderItem(uint _itemid, string memory _itemname) public returns(address){
-        address uniqueId = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
+    function orderItem(uint _itemId, uint _quantity, string memory _itemname, address _manufacturerAddress) public returns(address) {
+        address orderId = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
         
-        packageMapping[uniqueId].isUidGenerated = true;
-        packageMapping[uniqueId].itemid = _itemid;
-        packageMapping[uniqueId].itemname = _itemname;
-        packageMapping[uniqueId].transitstatus = "Your package is ordered and is under process!";
-        packageMapping[uniqueId].orderstatus = 1;
-        
-        packageMapping[uniqueId].customer = msg.sender;
-        packageMapping[uniqueId].ordertime = now;
-    
-        return uniqueId;
+        orderMap[orderId].isUidGenerated = true;
+        orderMap[orderId].itemid = _itemId;
+        orderMap[orderId].quantity = _quantity;
+        orderMap[orderId].itemname = _itemname;
+        orderMap[orderId].transitstatus = "Your order is recieved and is under process!";
+        orderMap[orderId].orderstatus = 1;
+        orderMap[orderId].customer = msg.sender;
+        orderMap[orderId].ordertime = now;
+
+        productMap[_itemId].quantityMg -= _quantity; 
+
+        return orderId;
     }    
 }
