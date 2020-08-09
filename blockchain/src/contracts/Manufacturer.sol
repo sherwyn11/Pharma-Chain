@@ -1,45 +1,29 @@
 pragma solidity ^0.6.6;
 
-import "./Roles.sol";
-
+import './Product.sol';
 
 contract Manufacturer {
 
-    using Roles for Roles.Role;
-
-    event ProducerAdded(address indexed account);
-    event ProducerRemoved(address indexed account);
-
-    Roles.Role private producers;
-
-    constructor() public {
-        _addProducer(msg.sender);
+    struct manufacturer {
+        string addressName;
+        string name;
+        uint mid;
+        uint pNo;
     }
 
-    modifier onlyProducer() {
-        require(isProducer(msg.sender), "Sender not authorized");
-        _;
+    mapping (address => manufacturer) public manufacturerMap;
+    mapping (address => mapping(uint => address)) public manuProductMap;
+
+    constructor() {}
+
+    function createManufacturer(string memory _name, string memory _addressName, string memory _mid) {
+        manufacturerMap[msg.sender] = manufacturer(_addressName, _name, _mid, 0);
     }
 
-    function isProducer(address account) public view returns(bool) {
-        return producers.has(account);
+    function addProductToManufacturer(string memory _itemName, string memory _latitude, string memory _longitude) {
+        manuProductMap[msg.sender][manufacturerMap[msg.sender].pNo] = createProduct(_itemName, _latitude, _longitude);
+        manufacturerMap[msg.sender].pNo += 1;
     }
 
-    function addProducer(address account) public onlyProducer {
-        _addProducer(account);
-    }
-
-    function renounceProducer(address account) public onlyProducer {
-        _removeProducer(account);
-    }
-
-    function _addProducer(address account) internal {
-        producers.add(account);
-        emit ProducerAdded(account);
-    }
-
-    function _removeProducer(address account) internal {
-        producers.remove(account);
-        emit ProducerRemoved(account);
-    }
+    
 }
