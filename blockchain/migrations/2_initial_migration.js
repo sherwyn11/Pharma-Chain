@@ -3,6 +3,8 @@ var Customer = artifacts.require('Customer');
 var Manufacturer = artifacts.require('Manufacturer');
 var Retailer = artifacts.require('Retailer');
 var Roles = artifacts.require('Roles');
+var Product = artifacts.require('Product');
+
 
 module.exports = function(deployer) {
   deployer.deploy(SupplyChain);
@@ -10,4 +12,5 @@ module.exports = function(deployer) {
   deployer.deploy(Manufacturer);
   deployer.deploy(Retailer);
   deployer.deploy(Roles);
+  deployer.deploy(Product);
 };

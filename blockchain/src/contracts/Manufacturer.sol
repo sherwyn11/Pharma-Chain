@@ -1,6 +1,6 @@
 pragma solidity ^0.6.6;
 
-import 'Product.sol';
+import './Product.sol';
 
 contract Manufacturer is Product{
 
