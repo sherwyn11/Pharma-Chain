@@ -2,7 +2,7 @@ pragma solidity ^0.6.6;
 
 import './Product.sol';
 
-contract Manufacturer is Product{
+contract Manufacturer is Product {
 
     struct manufacturer {
         string locationAddress;
