@@ -54,22 +54,20 @@
 - why not
 - sure please do
 - ok cool
-- yes please proceed further with placing the order
 - yes i would love to order it
 - ya good job
-- yup
+- yup order
 - next
-- order
 - carry on with ordering
-- it would be amazing if you can do the ordering here
-- oh great, please order it for me
+- it would be amazing if you can do it
+- oh great, plz order it for me
 - yes proceed
 - continue
 - sure, that'd be great
 - yea
 - yep
 - yes why not
-- yes please go ahead
+- go ahead
 - yes its ok
 - yes it did
 - yeah
@@ -118,6 +116,8 @@
 - I want to get [Abilify](product)
 - I would like to buy [Aspirin](product)
 - I would like to get [Onpattro](product)
+- Could you place an order for [Onpattro](product) please
+- Order [Onpattro](product) please
 - I want to buy a new [Entyvio](product)
 - I want to buy a new [Naproxen](product)
 - I would like to buy [Humira](product)
