@@ -16,7 +16,7 @@ contract Manufacturer is Product {
 
     constructor() public {}
 
-    function createManufacturer(string mexmory _name, string memory _addressName) public {
+    function createManufacturer(string memory _name, string memory _addressName) public{
         address _mid = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
         manufacturerMap[msg.sender] = manufacturer(_addressName, _name, _mid, 0);
     }
@@ -29,7 +29,7 @@ contract Manufacturer is Product {
         return _id;
     }
     
-    function getAllProducts() public view returns (address[] memory) {
+    function getItems() public view returns (address[] memory) {
         address[] memory ret = new address[](manufacturerMap[msg.sender].pNo);
         for (uint i = 0; i < manufacturerMap[msg.sender].pNo; i++) {
             ret[i] = manuProductMap[msg.sender][i];

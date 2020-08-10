@@ -43,7 +43,7 @@ contract Product {
         return uniqueId;
     }
 
-    function updateProductStatus(address uniqueId, uint _no, string memory _status, string memory _latitude, string memory _longitude)public returns(string memory) {
+    function updateProductStatus(address uniqueId, uint _no, string memory _status, string memory _latitude, string memory _longitude)public returns(string memory){
         productMap[uniqueId].statusNo = _no;
         productMap[uniqueId].statusMessage = _status;
         locationMap[uniqueId][productMap[uniqueId].locationNo] = location(_latitude, _longitude);
