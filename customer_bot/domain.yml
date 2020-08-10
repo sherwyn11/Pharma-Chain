@@ -2,16 +2,22 @@ intents:
   - greet
   - goodbye
   - affirm
-  - thanks
   - deny
   - bot_challenge
   - order_product
+  - thanks
 
 entities:
   - product
 
 actions:
   - action_find_product
+  - utter_did_that_help
+  - utter_goodbye
+  - utter_greet
+  - utter_happy
+  - utter_iamabot
+  - utter_searching
 
 slots:
   product:
@@ -23,12 +29,16 @@ responses:
     - text: "Hey! How could I help you?"
       buttons:
         - title: "What can you do?"
-          payload: /utter_iamabot
+          payload: /bot_challenge
+
   utter_did_that_help:
     - text: "Did that help you?"
 
   utter_happy:
     - text: "Great, carry on!"
+
+  utter_searching:
+    - text: "Searching..."
 
   utter_goodbye:
     - text: "Bye"
