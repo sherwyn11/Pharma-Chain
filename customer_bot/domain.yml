@@ -1,0 +1,41 @@
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - thanks
+  - deny
+  - bot_challenge
+  - order_product
+
+entities:
+  - product
+
+actions:
+  - action_find_product
+
+slots:
+  product:
+    type: text
+    auto_fill: true
+
+responses:
+  utter_greet:
+    - text: "Hey! How could I help you?"
+      buttons:
+        - title: "What can you do?"
+          payload: /utter_iamabot
+  utter_did_that_help:
+    - text: "Did that help you?"
+
+  utter_happy:
+    - text: "Great, carry on!"
+
+  utter_goodbye:
+    - text: "Bye"
+
+  utter_iamabot:
+    - text: "I am a safe medical drug bot, powered by Blockchain & Rasa.\n You can ask me things like:\n1. Ordering medical drugs"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
