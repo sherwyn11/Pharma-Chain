@@ -18,10 +18,10 @@ contract Distributor is Product {
         distributorMap[msg.sender] = distributor(msg.sender, _distributorName, _distributorContact);
     }
     
-    function distributorUpdateProductStatus(address uniqueId, 
-                                            uint _no, string memory _status, 
-                                            string memory _latitude, 
-                                            string memory _longitude) public{
-        updateProductStatus(uniqueId, _no, _status, _latitude, _longitude);
-    }
+    // function distributorUpdateProductStatus(address uniqueId, 
+    //                                         uint _no, string memory _status, 
+    //                                         string memory _latitude, 
+    //                                         string memory _longitude) public{
+    //     // updateProductStatus(uniqueId, _no, _status, _latitude, _longitude);
+    // }
 }

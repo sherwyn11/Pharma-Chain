@@ -1,45 +1,24 @@
 pragma solidity ^0.6.6;
 
-import "./Roles.sol";
-
-
 contract Customer {
-
-    using Roles for Roles.Role;
-
-    event CustomerAdded(address indexed account);
-    event CustomerRemoved(address indexed account);
-
-    Roles.Role private customers;
-
-    constructor() public {
-        _addCustomer(msg.sender);
+    
+    struct customer {
+        string name;
+        string email;
+        string contact;
+        uint ordersCount;
     }
-
-    modifier onlyCustomer() {
-        require(isCustomer(msg.sender), "Sender not authorized");
-        _;
+    
+    mapping (address => customer) public customerMap;
+    mapping (address => mapping (uint => address)) public customerOrders;
+    
+    function createUser(string memory _name, string memory _email, string memory _contact) public returns(string memory) {
+        customerMap[msg.sender].name = _name;
+        customerMap[msg.sender].email = _email;
+        customerMap[msg.sender].contact = _contact;
+        customerMap[msg.sender].ordersCount = 0;
+        
+        return 'User created successfully!';
     }
-
-    function isCustomer(address account) public view returns(bool) {
-        return customers.has(account);
-    }
-
-    function addCustomer(address account) public onlyCustomer {
-        _addCustomer(account);
-    }
-
-    function renounceCustomer(address account) public onlyCustomer {
-        _removeCustomer(account);
-    }
-
-    function _addCustomer(address account) internal {
-        customers.add(account);
-        emit CustomerAdded(account);
-    }
-
-    function _removeCustomer(address account) internal {
-        customers.remove(account);
-        emit CustomerRemoved(account);
-    }
+    
 }
