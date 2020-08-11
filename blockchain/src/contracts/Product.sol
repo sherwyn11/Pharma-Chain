@@ -19,7 +19,7 @@ contract Product {
 
     constructor() public {}
 
-    function createProduct(string memory _itemName, uint _quantityMg) public returns(address) {
+    function createProduct(string memory _itemName, uint _quantityMg) internal returns(address) {
         address uniqueId = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
         productMap[uniqueId].isUidGenerated = true;
         productMap[uniqueId].itemName = _itemName;
@@ -29,7 +29,7 @@ contract Product {
     }
 
 
-    function addComposite(address uniqueId, address _compositeId) public {
-        productMap[uniqueId].compositesArr.push(composites(_compositeId));
+    function addComposite(address _uniqueId, address _compositeId) internal {
+        productMap[_uniqueId].compositesArr.push(composites(_compositeId));
     }
 }
