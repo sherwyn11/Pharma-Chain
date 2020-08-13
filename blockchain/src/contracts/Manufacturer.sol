@@ -7,7 +7,6 @@ contract Manufacturer is Product {
     struct manufacturer {
         string locationAddress;
         string manufacturerName;
-        address mid;
         address[] productsArr;
     }
 
@@ -15,16 +14,24 @@ contract Manufacturer is Product {
 
     constructor() public {}
 
-    function createManufacturer(string memory _name, string memory _addressName) public{
-        address _mid = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
-        manufacturerMap[msg.sender] = manufacturer(_addressName, _name, _mid, 0);
+    function createManufacturer(address _addr, string memory _name, string memory _addressName) internal {
+        manufacturerMap[_addr].locationAddress = _addressName;
+        manufacturerMap[_addr].manufacturerName = _name;
     }
+
 
     function addProductToManufacturer(string memory _itemName, uint _quantity) public returns(address) {
         address _id = createProduct(_itemName, _quantity);
         manufacturerMap[msg.sender].productsArr.push(_id);
 
         return _id;
+    }
+
+
+    function createComposite(address _uniqueId, address _compositeId) public returns(string memory){
+        addComposite(_uniqueId, _compositeId);
+        
+        return 'Composite added';
     }
     
     function getItems() public view returns (address[] memory) {
@@ -34,4 +41,6 @@ contract Manufacturer is Product {
         }
         return ret;
     }
+    
+    
 }
