@@ -12,12 +12,11 @@ entities:
 
 actions:
   - action_find_product
-  - utter_did_that_help
-  - utter_goodbye
-  - utter_greet
-  - utter_happy
-  - utter_iamabot
-  - utter_searching
+  # - action_find_location
+  # - action_find_retailer
+  # - action_find_product_location
+  # - action_find_product_retailer
+  # - action_find_product_retailer_location
 
 slots:
   product:
