@@ -7,6 +7,11 @@ import './Distributor.sol';
 import './Customer.sol';
 import './Product.sol';
 
+
+
+//// New supply chain : supplier -> transporter -> manufacturer -> transporter -> whole-saler -> transporter -> distributor -> transporter -> customer/hospital/pharmacy
+
+
 contract SupplyChain is Manufacturer, Distributor, Customer {
     
     address Owner;
@@ -29,6 +34,7 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
         address manufacturerAddress;
         uint distributorCount;
         location[] locationsArr;
+        bytes32 uniqueHash;
     }
     
     mapping (address => orders) public orderMap;
@@ -51,6 +57,66 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
         _;
     }
     
+    enum roles {
+        noRole,
+        supplier,
+        transporter,
+        manufacturer,
+        wholesaler,
+        distributor,
+        customer
+    }
+    
+    
+    //////////////// Events ////////////////////
+    
+    event UserRegister(address indexed _address, bytes32 name);
+    event UpdateRole(bytes32 result);
+    
+    
+    /////////////// Users //////////////////////
+    
+    struct userData {
+        bytes32 name;
+        uint[] userLoc;
+        roles role;
+        address userAddr
+    }
+    
+    mapping (address => userData) public userInfo;
+    
+    function registerUser(bytes32 name, uint[] loc, roles role, address _userAddr) onlyOwner {
+        userInfo[_userAddr].name = name;
+        userInfo[_userAddr].userLoc = loc;
+        userInfo[_userAddr].role = role;
+        userInfo[_userAddr].userAddr = _userAddr;
+        
+        emit UserRegister(_userAddr, name);
+    }
+    
+    function changeUserRole(Role _role, address _address) onlyOwner {
+        userInfo[_address].role = _role;
+        bytes32 result = "Role Updated!";
+        emit UpdateRole(result);
+    }
+    
+    function getUserInfo(address _address) public view returns(
+        bytes32 name,
+        unit[] location,
+        address ethAddress,
+        roles role
+        ) {
+        return (
+            userInfo[_address].name,
+            userInfo[_address].userLoc,
+            userInfo[_address].userAddr,
+            userInfo[_address].role
+        );
+    }
+    
+    
+    /////////////// Users //////////////////////
+
     
     function orderItem(address _itemId, uint _quantity, string memory _itemname, address _manufacturerAddress) public returns(address) {
         address orderId = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
@@ -64,6 +130,7 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
         orderMap[orderId].customer = msg.sender;
         orderMap[orderId].ordertime = now;
         orderMap[orderId].manufacturerAddress = _manufacturerAddress;
+        // orderMap[orderId].uniqueHash = sha256(abi.encodePacked())
         
         productMap[_itemId].quantityMg -= _quantity;
         customerOrders[msg.sender][customerMap[msg.sender].ordersCount] = orderId;
@@ -136,7 +203,7 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
         return ret;
     }
     
-
+    
     function cancelOrder(address _orderId) public checkUser(orderMap[_orderId].customer) returns(string memory){
         require(orderMap[_orderId].orderstatus < 3);
         
