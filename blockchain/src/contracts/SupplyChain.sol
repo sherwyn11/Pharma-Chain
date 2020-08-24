@@ -71,6 +71,7 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
     //////////////// Events ////////////////////
     
     event UserRegister(address indexed _address, bytes32 name);
+    
     event UpdateRole(bytes32 result);
     
     
@@ -80,31 +81,31 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
         bytes32 name;
         uint[] userLoc;
         roles role;
-        address userAddr
+        address userAddr;
     }
     
     mapping (address => userData) public userInfo;
     
-    function registerUser(bytes32 name, uint[] loc, roles role, address _userAddr) onlyOwner {
+    function registerUser(bytes32 name, uint[] memory loc, uint role, address _userAddr) public onlyOwner {
         userInfo[_userAddr].name = name;
         userInfo[_userAddr].userLoc = loc;
-        userInfo[_userAddr].role = role;
+        userInfo[_userAddr].role = roles(role);
         userInfo[_userAddr].userAddr = _userAddr;
         
         emit UserRegister(_userAddr, name);
     }
     
-    function changeUserRole(Role _role, address _address) onlyOwner {
-        userInfo[_address].role = _role;
+    function changeUserRole(uint _role, address _addr) public onlyOwner {
+        userInfo[_addr].role = roles(_role);
         bytes32 result = "Role Updated!";
         emit UpdateRole(result);
     }
     
     function getUserInfo(address _address) public view returns(
-        bytes32 name,
-        unit[] location,
-        address ethAddress,
-        roles role
+        bytes32,
+        uint[] memory,
+        address,
+        roles
         ) {
         return (
             userInfo[_address].name,
@@ -114,103 +115,113 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
         );
     }
     
+} 
+    /////////////// Supplier //////////////////////
     
-    /////////////// Users //////////////////////
+    
+    
+    
+    
+    
+    
+    
+    
+    ////// My code ////////
 
     
-    function orderItem(address _itemId, uint _quantity, string memory _itemname, address _manufacturerAddress) public returns(address) {
-        address orderId = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
+//     function orderItem(address _itemId, uint _quantity, string memory _itemname, address _manufacturerAddress) public returns(address) {
+//         address orderId = address(bytes20(sha256(abi.encodePacked(msg.sender, now))));
         
-        orderMap[orderId].isUidGenerated = true;
-        orderMap[orderId].itemid = _itemId;
-        orderMap[orderId].quantity = _quantity;
-        orderMap[orderId].itemname = _itemname;
-        orderMap[orderId].transitstatus = "Your order is recieved!";
-        orderMap[orderId].orderstatus = 1;
-        orderMap[orderId].customer = msg.sender;
-        orderMap[orderId].ordertime = now;
-        orderMap[orderId].manufacturerAddress = _manufacturerAddress;
-        // orderMap[orderId].uniqueHash = sha256(abi.encodePacked())
+//         orderMap[orderId].isUidGenerated = true;
+//         orderMap[orderId].itemid = _itemId;
+//         orderMap[orderId].quantity = _quantity;
+//         orderMap[orderId].itemname = _itemname;
+//         orderMap[orderId].transitstatus = "Your order is recieved!";
+//         orderMap[orderId].orderstatus = 1;
+//         orderMap[orderId].customer = msg.sender;
+//         orderMap[orderId].ordertime = now;
+//         orderMap[orderId].manufacturerAddress = _manufacturerAddress;
+//         // orderMap[orderId].uniqueHash = sha256(abi.encodePacked())
         
-        productMap[_itemId].quantityMg -= _quantity;
-        customerOrders[msg.sender][customerMap[msg.sender].ordersCount] = orderId;
-        customerMap[msg.sender].ordersCount += 1;
+//         productMap[_itemId].quantityMg -= _quantity;
+//         customerOrders[msg.sender][customerMap[msg.sender].ordersCount] = orderId;
+//         customerMap[msg.sender].ordersCount += 1;
 
-        return orderId;
-    }
+//         return orderId;
+//     }
     
     
-    function confirmOrder(address _orderId, string memory _latitude, string memory _longitude) public checkUser(orderMap[_orderId].manufacturerAddress) returns(string memory){
-        require(orderMap[_orderId].orderstatus == 1);
+//     function confirmOrder(address _orderId, string memory _latitude, string memory _longitude) public checkUser(orderMap[_orderId].manufacturerAddress) returns(string memory){
+//         require(orderMap[_orderId].orderstatus == 1);
         
-        orderMap[_orderId].orderstatus = 2;
-        orderMap[_orderId].transitstatus = "Order Confirmed";
-        orderMap[_orderId].distributorCount = 1;
-        orderMap[_orderId].locationsArr.push(location(_latitude, _longitude));
+//         orderMap[_orderId].orderstatus = 2;
+//         orderMap[_orderId].transitstatus = "Order Confirmed";
+//         orderMap[_orderId].distributorCount = 1;
+//         orderMap[_orderId].locationsArr.push(location(_latitude, _longitude));
         
-        carriers[_orderId][0] = msg.sender; 
+//         carriers[_orderId][0] = msg.sender; 
             
-        return 'Order Confirmed!';
-    }
+//         return 'Order Confirmed!';
+//     }
 
 
 
-    function transferOwnershipOfOrder(address _orderId, address _nextDistributor) public checkUser(carriers[_orderId][orderMap[_orderId].distributorCount - 1]) returns(string memory) {
-        require(orderMap[_orderId].orderstatus < 4);
+//     function transferOwnershipOfOrder(address _orderId, address _nextDistributor) public checkUser(carriers[_orderId][orderMap[_orderId].distributorCount - 1]) returns(string memory) {
+//         require(orderMap[_orderId].orderstatus < 4);
         
-        carriers[_orderId][orderMap[_orderId].distributorCount] = _nextDistributor;
-        orderMap[_orderId].distributorCount += 1;
+//         carriers[_orderId][orderMap[_orderId].distributorCount] = _nextDistributor;
+//         orderMap[_orderId].distributorCount += 1;
         
-        if (orderMap[_orderId].customer == _nextDistributor){
-            orderMap[_orderId].orderstatus = 4;
-            orderMap[_orderId].transitstatus = 'Order Delivered!';
-            orderMap[_orderId].deliverytime = now;
-        }else{
-            orderMap[_orderId].orderstatus = 3;
-            orderMap[_orderId].transitstatus = 'Order in transit!';
-        }
+//         if (orderMap[_orderId].customer == _nextDistributor){
+//             orderMap[_orderId].orderstatus = 4;
+//             orderMap[_orderId].transitstatus = 'Order Delivered!';
+//             orderMap[_orderId].deliverytime = now;
+//         }else{
+//             orderMap[_orderId].orderstatus = 3;
+//             orderMap[_orderId].transitstatus = 'Order in transit!';
+//         }
         
-        return 'Distributor added for product!';
-    }
+//         return 'Distributor added for product!';
+//     }
     
     
-    function ownerCreateManufacturer(address _addr, string memory _name, string memory _addressName) public onlyOwner returns(string memory) {
-        createManufacturer(_addr, _name, _addressName);
+//     function ownerCreateManufacturer(address _addr, string memory _name, string memory _addressName) public onlyOwner returns(string memory) {
+//         createManufacturer(_addr, _name, _addressName);
         
-        return 'Manufacturer created successfully!';
-    }
+//         return 'Manufacturer created successfully!';
+//     }
     
     
-    function ownerCreateDistributor(address _addr, string memory _distributorName, string memory _distributorContact) public onlyOwner returns(string memory) {
-        createDistributor(_addr, _distributorName, _distributorContact);
+//     function ownerCreateDistributor(address _addr, string memory _distributorName, string memory _distributorContact) public onlyOwner returns(string memory) {
+//         createDistributor(_addr, _distributorName, _distributorContact);
         
-        return 'Distributor created successfully!';
-    }
+//         return 'Distributor created successfully!';
+//     }
     
     
-    function updateOrderStatus(address _orderId, string memory _latitude, string memory _longitude)public returns(string memory){
-        orderMap[_orderId].locationsArr.push(location(_latitude, _longitude));
+//     function updateOrderStatus(address _orderId, string memory _latitude, string memory _longitude)public returns(string memory){
+//         orderMap[_orderId].locationsArr.push(location(_latitude, _longitude));
         
-        return 'Status updated sucessfully!';
-    }
+//         return 'Status updated sucessfully!';
+//     }
     
     
-    function getLocations(address _orderId) public view returns (string[] memory) {
-        string[] memory ret = new string[](orderMap[_orderId].locationsArr.length);
-        for (uint i = 0; i < orderMap[_orderId].locationsArr.length; i++) {
-            ret[i] = orderMap[_orderId].locationsArr[i].latitude;
-        }
-        return ret;
-    }
+//     function getLocations(address _orderId) public view returns (string[] memory) {
+//         string[] memory ret = new string[](orderMap[_orderId].locationsArr.length);
+//         for (uint i = 0; i < orderMap[_orderId].locationsArr.length; i++) {
+//             ret[i] = orderMap[_orderId].locationsArr[i].latitude;
+//         }
+//         return ret;
+//     }
     
     
-    function cancelOrder(address _orderId) public checkUser(orderMap[_orderId].customer) returns(string memory){
-        require(orderMap[_orderId].orderstatus < 3);
+//     function cancelOrder(address _orderId) public checkUser(orderMap[_orderId].customer) returns(string memory){
+//         require(orderMap[_orderId].orderstatus < 3);
         
-        orderMap[_orderId].orderstatus = 5;
-        orderMap[_orderId].transitstatus = 'Order Cancelled Successfully!';
+//         orderMap[_orderId].orderstatus = 5;
+//         orderMap[_orderId].transitstatus = 'Order Cancelled Successfully!';
         
-        return orderMap[_orderId].transitstatus;
-    }
+//         return orderMap[_orderId].transitstatus;
+//     }
    
-}
+// }
