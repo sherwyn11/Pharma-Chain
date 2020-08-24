@@ -36,10 +36,10 @@ class ActionFindProduct(Action):
     ) -> List[Dict[Text, Any]]:
 
         product = tracker.get_slot("product")
-        if products[product] is None:
+        if product is None or products[product] is None:
             msg = "Sorry no such drug found"
         else:
-            msg = "Drug found at {}".format(products[product])
+            msg = "Drug: {} found at {}".format(product, products[product])
 
         dispatcher.utter_message(text=msg)
 

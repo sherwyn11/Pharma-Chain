@@ -1,10 +1,10 @@
 <!-- @format -->
 
 ## intent:greet
-
 - hey
 - hello
 - hi
+- dear sir
 - good morning
 - good evening
 - mornin
@@ -35,15 +35,18 @@
 - let's get started
 
 ## intent:goodbye
-
 - bye
 - goodbye
+- good bye
+- stop
+- end
+- farewell
+- have a good one
 - see you around
 - see you later
 - bye bot
 
 ## intent:affirm
-
 - yes
 - yes plz
 - indeed
@@ -54,6 +57,7 @@
 - why not
 - sure please do
 - ok cool
+- that's right
 - yes i would love to order it
 - ya good job
 - yup order
@@ -80,13 +84,14 @@
 - wonderful
 
 ## intent:deny
-
 - no
 - never
 - I don't think so
 - don't like that
 - no way
 - not really
+- not exactly
+- nope
 
 <!--
 ## intent:mood_unhappy
@@ -102,7 +107,6 @@
 - so sad -->
 
 ## intent:bot_challenge
-
 - are you a bot?
 - are you a human?
 - am I talking to a bot?
@@ -111,7 +115,6 @@
 - who are you?
 
 ## intent:order_product
-
 - I want to buy [Crocin](product)
 - I want to get [Abilify](product)
 - I would like to buy [Aspirin](product)
@@ -125,7 +128,6 @@
 - I'd like to place an order for [Crocin](product)
 
 ## intent:thanks
-
 - thanks
 - thank you
 - thank you so much
