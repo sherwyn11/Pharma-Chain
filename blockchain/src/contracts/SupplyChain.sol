@@ -2,17 +2,18 @@ pragma solidity ^0.6.6;
 pragma experimental ABIEncoderV2;
 
 
-import './Manufacturer.sol';
-import './Distributor.sol';
-import './Customer.sol';
-import './Product.sol';
+import './RawMaterial.sol';
+import './Supplier.sol';
+// import './Distributor.sol';
+// import './Customer.sol';
+// import './Product.sol';
 
 
 
 //// New supply chain : supplier -> transporter -> manufacturer -> transporter -> whole-saler -> transporter -> distributor -> transporter -> customer/hospital/pharmacy
 
 
-contract SupplyChain is Manufacturer, Distributor, Customer {
+contract SupplyChain is Supplier {
     
     address Owner;
     
@@ -72,10 +73,8 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
     
     event UserRegister(address indexed _address, bytes32 name);
     
-    event UpdateRole(bytes32 result);
     
-    
-    /////////////// Users //////////////////////
+    /////////////// Users (Only Owner Executable) //////////////////////
     
     struct userData {
         bytes32 name;
@@ -95,10 +94,9 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
         emit UserRegister(_userAddr, name);
     }
     
-    function changeUserRole(uint _role, address _addr) public onlyOwner {
+    function changeUserRole(uint _role, address _addr) public onlyOwner returns(string memory) {
         userInfo[_addr].role = roles(_role);
-        bytes32 result = "Role Updated!";
-        emit UpdateRole(result);
+       return "Role Updated!";
     }
     
     function getUserInfo(address _address) public view returns(
@@ -115,17 +113,43 @@ contract SupplyChain is Manufacturer, Distributor, Customer {
         );
     }
     
-} 
+
     /////////////// Supplier //////////////////////
     
     
+    function supplierCreatesRawPackage(
+        bytes32 _description,
+        uint[] memory _locationArr,
+        uint _quantity,
+        address _transporterAddr,
+        address _manufacturerAddr
+        ) public {
+            
+        require(userInfo[msg.sender].role == roles.supplier, "Role=>Supplier can use this function");
+        
+        createRawMaterialPackage(
+            _description,
+            _locationArr,
+            _quantity,
+            _transporterAddr,
+            _manufacturerAddr
+        );
+    }
     
+    function supplierGetPackageCount() public view returns(uint) {
+        require(userInfo[msg.sender].role == roles.supplier, "Role=>Supplier can use this function");
+        
+        return getNoOfPackagesOfSupplier();
+    }
     
+    function supplierGetRawMaterialAddresses() public returns(address[] memory) {
+        require(userInfo[msg.sender].role == roles.supplier, "Role=>Supplier can use this function");
+        
+        address[] memory ret = getAllPackages();
+        return ret;
+    }
     
-    
-    
-    
-    
+}    
     ////// My code ////////
 
     
