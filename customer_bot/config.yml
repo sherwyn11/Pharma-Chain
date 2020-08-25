@@ -2,11 +2,11 @@
 # https://rasa.com/docs/rasa/nlu/components/
 language: en
 pipeline:
-  - name: ConveRTTokenizer
-    case_sensitive: False
-  - name: ConveRTFeaturizer
-  # - name: WhitespaceTokenizer
+  # - name: ConveRTTokenizer
   #   case_sensitive: False
+  # - name: ConveRTFeaturizer
+  - name: WhitespaceTokenizer
+    case_sensitive: False
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
@@ -19,6 +19,9 @@ pipeline:
   - name: EntitySynonymMapper
   - name: ResponseSelector
     epochs: 100
+    dimensions: ["time", "number"]
+    locale: "en_GB"
+    timezone: "Asia/Mumbai"
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/

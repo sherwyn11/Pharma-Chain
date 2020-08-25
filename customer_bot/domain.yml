@@ -6,6 +6,7 @@ intents:
   - bot_challenge
   - order_product
   - thanks
+  - help
 
 entities:
   - product
@@ -21,29 +22,34 @@ actions:
 slots:
   product:
     type: text
-    auto_fill: true
 
 responses:
   utter_greet:
-    - text: "Hey! How could I help you?"
+    - text: "Hi! How can I help you?"
+
+  utter_try_these:
+    - text: "Hey there! I'm your Medical Drug Assistant.\nThere's a lot I can help you with. Here are few popular actions."
       buttons:
-        - title: "What can you do?"
+        - title: "Tell me more about yourself"
           payload: /bot_challenge
 
   utter_did_that_help:
     - text: "Did that help you?"
+    - text: "I hope you got what you were looking for..."
 
   utter_happy:
     - text: "Great, carry on!"
 
   utter_searching:
     - text: "Searching..."
+    - text: "I'm fetching the details for you..."
 
   utter_goodbye:
     - text: "Bye"
 
   utter_iamabot:
-    - text: "I am a safe medical drug bot, powered by Blockchain & Rasa.\n You can ask me things like:\n1. Ordering medical drugs"
+    - text: "I'm your Medical Drug Assistant, powered by Blockchain & Rasa.\nI can help you in things like:\n* Ordering medicines\n* Tracking your orders\n* Searching for nearby Pharmacies"
+    - text: "My name: Pharma Drug Bot, powered by Blockchain & Rasa.\nMy mission: to assist you in things like:\n* Ordering medicines\n* Tracking your orders\n* Searching for nearby Pharmacies"
 
 session_config:
   session_expiration_time: 60

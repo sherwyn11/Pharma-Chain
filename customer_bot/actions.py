@@ -11,6 +11,7 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
 
 products = {
     "Crocin": "Bandra Medical Store - 1 Ether",
@@ -36,11 +37,12 @@ class ActionFindProduct(Action):
     ) -> List[Dict[Text, Any]]:
 
         product = tracker.get_slot("product")
-        if product is None or products[product] is None:
+        print(product)
+        if product == None or product not in products:
             msg = "Sorry no such drug found"
         else:
             msg = "Drug: {} found at {}".format(product, products[product])
 
         dispatcher.utter_message(text=msg)
 
-        return []
+        return [SlotSet("product", None)]

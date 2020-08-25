@@ -1,6 +1,7 @@
 <!-- @format -->
 
 ## intent:greet
+
 - hey
 - hello
 - hi
@@ -35,6 +36,7 @@
 - let's get started
 
 ## intent:goodbye
+
 - bye
 - goodbye
 - good bye
@@ -47,6 +49,7 @@
 - bye bot
 
 ## intent:affirm
+
 - yes
 - yes plz
 - indeed
@@ -84,6 +87,7 @@
 - wonderful
 
 ## intent:deny
+
 - no
 - never
 - I don't think so
@@ -107,14 +111,28 @@
 - so sad -->
 
 ## intent:bot_challenge
+
 - are you a bot?
 - are you a human?
 - am I talking to a bot?
 - am I talking to a human?
-- what can you do?
 - who are you?
 
+## intent:help
+
+- help
+- what can you do?
+- what can I ask you?
+- what do you do?
+- what can you help me with?
+- help me
+- help, what do you do
+- how do I use this
+- how can you help me
+- What are the things that you can do?
+
 ## intent:order_product
+
 - I want to buy [Crocin](product)
 - I want to get [Abilify](product)
 - I would like to buy [Aspirin](product)
@@ -128,10 +146,11 @@
 - I'd like to place an order for [Crocin](product)
 
 ## intent:thanks
+
 - thanks
 - thank you
 - thank you so much
-- hey there, thanks!
+- oh thanks!
 - yes, thanks
 - yup thnaks
 - thx
@@ -139,5 +158,12 @@
 - nice
 - cool
 - okay thank you
-- it helped a lot..thanks
+- it helped a lot
 - yes it did, thanks a lot
+
+<!-- ## intent: find_pharma
+
+- find pharmacies near me
+- local pharma
+- hospitals near me
+- drug stores near me -->
