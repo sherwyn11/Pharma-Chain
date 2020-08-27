@@ -45,7 +45,7 @@ contract Medicine {
         Owner = Manu;
         manufacturer = Manu;
         description = Des;
-        rawmatriales = RM;
+        rawMaterials = RM;
         quantity = Quant;
         shipper = Shpr;
         if(RcvrType == 1) {
@@ -66,7 +66,7 @@ contract Medicine {
         return(
             manufacturer,
             description,
-            rawmatriales,
+            rawMaterials,
             quantity,
             shipper
         );
