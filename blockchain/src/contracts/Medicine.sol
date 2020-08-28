@@ -7,12 +7,12 @@ contract Medicine {
 
     enum medicineStatus {
         atManufacturer,
-        picked4W,
-        picked4D,
-        deliveredatW,
-        deliveredatD,
-        picked4P,
-        deliveredatP
+        pickedForW,
+        pickedForD,
+        deliveredAtW,
+        deliveredAtD,
+        pickedForC,
+        deliveredAtC
     }
 
     bytes32 description;
@@ -22,6 +22,7 @@ contract Medicine {
     address wholesaler;
     address distributor;
     address customer;
+    uint RcvrType;
     medicineStatus status;
 
     event ShippmentUpdate(
@@ -40,44 +41,44 @@ contract Medicine {
         uint _quantity,
         address _transporterAddr,
         address _recieverAddr,
-        uint 
+        uint RcvrType
     ) public {
-        Owner = Manu;
-        manufacturer = Manu;
-        description = Des;
-        rawMaterials = RM;
-        quantity = Quant;
-        shipper = Shpr;
+        Owner = _manufacturerAddr;
+        manufacturer = _manufacturerAddr;
+        description = _description;
+        rawMaterials = _rawAddr;
+        quantity = _quantity;
+        shipper = _transporterAddr;
         if(RcvrType == 1) {
-            wholesaler = Rcvr;
+            wholesaler = _recieverAddr;
         } else if( RcvrType == 2){
-            distributer = Rcvr;
+            distributor = _recieverAddr;
         }
     }
 
 
     function getMedicineInfo () public view returns(
-        address Manu,
-        bytes32 Des,
-        bytes32 RM,
-        uint Quant,
-        address Shpr
+        address _manufacturerAddr,
+        bytes32 _description,
+        address[] _description,
+        uint _quantity,
+        address _transporterAddr
     ) {
         return(
-            manufacturer,
-            description,
-            rawMaterials,
-            quantity,
-            shipper
+            _manufacturerAddr,
+            _description,
+            _description,
+            _quantity,
+            _transporterAddr
         );
     }
 
  
-    function getWDP() public view returns(
+    function getWDC() public view returns(
         address[3] memory WDP
     ) {
         return (
-            [wholesaler,distributer,pharma]
+            [wholesaler, distributor, customer]
         );
     }
 
@@ -88,37 +89,41 @@ contract Medicine {
     }
 
 
-    function pickPackage(
-        address shpr
+    function pickMedicine(
+        address _transporterAddr
     ) public {
         require(
-            shpr == shipper,
-            "Only Associate Shipper can call this function"
+            _transporterAddr == transporters[transporters.length - 1],
+            "Only Transporter can call this function"
         );
         require(
             status == medicineStatus(0),
             "Package must be at Supplier."
         );
 
-        if(wholesaler!=address(0x0)){
+        if(wholesaler != address(0x0)){
             status = medicineStatus(1);
-            emit ShippmentUpdate(address(this),shipper,wholesaler,1,1);
+            emit ShippmentUpdate(address(this), _transporterAddr, wholesaler, 1, 1);
         }else{
             status = medicineStatus(2);
-            emit ShippmentUpdate(address(this),shipper,distributer,1,1);
+            emit ShippmentUpdate(address(this), _transporterAddr, distributor, 1, 2);
         }
+    }
+    
+    function updateTransporterArray(address _transporterAddr) public {
+        transporters.push(_transporterAddr);
     }
 
 
-    function receivedPackage(
-        address Rcvr
+    function receivedMedicine(
+        address _recieverAddr
     ) public
-    returns(uint rcvtype)
+    returns(uint)
     {
 
         require(
-            Rcvr == wholesaler || Rcvr == distributer,
-            "Only Associate Wholesaler or Distrubuter can call this function"
+            _recieverAddr == wholesaler || _recieverAddr == distributor,
+            "Only Wholesaler or Distrubutor can call this function"
         );
 
         require(
@@ -126,19 +131,19 @@ contract Medicine {
             "Product not picked up yet"
         );
 
-        if(Rcvr == wholesaler && status == medicineStatus(1)){
+        if(_recieverAddr == wholesaler && status == medicineStatus(1)){
             status = medicineStatus(3);
-            emit ShippmentUpdate(address(this),shipper,wholesaler,2,3);
+            emit ShippmentUpdate(address(this),shipper,wholesaler,2, 3);
             return 1;
-        } else if(Rcvr == distributer && status == medicineStatus(2)){
+        } else if(_recieverAddr == distributor && status == medicineStatus(2)){
             status = medicineStatus(4);
-            emit ShippmentUpdate(address(this),shipper,distributer,3,4);
+            emit ShippmentUpdate(address(this),shipper,distributor,3, 4);
             return 2;
         }
     }
 
 
-    function sendWD(
+    function sendWtoD(
         address receiver,
         address sender
     ) public {
@@ -146,41 +151,41 @@ contract Medicine {
             wholesaler == sender,
             "this Wholesaler is not Associated."
         );
-        distributer = receiver;
+        distributor = receiver;
         status = medicineStatus(2);
     }
 
 
-    function recievedWD(
+    function recievedWtoD(
         address receiver
     ) public {
         require(
-            distributer == receiver,
+            distributor == receiver,
             "This Distributer is not Associated."
         );
         status = medicineStatus(4);
     }
 
 
-    function sendDP(
+    function sendDtoC(
         address receiver,
         address sender
     ) public {
         require(
-            distributer == sender,
-            "this Distributer is not Associated."
+            distributor == sender,
+            "this Distributor is not Associated."
         );
-        pharma = receiver;
+        customer = receiver;
         status = medicineStatus(5);
     }
 
 
-    function recievedDP(
+    function recievedDtoC(
         address receiver
     ) public {
         require(
-            pharma == receiver,
-            "This Pharma is not Associated."
+            customer == receiver,
+            "This Customer is not Associated."
         );
         status = medicineStatus(6);
     }

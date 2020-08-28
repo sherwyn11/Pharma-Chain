@@ -1,46 +1,46 @@
 pragma solidity ^0.6.6;
 
-import './Product.sol';
+import './RawMaterial.sol';
+import './Medicine.sol';
 
-contract Manufacturer is Product {
+contract Manufacturer {
+    
+    mapping (address => address[]) public manufacturerRawMaterials;
+    mapping (address => address[]) public manufacturerMedicines;
 
-    struct manufacturer {
-        string locationAddress;
-        string manufacturerName;
-        address[] productsArr;
+    
+    function manufacturerReceivedPackage(
+        address _addr,
+        address _manufacturerAddress
+        ) internal {
+            
+        RawMaterial(_addr).receivedPackage(_manufacturerAddress);
+        manufacturerRawMaterials[_manufacturerAddress].push(_addr);
     }
-
-    mapping (address => manufacturer) public manufacturerMap;
-
-    constructor() public {}
-
-    function createManufacturer(address _addr, string memory _name, string memory _addressName) internal {
-        manufacturerMap[_addr].locationAddress = _addressName;
-        manufacturerMap[_addr].manufacturerName = _name;
-    }
-
-
-    function addProductToManufacturer(string memory _itemName, uint _quantity) public returns(address) {
-        address _id = createProduct(_itemName, _quantity);
-        manufacturerMap[msg.sender].productsArr.push(_id);
-
-        return _id;
-    }
-
-
-    function createComposite(address _uniqueId, address _compositeId) public returns(string memory){
-        addComposite(_uniqueId, _compositeId);
+    
+    
+    function manufacturerCreatesMedicine(
+        address _manufacturerAddr,
+        bytes32 _description,
+        address[] _rawAddr,
+        uint _quantity,
+        address _transporterAddr,
+        address _recieverAddr,
+        uint RcvrType
+        ) internal {
+            
+        Medicine _medicine = new Medicine(
+            _manufacturerAddr,
+            _description,
+            _rawAddr,
+            _quantity,
+            _transporterAddr,
+            _recieverAddr,
+            RcvrType
+        );
         
-        return 'Composite added';
+        manufacturerMedicines[_manufacturerAddr].push(address(_medicine));
+        
     }
-    
-    function getItems() public view returns (address[] memory) {
-        address[] memory ret = new address[](manufacturerMap[msg.sender].productsArr.length);
-        for (uint i = 0; i < manufacturerMap[msg.sender].productsArr.length; i++) {
-            ret[i] = manufacturerMap[msg.sender].productsArr[i];
-        }
-        return ret;
-    }
-    
     
 }
