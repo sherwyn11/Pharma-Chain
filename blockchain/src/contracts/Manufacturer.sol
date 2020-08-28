@@ -8,6 +8,7 @@ contract Manufacturer {
     mapping (address => address[]) public manufacturerRawMaterials;
     mapping (address => address[]) public manufacturerMedicines;
 
+    constructor() public {}
     
     function manufacturerReceivedPackage(
         address _addr,
@@ -22,12 +23,12 @@ contract Manufacturer {
     function manufacturerCreatesMedicine(
         address _manufacturerAddr,
         bytes32 _description,
-        address[] _rawAddr,
+        address[] memory _rawAddr,
         uint _quantity,
         address _transporterAddr,
         address _recieverAddr,
         uint RcvrType
-        ) internal {
+        ) public {
             
         Medicine _medicine = new Medicine(
             _manufacturerAddr,

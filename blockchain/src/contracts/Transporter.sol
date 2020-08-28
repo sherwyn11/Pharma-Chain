@@ -1,12 +1,14 @@
 pragma solidity ^0.6.6;
 
 import './RawMaterial.sol';
+import './Medicine.sol';
 
 contract Transporter {
     
     function handlePackage(
         address _addr,
         uint transportertype
+        // address cid
         ) public {
 
         if(transportertype == 1) { 
@@ -15,7 +17,7 @@ contract Transporter {
         } 
         else if(transportertype == 2) { 
             /// Manufacturer -> Wholesaler
-            Medicine(_addr).pickPackage(msg.sender);
+            Medicine(_addr).pickMedicine(msg.sender);
         }
-    } 
+    }    
 }

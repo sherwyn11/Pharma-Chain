@@ -22,7 +22,7 @@ contract Medicine {
     address wholesaler;
     address distributor;
     address customer;
-    uint RcvrType;
+    uint quantity;
     medicineStatus status;
 
     event ShippmentUpdate(
@@ -37,10 +37,10 @@ contract Medicine {
     constructor(
         address _manufacturerAddr,
         bytes32 _description,
-        address[] _rawAddr,
+        address[] memory _rawAddr,
         uint _quantity,
         address _transporterAddr,
-        address _recieverAddr,
+        address _receiverAddr,
         uint RcvrType
     ) public {
         Owner = _manufacturerAddr;
@@ -48,11 +48,11 @@ contract Medicine {
         description = _description;
         rawMaterials = _rawAddr;
         quantity = _quantity;
-        shipper = _transporterAddr;
+        transporters.push(_transporterAddr);
         if(RcvrType == 1) {
-            wholesaler = _recieverAddr;
+            wholesaler = _receiverAddr;
         } else if( RcvrType == 2){
-            distributor = _recieverAddr;
+            distributor = _receiverAddr;
         }
     }
 
@@ -60,14 +60,14 @@ contract Medicine {
     function getMedicineInfo () public view returns(
         address _manufacturerAddr,
         bytes32 _description,
-        address[] _description,
+        address[] memory _rawAddr,
         uint _quantity,
         address _transporterAddr
     ) {
         return(
             _manufacturerAddr,
             _description,
-            _description,
+            _rawAddr,
             _quantity,
             _transporterAddr
         );
@@ -98,7 +98,7 @@ contract Medicine {
         );
         require(
             status == medicineStatus(0),
-            "Package must be at Supplier."
+            "Package must be at Manufacturer."
         );
 
         if(wholesaler != address(0x0)){
@@ -116,13 +116,13 @@ contract Medicine {
 
 
     function receivedMedicine(
-        address _recieverAddr
+        address _receiverAddr
     ) public
     returns(uint)
     {
 
         require(
-            _recieverAddr == wholesaler || _recieverAddr == distributor,
+            _receiverAddr == wholesaler || _receiverAddr == distributor,
             "Only Wholesaler or Distrubutor can call this function"
         );
 
@@ -131,13 +131,13 @@ contract Medicine {
             "Product not picked up yet"
         );
 
-        if(_recieverAddr == wholesaler && status == medicineStatus(1)){
+        if(_receiverAddr == wholesaler && status == medicineStatus(1)){
             status = medicineStatus(3);
-            emit ShippmentUpdate(address(this),shipper,wholesaler,2, 3);
+            emit ShippmentUpdate(address(this), transporters[transporters.length - 1], wholesaler, 2, 3);
             return 1;
-        } else if(_recieverAddr == distributor && status == medicineStatus(2)){
+        } else if(_receiverAddr == distributor && status == medicineStatus(2)){
             status = medicineStatus(4);
-            emit ShippmentUpdate(address(this),shipper,distributor,3, 4);
+            emit ShippmentUpdate(address(this), transporters[transporters.length - 1], distributor,3, 4);
             return 2;
         }
     }

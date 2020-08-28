@@ -91,7 +91,7 @@ contract RawMaterial {
 
         require(
             _manufacturerAddr == manufacturer,
-            "Only Manufacturer of the package can receieve this function"
+            "Only Manufacturer of the package can receieve the package"
         );
 
         require(
