@@ -1,8 +1,8 @@
 pragma solidity ^0.6.6;
 
-import './Product.sol';
+// import './Product.sol';
 
-contract Distributor is Product {
+contract Distributor {
     
     struct distributor {
         string distributorName;
