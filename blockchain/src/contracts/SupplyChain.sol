@@ -5,43 +5,21 @@ pragma experimental ABIEncoderV2;
 import './RawMaterial.sol';
 import './Supplier.sol';
 import './Transporter.sol';
+import './Medicine.sol';
 import './Manufacturer.sol';
-// import './Medicine.sol';
-// import './Product.sol';
-
+import './MedicineW_D.sol';
+import './Wholesaler.sol';
+import './MedicineD_C.sol';
+import './Distributor.sol';
+import './Customer.sol';
 
 
 //// New supply chain : supplier -> transporter -> manufacturer -> transporter -> whole-saler -> transporter -> distributor -> transporter -> customer/hospital/pharmacy
 
 
-contract SupplyChain is Supplier, Transporter, Manufacturer {
+contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler {
     
     address Owner;
-    
-    // struct location {
-    //     string latitude;
-    //     string longitude;
-    // }
-    
-    // struct orders {
-    //     bool isUidGenerated;
-    //     address itemid;
-    //     string itemname;
-    //     string transitstatus;
-    //     uint orderstatus; /// 1 -> Order Recieved, 2 -> Confirmed, 3 -> Order Shipped, 4 -> Order Delivered, 5 -> Order Cancelled
-    //     address customer;
-    //     uint ordertime;
-    //     uint deliverytime;
-    //     uint quantity;
-    //     address manufacturerAddress;
-    //     uint distributorCount;
-    //     location[] locationsArr;
-    //     bytes32 uniqueHash;
-    // }
-    
-    // mapping (address => orders) public orderMap;
-    // mapping (address => mapping (uint => address)) public carriers;
-    
     
     constructor() public {
         Owner = msg.sender;
@@ -157,6 +135,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer {
     function transporterHandlePackage(
         address _address,
         uint transporterType
+        address cid
         ) public {
             
         require(
@@ -168,7 +147,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer {
             "Transporter Type is incorrect"
         );
         
-        handlePackage(_address, transporterType);
+        handlePackage(_address, transporterType, cid);
     }
     
     
@@ -204,5 +183,146 @@ contract SupplyChain is Supplier, Transporter, Manufacturer {
         
         return "Medicine created!";
     }
+    
 
-}
+    ///////////////  Wholesaler  ///////////////
+
+    
+    function wholesalerReceivesMedicine(
+        address _address,
+        address cid
+        ) {
+        require(
+            userInfo[msg.sender].role == roles.wholesaler || userInfo[msg.sender].role == roles.distributor,
+            "Only Wholesaler and Distributor can call this function"
+        );
+        
+        medicineReceived(
+            address _address,
+            address cid
+        );
+    }
+    
+    function transferMedicineW_D(
+        address _address,
+        address transporter,
+        address receiver) {
+        require(
+            userInfo[msg.sender].role == roles.wholesaler &&
+            msg.sender == Medicine(_address).getWDC()[0],
+            "Only Wholesaler or current owner of package can call this function"
+        );
+        
+        transferMedicineWtoD(
+            _address,
+            transporter,
+            receiver
+        );
+    }
+    
+    function getBatchIdByIndexWD(uint index) public view returns(address packageID) {
+        require(
+            userInfo[msg.sender].role == roles.wholesaler,
+            "Only Wholesaler Can call this function."
+        );
+        return MedicineWtoD[msg.sender][index];
+    }
+
+    function getSubContractWD(address _address) public view returns (address SubContractWD) {
+        return MedicineWtoDTxContract[_address];
+    }
+
+
+    ///////////////  Distributor  ///////////////
+
+
+    function distributorTransferMedicinetoCustomer(
+        address _address,
+        address transporter,
+        address receiver
+    ) public {
+        require(
+            userInfo[msg.sender].role == roles.distributor &&
+            msg.sender == Medicine(_address).getWDC()[1],
+            "Only Distributor or current owner of package can call this function"
+        );
+        transferMedicineDtoC(_address, transporter, receiver);
+    }
+    
+    function getBatchesCountDC() public view returns (uint count){
+        require(
+            userInfo[msg.sender].role == roles.distributor,
+            "Only Distributor Can call this function."
+        );
+        return MedicineDtoC[msg.sender].length;
+    }
+
+    function getBatchIdByIndexDC(uint index) public view returns(address packageID) {
+        require(
+            userInfo[msg.sender].role == roles.distributor,
+            "Only Distributor Can call this function."
+        );
+        return MedicineDtoC[msg.sender][index];
+    }
+
+    function getSubContractDC(address _address) public view returns (address SubContractDP) {
+        return MedicineDtoCTxContract[_address];
+    }
+    
+    
+    ///////////////  Customer  ///////////////
+    
+    
+    function medicineRecievedAtCustomer(
+        address _address,
+        address cid
+    ) public {
+        require(
+            userInfo[msg.sender].role == roles.customer,
+            "Only Customer Can call this function."
+        );
+        medicineRecievedAtCustomer(_address, cid);
+    }
+
+    function updateStatus(
+        address _address,
+        uint Status
+    ) internal {
+        require(
+            userInfo[msg.sender].role == roles.customer &&
+            msg.sender == Medicine(_address).getWDC()[2],
+            "Only Customer or current owner of package can call this function"
+        );
+        require(sale[_address] == salestatus(1), "Medicine Must be at Customer");
+        
+        updateSaleStatus(_address, Status);
+    }
+
+    function getSalesInfo(
+        address _address
+    ) internal
+    view
+    returns(
+        uint Status 
+    ){
+        return salesInfo(_address);
+    }
+
+    
+    function getBatchesCountC() public view returns(uint count){
+        require(
+            userInfo[msg.sender].role == roles.customer,
+            "Only Wholesaler or current owner of package can call this function"
+        );
+        return  MedicineBatchAtCustomer[msg.sender].length;
+    }
+
+    function getBatchIdByIndexC(uint index) public view returns(address _address){
+        require(
+            userInfo[msg.sender].role == roles.customer,
+            "Only Wholesaler or current owner of package can call this function"
+        );
+        return MedicineBatchAtCustomer[msg.sender][index];
+    }
+    
+}   

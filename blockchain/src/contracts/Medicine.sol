@@ -123,7 +123,7 @@ contract Medicine {
 
         require(
             _receiverAddr == wholesaler || _receiverAddr == distributor,
-            "Only Wholesaler or Distrubutor can call this function"
+            "Only Wholesaler or Distributor can call this function"
         );
 
         require(
@@ -156,7 +156,7 @@ contract Medicine {
     }
 
 
-    function recievedWtoD(
+    function receivedWtoD(
         address receiver
     ) public {
         require(
@@ -173,14 +173,14 @@ contract Medicine {
     ) public {
         require(
             distributor == sender,
-            "this Distributor is not Associated."
+            "This Distributor is not Associated."
         );
         customer = receiver;
         status = medicineStatus(5);
     }
 
 
-    function recievedDtoC(
+    function receivedDtoC(
         address receiver
     ) public {
         require(
