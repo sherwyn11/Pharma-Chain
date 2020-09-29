@@ -1,7 +1,7 @@
 pragma solidity ^0.6.6;
 
 import './MedicineW_D.sol';
-import './Medicine.sol'
+import './Medicine.sol';
 
 contract Wholesaler {
     
@@ -16,13 +16,13 @@ contract Wholesaler {
         address cid
     ) internal {
 
-        uint rtype = Medicine(batchid).receivedPackage(msg.sender);
+        uint rtype = Medicine(_address).receivedMedicine(msg.sender);
         if(rtype == 1){
             MedicinesAtWholesaler[msg.sender].push(_address);
-        }else if( rtype == 2){
+        }else if(rtype == 2){
             MedicinesAtWholesaler[msg.sender].push(_address);
-            if(Madicine(batchid).getWDP()[0] != address(0)){
-                MedicineW_D(cid).receiveWD(batchid, msg.sender);
+            if(Medicine(_address).getWDC()[0] != address(0)){
+                MedicineW_D(cid).receiveWD(_address, msg.sender);
             }
         }
     }

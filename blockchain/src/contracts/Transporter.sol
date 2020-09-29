@@ -9,7 +9,7 @@ contract Transporter {
     
     function handlePackage(
         address _addr,
-        uint transportertype
+        uint transportertype,
         address cid
         ) public {
 
@@ -24,7 +24,7 @@ contract Transporter {
             MedicineW_D(cid).pickWD(_addr, msg.sender);
         } else if(transportertype == 4) {   
             // Distrubuter to Customer
-            MedicineD_C(cid).pickD(_addr, msg.sender);
+            MedicineD_C(cid).pickDC(_addr, msg.sender);
         }
     }
     

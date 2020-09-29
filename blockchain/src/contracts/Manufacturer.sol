@@ -28,7 +28,7 @@ contract Manufacturer {
         address _transporterAddr,
         address _recieverAddr,
         uint RcvrType
-        ) public {
+        ) internal {
             
         Medicine _medicine = new Medicine(
             _manufacturerAddr,

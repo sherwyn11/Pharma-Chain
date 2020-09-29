@@ -2,6 +2,7 @@ pragma solidity ^0.6.6;
 
 import './Medicine.sol';
 
+
 contract MedicineD_C {
 
     address Owner;
@@ -33,7 +34,7 @@ contract MedicineD_C {
         address transporterAddr
     ) public {
         require(
-            transporter == Transporter,
+            transporter == transporterAddr,
             "Only Associated transporter can call this function."
         );
         status = packageStatus(1);
