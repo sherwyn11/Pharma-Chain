@@ -11,19 +11,13 @@ contract Wholesaler {
     
     constructor() public {}
     
-    function medicineReceived(
-        address _address,
-        address cid
+    function medicineRecievedAtWholesaler(
+        address _address
     ) internal {
 
         uint rtype = Medicine(_address).receivedMedicine(msg.sender);
         if(rtype == 1){
             MedicinesAtWholesaler[msg.sender].push(_address);
-        }else if(rtype == 2){
-            MedicinesAtWholesaler[msg.sender].push(_address);
-            if(Medicine(_address).getWDC()[0] != address(0)){
-                MedicineW_D(cid).receiveWD(_address, msg.sender);
-            }
         }
     }
     

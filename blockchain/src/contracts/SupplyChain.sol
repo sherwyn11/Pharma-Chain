@@ -161,7 +161,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         bytes32 _description,
         address[] memory _rawAddr,
         uint _quantity,
-        address _transporterAddr,
+        address[] memory _transporterAddr,
         address _receiverAddr,
         uint RcvrType
         ) public returns(string memory){
@@ -186,18 +186,16 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
     ///////////////  Wholesaler  ///////////////
 
     
-    function wholesalerReceivesMedicine(
-        address _address,
-        address cid
+    function wholesalerReceivedMedicine(
+        address _address
         ) public {
         require(
             userInfo[msg.sender].role == roles.wholesaler || userInfo[msg.sender].role == roles.distributor,
             "Only Wholesaler and Distributor can call this function"
         );
         
-        medicineReceived(
-            _address,
-            cid
+        medicineRecievedAtWholesaler(
+            _address
         );
     }
     
@@ -233,6 +231,22 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
 
     ///////////////  Distributor  ///////////////
 
+
+    function distributorReceivedMedicine(
+      address _address,
+      address cid
+    ) public {
+        require(
+            userInfo[msg.sender].role == roles.distributor &&
+            msg.sender == Medicine(_address).getWDC()[1],
+            "Only Distributor or current owner of package can call this function"  
+        );
+        
+        medicineRecievedAtDistributor(
+            _address,
+            cid
+        );
+    }
 
     function distributorTransferMedicinetoCustomer(
         address _address,
@@ -322,4 +336,6 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         );
         return MedicineBatchAtCustomer[msg.sender][index];
     }
+    
 }    
+    

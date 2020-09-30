@@ -13,7 +13,7 @@ contract Manufacturer {
     function manufacturerReceivedPackage(
         address _addr,
         address _manufacturerAddress
-        ) internal {
+        ) public {
             
         RawMaterial(_addr).receivedPackage(_manufacturerAddress);
         manufacturerRawMaterials[_manufacturerAddress].push(_addr);
@@ -25,10 +25,10 @@ contract Manufacturer {
         bytes32 _description,
         address[] memory _rawAddr,
         uint _quantity,
-        address _transporterAddr,
+        address[] memory _transporterAddr,
         address _recieverAddr,
         uint RcvrType
-        ) internal {
+        ) public {
             
         Medicine _medicine = new Medicine(
             _manufacturerAddr,

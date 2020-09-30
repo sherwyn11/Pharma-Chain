@@ -1,14 +1,29 @@
 pragma solidity ^0.6.6;
 
+import './MedicineW_D.sol';
 import './Medicine.sol';
 import './MedicineD_C.sol';
 
 
 contract Distributor {
     
-    mapping(address => address[]) MedicineBatchAtDistributor;
-    mapping(address => address[]) MedicineDtoC;
-    mapping(address => address) MedicineDtoCTxContract;
+    mapping(address => address[]) public MedicinesAtDistributor;
+    mapping(address => address[]) public MedicineDtoC;
+    mapping(address => address) public MedicineDtoCTxContract;
+    
+    function medicineRecievedAtDistributor(
+        address _address, 
+        address cid
+        ) internal {
+            
+        uint rtype = Medicine(_address).receivedMedicine(msg.sender);
+        if(rtype == 2){
+            MedicinesAtDistributor[msg.sender].push(_address);
+            if(Medicine(_address).getWDC()[0] != address(0)){
+                MedicineW_D(cid).receiveWD(_address, msg.sender);
+            }
+        }
+    }
 
 
     function transferMedicineDtoC(

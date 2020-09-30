@@ -7,7 +7,7 @@ contract MedicineD_C {
 
     address Owner;
 
-    enum packageStatus { atcreator, picked, delivered}
+    enum packageStatus { atcreator, picked, delivered }
 
     address medAddr;
     address sender;

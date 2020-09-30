@@ -39,7 +39,7 @@ contract Medicine {
         bytes32 _description,
         address[] memory _rawAddr,
         uint _quantity,
-        address _transporterAddr,
+        address[] memory _transporterAddr,
         address _receiverAddr,
         uint RcvrType
     ) public {
@@ -48,7 +48,7 @@ contract Medicine {
         description = _description;
         rawMaterials = _rawAddr;
         quantity = _quantity;
-        transporters.push(_transporterAddr);
+        transporters = _transporterAddr;
         if(RcvrType == 1) {
             wholesaler = _receiverAddr;
         } else if( RcvrType == 2){
@@ -62,14 +62,18 @@ contract Medicine {
         bytes32 _description,
         address[] memory _rawAddr,
         uint _quantity,
-        address _transporterAddr
+        address[] memory _transporterAddr,
+        address _distributor,
+        address _customer
     ) {
         return(
-            _manufacturerAddr,
-            _description,
-            _rawAddr,
-            _quantity,
-            _transporterAddr
+            manufacturer,
+            description,
+            rawMaterials,
+            quantity,
+            transporters,
+            distributor,
+            customer
         );
     }
 
@@ -161,7 +165,7 @@ contract Medicine {
     ) public {
         require(
             distributor == receiver,
-            "This Distributer is not Associated."
+            "This Distributor is not Associated."
         );
         status = medicineStatus(4);
     }
