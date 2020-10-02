@@ -4,7 +4,6 @@ import './MedicineW_D.sol';
 import './Medicine.sol';
 import './MedicineD_C.sol';
 
-
 contract Distributor {
     
     mapping(address => address[]) public MedicinesAtDistributor;

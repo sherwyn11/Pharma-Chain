@@ -2,7 +2,6 @@ pragma solidity ^0.6.6;
 
 import './Medicine.sol';
 
-
 contract MedicineD_C {
 
     address Owner;
