@@ -3,7 +3,9 @@ module.exports = {
     development: {
       host: "127.0.0.1",
       port: 7545,
-      network_id: "*" // Match any network id
+      network_id: "*",
+      gas: 30000000,
+      from: '0x02582591F6401bCCA43a677A970148E040926524',
     },
   },
   contracts_directory: './src/contracts/',
@@ -11,9 +13,11 @@ module.exports = {
   compilers: {
     solc: {
       version: "0.6.6",
-      optimizer: {
-        enabled: true,
-        runs: 200
+      settings: {
+        optimizer: {
+          enabled: true,
+          runs: 1
+        }
       }
     }
   }

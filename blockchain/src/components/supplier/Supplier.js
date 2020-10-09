@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Header from '../header/Header';
 import AddRawMaterial from "./AddRawMaterial";
-import history from '../supplier/history';
+import history from './History';
 
 import {BrowserRouter as Router, NavLink, Switch, Route } from 'react-router-dom';
 const Supplier = props =>{

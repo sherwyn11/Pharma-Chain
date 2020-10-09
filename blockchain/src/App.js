@@ -1,24 +1,84 @@
-import React from 'react';
-import Header from './components/header/Header';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Cards from './components/cards/Cards';
-import Routes from '../src/components/supplier/Routes';
+import React, { Component } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Web3 from 'web3';
+import Owner from './entities/Owner/Owner';
+import NavBar from './components/Navbar';
+import SupplyChain from './build/SupplyChain.json';
 
-import { BrowserRouter as Router } from 'react-router-dom';
-import {Route }from 'react-router-dom';
+class App extends Component {
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        {/* <Header/>
-        <div></div>
-        <Cards/> */}
-        <Routes/>
-       </div>
-       
-      </Router>
-  );
-}
+  constructor() {
+    super();
+    this.state = {
+      'account': null,
+      'supplyChain': null,
+      'identicon': null,
+      'loading': true,
+    }
+  }
+
+  async componentWillMount() {
+    await this.loadWeb3()
+    await this.loadBlockChain()
+  }
+
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+  }
+
+  handleInputChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    })
+  }
+
+  async loadBlockChain() {
+    const web3 = window.web3
+    const accounts = await web3.eth.getAccounts();
+    this.setState({ 'account': accounts[0] });
+    const networkId = await web3.eth.net.getId();
+    const networkData = SupplyChain.networks[networkId];
+    if(networkData) {
+      const supplyChain = new web3.eth.Contract(SupplyChain.abi, networkData.address);
+      this.setState({ 'supplyChain': supplyChain, 'loading': false });
+      console.log(supplyChain);
+    } else {
+      window.alert('Supply chain contract not deployed to detected network.');
+    }
+  }
+
+  render() {
+    if(this.state.loading === false){
+      return (
+        <BrowserRouter>
+            <div className="App">
+              <main>
+                <NavBar account={this.state.account}/>
+                {/* <Route exact path = '/' component={(() => <Home account={this.state.account}/>)} /> */}
+                <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+                {/* <Route exact path="/upload" component={(() => <Upload account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+                <Route exact path="/view" component={(() => <View account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+                <Route exact path="/doctors" component={(() => <AddDoctor account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+                <Route exact path="/view/:id" component={Analysis} /> */}
+              </main>
+            </div>
+        </BrowserRouter>
+        );
+      } else {
+        return (
+          <h1>Hello!</h1>
+        )
+      }
+    }
+  }
 
 export default App;

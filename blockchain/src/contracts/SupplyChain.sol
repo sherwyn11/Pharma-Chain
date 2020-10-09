@@ -18,7 +18,7 @@ import './Customer.sol';
 
 contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distributor, Customer {
     
-    address Owner;
+    address public Owner;
     
     constructor() public {
         Owner = msg.sender;
@@ -118,7 +118,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         return getNoOfPackagesOfSupplier();
     }
     
-    function supplierGetRawMaterialAddresses() public returns(address[] memory) {
+    function supplierGetRawMaterialAddresses() public view returns(address[] memory) {
         require(userInfo[msg.sender].role == roles.supplier, "Role=>Supplier can use this function");
         
         address[] memory ret = getAllPackages();
@@ -298,7 +298,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
     function updateStatus(
         address _address,
         uint Status
-    ) internal {
+    ) public {
         require(
             userInfo[msg.sender].role == roles.customer &&
             msg.sender == Medicine(_address).getWDC()[2],
@@ -311,7 +311,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
 
     function getSalesInfo(
         address _address
-    ) internal
+    ) public
     view
     returns(
         uint Status 

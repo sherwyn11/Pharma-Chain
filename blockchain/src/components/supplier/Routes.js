@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Supplier from './Supplier';
 import AddRawMaterial from './AddRawMaterial';
-import history from './history';
+import history from './History';
 import Header from '../header/Header';
 
 

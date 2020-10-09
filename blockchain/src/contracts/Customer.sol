@@ -24,7 +24,7 @@ contract Customer {
     function medicineRecievedAtCustomer(
         address _address,
         address cid
-    ) internal {
+    ) public {
         MedicineD_C(cid).receiveDC(_address, msg.sender);
         MedicineBatchAtCustomer[msg.sender].push(_address);
         sale[_address] = salestatus(1);
@@ -33,14 +33,14 @@ contract Customer {
     function updateSaleStatus(
         address _address,
         uint Status
-    ) internal {
+    ) public {
         sale[_address] = salestatus(Status);
         emit MedicineStatus(_address, msg.sender, Status);
     }
 
     function salesInfo(
         address _address
-    ) internal
+    ) public
     view
     returns(
         uint Status

@@ -35,7 +35,7 @@ contract Supplier {
     }
     
     
-    function getAllPackages() public returns(address[] memory) {
+    function getAllPackages() public view returns(address[] memory) {
         uint len = supplierRawMaterials[msg.sender].length;
         address[] memory ret = new address[](len);
         for (uint i = 0; i < len; i++) {

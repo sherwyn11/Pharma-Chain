@@ -13,7 +13,7 @@ contract Wholesaler {
     
     function medicineRecievedAtWholesaler(
         address _address
-    ) internal {
+    ) public {
 
         uint rtype = Medicine(_address).receivedMedicine(msg.sender);
         if(rtype == 1){
@@ -25,7 +25,7 @@ contract Wholesaler {
         address _address,
         address transporter,
         address receiver
-    ) internal {
+    ) public {
         
         MedicineW_D wd = new MedicineW_D(
             _address,

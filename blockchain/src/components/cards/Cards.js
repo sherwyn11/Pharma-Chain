@@ -8,7 +8,7 @@ import Manufacturer1 from '../images/Manufacturer1.jpg';
 import Transporter2 from '../images/Transporter2.jpg';
 import Wholesaler from '../images/Wholesaler.jpg';
 
-import history from '../supplier/history'
+import history from '../supplier/History'
 import Supplier from '../supplier/Supplier';
 import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 

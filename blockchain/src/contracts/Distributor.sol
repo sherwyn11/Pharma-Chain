@@ -13,7 +13,7 @@ contract Distributor {
     function medicineRecievedAtDistributor(
         address _address, 
         address cid
-        ) internal {
+        ) public {
             
         uint rtype = Medicine(_address).receivedMedicine(msg.sender);
         if(rtype == 2){
@@ -29,7 +29,7 @@ contract Distributor {
         address _address,
         address transporter,
         address receiver
-    ) internal {
+    ) public {
         MedicineD_C dp = new MedicineD_C(
             _address,
             msg.sender,
