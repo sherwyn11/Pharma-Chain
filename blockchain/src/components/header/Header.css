@@ -1,0 +1,45 @@
+.header-main{
+    position: relative;
+    width: 100%;
+    background-color:black;
+    height: 56px;
+    top: 0;
+    left: 0;
+    
+}
+.header-navigation{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 1rem;
+    
+}
+.header-logo{
+    margin-left: 0.8rem;
+}
+.header-logo a{
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    font-family:-webkit-body;
+
+}
+.spacer{
+    flex: 1;
+}
+.header-items ul{
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.header-items label{
+    padding: 0 0.5rem;
+}
+.header-items a{
+    color: white;
+    text-decoration: none;
+}
+.header-items a:hover,
+.header-items a:active{
+    color:white;
+}

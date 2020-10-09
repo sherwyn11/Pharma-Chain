@@ -1,0 +1,19 @@
+.toogle-button{
+    display: flex;
+    flex-direction: column;
+    height: 21px;
+    justify-content: space-around;
+    width: 25px;
+    background: transparent;
+    padding: 0px;
+    box-sizing: border-box;
+    border: none;
+}
+.toogle-button:focus{
+    outline: none;
+}
+.toogle-button_line{
+    width: 24px;
+    height: 2px;
+    background: white;
+}
