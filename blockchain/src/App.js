@@ -15,6 +15,7 @@ class App extends Component {
       'supplyChain': null,
       'identicon': null,
       'loading': true,
+      'web3': null,
     }
   }
 
@@ -51,7 +52,7 @@ class App extends Component {
     const networkData = SupplyChain.networks[networkId];
     if(networkData) {
       const supplyChain = new web3.eth.Contract(SupplyChain.abi, networkData.address);
-      this.setState({ 'supplyChain': supplyChain, 'loading': false });
+      this.setState({ 'supplyChain': supplyChain, 'loading': false, 'web3': web3 });
       console.log(supplyChain);
     } else {
       window.alert('Supply chain contract not deployed to detected network.');
@@ -67,7 +68,7 @@ class App extends Component {
                 <NavBar account={this.state.account}/>
                 {/* <Route exact path = '/' component={(() => <Home account={this.state.account}/>)} /> */}
                 <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
-                <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+                <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
                 {/* <Route exact path="/view" component={(() => <View account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
                 <Route exact path="/doctors" component={(() => <AddDoctor account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
                 <Route exact path="/view/:id" component={Analysis} /> */}

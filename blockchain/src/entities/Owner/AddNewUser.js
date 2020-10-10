@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Loader from '../../components/Loader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,13 +15,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddNewUser(props) {
     const classes = useStyles();
-    const [ account ] = useState(props.account);
-    const [ supplyChain ] = useState(props.supplyChain);
-    const [ name, setName ] = useState("");
-    const [ locationx, setLocationX ] = useState("");
-    const [ locationy, setLocationY ] = useState("");
-    const [ role, setRole ] = useState("");
-    const [ address, setAddress ] = useState("");
+    const [account] = useState(props.account);
+    const [web3, setWeb3] = useState(props.web3);
+    const [supplyChain] = useState(props.supplyChain);
+    const [name, setName] = useState("");
+    const [locationx, setLocationX] = useState("");
+    const [locationy, setLocationY] = useState("");
+    const [role, setRole] = useState("");
+    const [address, setAddress] = useState("");
+    const [loading, isLoading] = useState(false);
 
     const handleInputChange = (e) => {
         if (e.target.id === 'name') {
@@ -38,13 +41,22 @@ export default function AddNewUser(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(name);
-        console.log(locationx);
-        console.log(locationy);
-        console.log(role);
-        console.log(address);
+        isLoading(true);
+        var n = web3.utils.fromAscii(name);
+        setName(n);
+        console.log(n);
+        var loc = [Number(locationx), Number(locationy)];
+        setRole(Number(role));
+        supplyChain.methods.registerUser(n, loc, role, address).send({ from: account })
+        .once('receipt', (receipt) => {
+            console.log(receipt);
+            isLoading(false);
+        })
     }
 
+    if(loading) {
+        return <Loader></Loader>;
+    }
     return (
         <form className={classes.root} noValidate autoComplete="on">
             <TextField id="name" label="Name" variant="outlined" onChange={ handleInputChange } /><br></br>
