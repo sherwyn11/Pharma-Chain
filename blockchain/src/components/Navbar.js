@@ -16,13 +16,14 @@ class Navbar extends Component {
     }
 
     render(){
-        if(this.props.location.pathname === "/owner") {
+        console.log(this.props.location.pathname.split('/')[0])
+        if(this.props.location.pathname.split('/')[1] === "owner") {
             return ( 
                 <nav className="nav-wrapper black darken-3">
                     <div className="container">
                         <a href="#" className="brand-logo left"><i style={{marginTop: 5}} className="material-icons">local_hospital</i>Medcine Supply Chain</a>
                         <ul className="right hide-on-med-and-down">
-                            <li><NavLink to="/">Add User</NavLink></li>
+                            <li><NavLink to="/owner/add-new-user">Add User</NavLink></li>
                             <li><NavLink to="/upload">View User</NavLink></li>
                             <li>
                             { this.props.account

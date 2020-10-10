@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Web3 from 'web3';
 import Owner from './entities/Owner/Owner';
+import AddNewUser from './entities/Owner/AddNewUser';
 import NavBar from './components/Navbar';
 import SupplyChain from './build/SupplyChain.json';
 
@@ -44,6 +45,7 @@ class App extends Component {
   async loadBlockChain() {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts();
+    console.log(accounts);
     this.setState({ 'account': accounts[0] });
     const networkId = await web3.eth.net.getId();
     const networkData = SupplyChain.networks[networkId];
@@ -65,8 +67,8 @@ class App extends Component {
                 <NavBar account={this.state.account}/>
                 {/* <Route exact path = '/' component={(() => <Home account={this.state.account}/>)} /> */}
                 <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
-                {/* <Route exact path="/upload" component={(() => <Upload account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
-                <Route exact path="/view" component={(() => <View account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+                <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+                {/* <Route exact path="/view" component={(() => <View account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
                 <Route exact path="/doctors" component={(() => <AddDoctor account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
                 <Route exact path="/view/:id" component={Analysis} /> */}
               </main>

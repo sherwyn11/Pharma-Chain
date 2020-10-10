@@ -22393,12 +22393,12 @@
         }
       },
       "links": {},
-      "address": "0xB7A2e1e9053787B4a99bDb045912D40FDec7Ee7a",
-      "transactionHash": "0xabf7ded63ad70b631deb8ac21eaa623422f7de2e762bbfb066c151b0cc0daf22"
+      "address": "0x7ed5A5b2401a6b94C274cB87fe3fe2781ab50bC3",
+      "transactionHash": "0x3728a19db94330779841795594ed468c15c5a60eabe26794416634c30a382d97"
     }
   },
   "schemaVersion": "3.2.2",
-  "updatedAt": "2020-10-09T11:14:30.540Z",
+  "updatedAt": "2020-10-10T07:38:46.826Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
