@@ -25,6 +25,16 @@ export default function AddNewUser(props) {
     const [address, setAddress] = useState("");
     const [loading, isLoading] = useState(false);
 
+    /// Checking to see if user is added
+
+    useEffect(() => {
+        async function fetchData() {
+            var test = await supplyChain.methods.userInfo('0x9ab390191EE3d5E94fE890Ea596F6be1400F9064').call();
+            console.log(test);
+        }
+        fetchData();
+      }, []);
+
     const handleInputChange = (e) => {
         if (e.target.id === 'name') {
            setName(e.target.value);     
@@ -44,10 +54,9 @@ export default function AddNewUser(props) {
         isLoading(true);
         var n = web3.utils.fromAscii(name);
         setName(n);
-        console.log(n);
         var loc = [Number(locationx), Number(locationy)];
-        setRole(Number(role));
-        supplyChain.methods.registerUser(n, loc, role, address).send({ from: account })
+        console.log(loc);
+        supplyChain.methods.registerUser(n, loc, Number(role), address).send({ from: account })
         .once('receipt', (receipt) => {
             console.log(receipt);
             isLoading(false);
