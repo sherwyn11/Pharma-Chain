@@ -28,35 +28,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddRawMaterial() {
+function Transporter() {
   const classes = useStyles();
 
   return (
     <Router>
+        <h3>Welcome Transporter</h3>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           
-          <Typography component="h1" variant="h5"> Add Raw Material</Typography>
+          <Typography component="h1" variant="h5">Package Page</Typography>
           <form className={classes.form} noValidate>
           <Grid container spacing={2}>
 
             <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="description" label="Material Description" name="description"/>
+                <TextField variant="outlined" required fullWidth  id="input-raw-material" label="Raw Material" name="input-raw-material"/>
             </Grid>
             <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="quantity" label="Material Quantity" name="quantity"/>
+                <TextField variant="outlined" required fullWidth  id="medicine-address" label="Medicine Address" name="medicine-address"/>
             </Grid>
             <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="supplier-location" label="Supplier Location" name="supplier-location"/>
+                <TextField variant="outlined" required fullWidth  id="transporter-no" label="Transporter Number/Type" name="transporter-no"/>
             </Grid>
             <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="transport-address" label="Transport Address" name="transport-address"/>
+                <TextField variant="outlined" required fullWidth  id="contract-address" label="Contract Address" name="contract-address"/>
             </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="manufacturer-address" label="Manufacturer Address" name="manufacturer-address"/>
-            </Grid>
-            
+                    
             </Grid>
             <Button
               type="submit" fullWidth variant="contained" color="primary" className={classes.submit} >
@@ -69,4 +67,4 @@ function AddRawMaterial() {
     </Router>
   );
 }
-export default withRouter(AddRawMaterial);
+export default withRouter(Transporter);
