@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
-// import Header from '../header/Header';
-import AddRawMaterial from "./AddRawMaterial";
-import history from './History';
+import AddRawMaterial from './AddRawMaterial';
+import Button from '@material-ui/core/Button';
+import history from '../views/history';
+import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom'; 
 
-import {BrowserRouter as Router, NavLink, Switch, Route } from 'react-router-dom';
-const Supplier = props =>{
-    return(
-        <Router history={history}>
-            <div>
-                <h3>Hi, Im a Supplier</h3>
-                <NavLink exact activeClassName="active" to="/addproducts" className="btn btn-outline-success" onClick={ ()=> history.push('/addproducts')}>Add Raw Material</NavLink>
-                <Route path="/addproducts" component={AddRawMaterial}/>
-            </div>
+class Supplier extends Component{
+   
+    constructor(props){
+        super(props);
+        
+    }
+
+    render(){
+        return(
+        <Router>
+            <h3 style={{paddingLeft:550}}>Welcome Supplier</h3>
+            <Button variant="contained" color="primary">
+                <NavLink to ="/supplier/addrawmaterial"  onClick={ ()=> history.push('/supplier/addrawmaterial')}>Add Raw Material</NavLink>
+            </Button>
+            <Route path="/supplier/addrawmaterial" exact component={AddRawMaterial}/>
         </Router>
-         
-    );
+            )
+        }
+
 }
-export default Supplier
+export default withRouter(Supplier);
