@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Web3 from 'web3';
 import Owner from './entities/Owner/Owner';
 import AddNewUser from './entities/Owner/AddNewUser';
+import ViewUser from './entities/Owner/ViewUser';
 import NavBar from './components/Navbar';
 import SupplyChain from './build/SupplyChain.json';
 
@@ -69,8 +70,8 @@ class App extends Component {
                 {/* <Route exact path = '/' component={(() => <Home account={this.state.account}/>)} /> */}
                 <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
                 <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
-                {/* <Route exact path="/view" component={(() => <View account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
-                <Route exact path="/doctors" component={(() => <AddDoctor account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+                <Route exact path="/owner/view-user" component={(() => <ViewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
+                {/*<Route exact path="/doctors" component={(() => <AddDoctor account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
                 <Route exact path="/view/:id" component={Analysis} /> */}
               </main>
             </div>

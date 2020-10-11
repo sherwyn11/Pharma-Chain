@@ -25,16 +25,6 @@ export default function AddNewUser(props) {
     const [address, setAddress] = useState("");
     const [loading, isLoading] = useState(false);
 
-    /// Checking to see if user is added
-
-    useEffect(() => {
-        async function fetchData() {
-            var test = await supplyChain.methods.userInfo('0x9ab390191EE3d5E94fE890Ea596F6be1400F9064').call();
-            console.log(test);
-        }
-        fetchData();
-      }, []);
-
     const handleInputChange = (e) => {
         if (e.target.id === 'name') {
            setName(e.target.value);     
