@@ -1,4 +1,5 @@
 pragma solidity ^0.6.6;
+pragma experimental ABIEncoderV2;
 
 contract RawMaterial {
     
@@ -16,7 +17,9 @@ contract RawMaterial {
 
     address productid;
     bytes32 description;
-    uint[] location;
+    string locationx;
+    string locationy;
+    string[] locationArr;
     uint quantity;
     address transporter;
     address manufacturer;
@@ -29,7 +32,8 @@ contract RawMaterial {
         address _creatorAddr,
         address _productid,
         bytes32 _description,
-        uint[] memory _locationArr,
+        string memory _locationx,
+        string memory _locationy,
         uint _quantity,
         address _transporterAddr,
         address _manufacturerAddr
@@ -37,25 +41,28 @@ contract RawMaterial {
         Owner = _creatorAddr;
         productid = _productid;
         description = _description;
-        location = _locationArr;
+        locationx = _locationx;
+        locationx = _locationy;
         quantity = _quantity;
         transporter = _transporterAddr;
         manufacturer = _manufacturerAddr;
         supplier = _creatorAddr;
         status = packageStatus(0);
+        locationArr.push(_locationx);
+        locationArr.push(_locationy);
     }
 
 
     function getSuppliedRawMaterials () public view returns(
         address,
         bytes32,
-        uint[] memory,
+        string[] memory,
         uint,
         address,
         address,
         address
     ) {
-        return (productid, description, location, quantity, supplier, transporter, manufacturer);
+        return (productid, description, locationArr, quantity, supplier, transporter, manufacturer);
     }
 
 

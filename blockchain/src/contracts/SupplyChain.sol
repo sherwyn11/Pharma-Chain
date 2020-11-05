@@ -54,14 +54,14 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
     
     struct userData {
         bytes32 name;
-        uint[] userLoc;
+        string[] userLoc;
         roles role;
         address userAddr;
     }
     
     mapping (address => userData) public userInfo;
     
-    function registerUser(bytes32 name, uint[] memory loc, uint role, address _userAddr) public onlyOwner {
+    function registerUser(bytes32 name, string[] memory loc, uint role, address _userAddr) public onlyOwner {
         userInfo[_userAddr].name = name;
         userInfo[_userAddr].userLoc = loc;
         userInfo[_userAddr].role = roles(role);
@@ -87,7 +87,8 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
     
     function supplierCreatesRawPackage(
         bytes32 _description,
-        uint[] memory _locationArr,
+        string memory _locationx,
+        string memory _locationy,
         uint _quantity,
         address _transporterAddr,
         address _manufacturerAddr
@@ -97,7 +98,8 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         
         createRawMaterialPackage(
             _description,
-            _locationArr,
+            _locationx,
+            _locationy,
             _quantity,
             _transporterAddr,
             _manufacturerAddr

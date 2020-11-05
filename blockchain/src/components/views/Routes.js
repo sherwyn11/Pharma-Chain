@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Supplier from '../supplier/Supplier';
-import AddRawMaterial from '../supplier/AddRawMaterial';
+import Supplier from '../../entities/Supplier/Supplier';
+import AddRawMaterial from '../../entities/Supplier/AddRawMaterial';
 import Header from '../header/Header';
 import SignIn from '../login/SignIn';
 

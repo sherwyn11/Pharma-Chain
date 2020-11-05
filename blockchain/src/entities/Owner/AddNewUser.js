@@ -44,8 +44,7 @@ export default function AddNewUser(props) {
         isLoading(true);
         var n = web3.utils.fromAscii(name);
         setName(n);
-        var loc = [Number(locationx), Number(locationy)];
-        console.log(loc);
+        var loc = [String(locationx), String(locationy)];
         supplyChain.methods.registerUser(n, loc, Number(role), address).send({ from: account })
         .once('receipt', (receipt) => {
             console.log(receipt);

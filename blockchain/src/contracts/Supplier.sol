@@ -10,7 +10,8 @@ contract Supplier {
     
     function createRawMaterialPackage(
         bytes32 _description,
-        uint[] memory _locationArr,
+        string memory _locx,
+        string memory _locy,
         uint _quantity,
         address _transporterAddr,
         address _manufacturerAddr
@@ -18,12 +19,13 @@ contract Supplier {
 
         RawMaterial rawMaterial = new RawMaterial(
             msg.sender,
-        address(bytes20(sha256(abi.encodePacked(msg.sender, now)))),
-        _description,
-        _locationArr,
-        _quantity,
-        _transporterAddr,
-        _manufacturerAddr
+            address(bytes20(sha256(abi.encodePacked(msg.sender, now)))),
+            _description,
+            _locx,
+            _locy,
+            _quantity,
+            _transporterAddr,
+            _manufacturerAddr
         );
         
         supplierRawMaterials[msg.sender].push(address(rawMaterial));

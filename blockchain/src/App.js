@@ -9,11 +9,11 @@ import SupplyChain from './build/SupplyChain.json';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignIn from '../src/components/login/SignIn';
 import SignUp from '../src/components/login/SignUp';
-import Supplier from '../src/components/supplier/Supplier';
+import Supplier from './entities/Supplier/Supplier';
 import Transporter from '../src/components/transporter/Transporter';
 import Landing from '../src/components/home/Landing';
 import Routes from '../src/components/views/Routes';
-import AddRawMaterial from './components/supplier/AddRawMaterial';
+import AddRawMaterial from './entities/Supplier/AddRawMaterial';
 import PackageDetails from '../src/components/transporter/PackageDetails';
 
 class App extends Component {
@@ -83,6 +83,8 @@ class App extends Component {
             <Route exact path="/owner/view-user" component={(() => <ViewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
 
             <Route exact path= "/supplier" component= {Supplier}/>
+            <Route exact path= "/supplier/add-raw-material" component = {(() => <AddRawMaterial account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+
             <Route exact path= "/transporter" component= {Transporter}/>
           </Switch>
         </Router>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -28,7 +28,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddRawMaterial() {
+function AddRawMaterial(props) {
+  const [account] = useState(props.account);
+  const [web3, setWeb3] = useState(props.web3);
+  const [address, setAddress] = useState("");
+  const [supplyChain] = useState(props.supplyChain);
+  const [loading, isLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [locationx, setLocationX] = useState("");
+  const [locationy, setLocationY] = useState("");
+  const [role, setRole] = useState("");
+
   const classes = useStyles();
 
   return (
@@ -49,7 +59,10 @@ function AddRawMaterial() {
                   <TextField variant="outlined" required fullWidth  id="quantity" label="Material Quantity" name="quantity"/>
               </Grid>
               <Grid item xs={12}>
-                  <TextField variant="outlined" required fullWidth  id="supplier-location" label="Supplier Location" name="supplier-location"/>
+                  <TextField variant="outlined" required fullWidth  id="locationx" label="Location - x" name="supplier-location"/>
+              </Grid>
+              <Grid item xs={12}>
+                  <TextField variant="outlined" required fullWidth  id="locationy" label="Location - y" name="supplier-location"/>
               </Grid>
               <Grid item xs={12}>
                   <TextField variant="outlined" required fullWidth  id="transport-address" label="Transport Address" name="transport-address"/>
@@ -71,4 +84,4 @@ function AddRawMaterial() {
     </Router>
   );
 }
-export default withRouter(AddRawMaterial);
+export default AddRawMaterial;

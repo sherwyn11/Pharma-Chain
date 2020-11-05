@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import AddRawMaterial from './AddRawMaterial';
 import Button from '@material-ui/core/Button';
-import history from '../views/history';
+import history from '../../components/views/history';
 import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom'; 
-import Header from '../header/Header';
-import Sample from '../images/supplierbg.jpg';
+import Header from '../../components/header/Header';
+import Sample from '../../components/images/supplierbg.jpg';
 
 class Supplier extends Component{
    
@@ -39,7 +39,7 @@ class Supplier extends Component{
                 </Button>
                 <Route path="/supplier/addrawmaterial" exact component={AddRawMaterial}/> */}
                 <Button variant="contained" color="primary" onClick = {()=> this.handleClick()}>Add Material</Button>
-            <div className= "button-clicked">{(this.state.clicked) ?<AddRawMaterial/>: '' }</div>
+            <div className= "button-clicked">{(this.state.clicked) ?<Router exact to='supplier/add-raw-material'></Router>: '' }</div>
             </div>
             </div>
         </Router>
