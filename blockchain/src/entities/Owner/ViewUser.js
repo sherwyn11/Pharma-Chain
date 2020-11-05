@@ -45,7 +45,7 @@ export default function ViewUser(props) {
     return (
       <div>
         <p>{ address }</p>
-        <p>{ web3.utils.toAscii(name).trim() }</p>
+        <p>{ web3.utils.hexToUtf8(name).trim() }</p>
         <p>{ role }</p>
         <p>{locationx}, {locationy}</p>
       </div>

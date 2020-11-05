@@ -14,6 +14,7 @@ import Transporter from '../src/components/transporter/Transporter';
 import Landing from '../src/components/home/Landing';
 import Routes from '../src/components/views/Routes';
 import AddRawMaterial from './entities/Supplier/AddRawMaterial';
+import ViewRawMaterials from './entities/Supplier/ViewRawMaterials';
 import PackageDetails from '../src/components/transporter/PackageDetails';
 
 class App extends Component {
@@ -84,6 +85,7 @@ class App extends Component {
 
             <Route exact path= "/supplier" component= {Supplier}/>
             <Route exact path= "/supplier/add-raw-material" component = {(() => <AddRawMaterial account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+            <Route exact path= "/supplier/view-raw-materials" component = {(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
 
             <Route exact path= "/transporter" component= {Transporter}/>
           </Switch>

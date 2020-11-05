@@ -112,9 +112,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         return getNoOfPackagesOfSupplier();
     }
     
-    function supplierGetRawMaterialAddresses() public view returns(address[] memory) {
-        require(userInfo[msg.sender].role == roles.supplier, "Role=>Supplier can use this function");
-        
+    function supplierGetRawMaterialAddresses() public returns(address[] memory) {
         address[] memory ret = getAllPackages();
         return ret;
     }

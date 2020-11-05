@@ -26,7 +26,7 @@ export default function AddNewUser(props) {
     const [loading, isLoading] = useState(false);
 
     const handleInputChange = (e) => {
-        if (e.target.id === '') {
+        if (e.target.id === 'name') {
            setName(e.target.value);     
         } else if(e.target.id === 'locationx') {
             setLocationX(e.target.value);     
