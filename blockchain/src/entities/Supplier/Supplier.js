@@ -34,12 +34,7 @@ class Supplier extends Component{
             <Header/>
             <div className="body-container">
                 <h3 style={{ textAlign: "center", color: "white"}}>Welcome Supplier!</h3>
-                {/* <Button variant="contained" color="primary">
-                    <NavLink to ="/supplier/addrawmaterial"  onClick={ ()=> history.push('/supplier/addrawmaterial')}>Add Raw Material</NavLink>
-                </Button>
-                <Route path="/supplier/addrawmaterial" exact component={AddRawMaterial}/> */}
-                <Button variant="contained" color="primary" onClick = {()=> this.handleClick()}>Add Material</Button>
-            <div className= "button-clicked">{(this.state.clicked) ?<Router exact to='supplier/add-raw-material'></Router>: '' }</div>
+                <Button variant="contained" color="primary" onClick={()=>{this.props.history.push('/supplier/add-raw-material')}}>Add Material</Button>
             </div>
             </div>
         </Router>

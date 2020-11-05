@@ -26,7 +26,7 @@ export default function AddNewUser(props) {
     const [loading, isLoading] = useState(false);
 
     const handleInputChange = (e) => {
-        if (e.target.id === 'name') {
+        if (e.target.id === '') {
            setName(e.target.value);     
         } else if(e.target.id === 'locationx') {
             setLocationX(e.target.value);     
@@ -42,8 +42,7 @@ export default function AddNewUser(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         isLoading(true);
-        var n = web3.utils.fromAscii(name);
-        setName(n);
+        var n = web3.utils.padRight(web3.utils.fromAscii(name), 64);
         var loc = [String(locationx), String(locationy)];
         supplyChain.methods.registerUser(n, loc, Number(role), address).send({ from: account })
         .once('receipt', (receipt) => {

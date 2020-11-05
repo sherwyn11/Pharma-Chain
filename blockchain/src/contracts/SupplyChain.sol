@@ -75,7 +75,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
        return "Role Updated!";
     }
     
-    function getUserInfo(address _address) public view returns(
+    function getUserInfo(address _address) public view onlyOwner returns(
         userData memory
         ) {
         return userInfo[_address];
