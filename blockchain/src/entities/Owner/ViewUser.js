@@ -30,22 +30,30 @@ export default function ViewUser(props) {
   }
 
   async function handleSubmit() {
-    var test = await supplyChain.methods.userInfo(address).call();
+    var test = await supplyChain.methods.getUserInfo(address).call();
     setName(test.name);
     setRole(test.role);
+    setLocationX(test.userLoc[0]);
+    setLocationY(test.userLoc[1]);
+    
+    console.log(test);
     isLoading(true);
   }
 
-  if (loading) return (
-    <div>
-      <p>{ address }</p>
-      <p>{ web3.utils.toAscii(name) }</p>
-      <p>{ role }</p>
-    </div>
-  );
+  if (loading) { 
+    console.log(web3.utils.toAscii(name));
+    return (
+      <div>
+        <p>{ address }</p>
+        <p>{ web3.utils.toAscii(name).trim() }</p>
+        <p>{ role }</p>
+        <p>{locationx}, {locationy}</p>
+      </div>
+    );
+  }
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="address" label="Address" variant="outlined" onChange={ handleInputChange }/><br></br>
+      <TextField id="address" label="Account" variant="outlined" onChange={ handleInputChange }/><br></br>
       <Button variant="contained" color="primary" onClick={ handleSubmit } >
         Submit
       </Button>   

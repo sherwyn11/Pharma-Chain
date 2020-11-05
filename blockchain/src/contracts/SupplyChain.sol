@@ -76,17 +76,9 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
     }
     
     function getUserInfo(address _address) public view returns(
-        bytes32,
-        uint[] memory,
-        address,
-        roles
+        userData memory
         ) {
-        return (
-            userInfo[_address].name,
-            userInfo[_address].userLoc,
-            userInfo[_address].userAddr,
-            userInfo[_address].role
-        );
+        return userInfo[_address];
     }
     
 

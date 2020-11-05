@@ -62,7 +62,7 @@ export default function AddNewUser(props) {
             <TextField id="locationx" label="Locationx" variant="outlined" onChange={ handleInputChange }/><br></br>
             <TextField id="locationy" label="Locationy" variant="outlined" onChange={ handleInputChange }/><br></br>
             <TextField id="role" label="Role" variant="outlined" onChange={ handleInputChange }/><br></br>
-            <TextField id="address" label="Address" variant="outlined" onChange={ handleInputChange }/><br></br>
+            <TextField id="address" label="Account" variant="outlined" onChange={ handleInputChange }/><br></br>
             <Button variant="contained" color="primary" onClick={ handleSubmit } >
                 Submit
             </Button>    
