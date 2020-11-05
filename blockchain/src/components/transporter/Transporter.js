@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,63 +8,40 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import Header from '../header/Header';
+import PackageDetails from './PackageDetails';
+import BackgroundImg from '../images/Transporterbg.jpg';
 
-function Transporter() {
-  const classes = useStyles();
-
-  return (
-    <Router>
-        <h3>Welcome Transporter</h3>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          
-          <Typography component="h1" variant="h5">Package Page</Typography>
-          <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="input-raw-material" label="Raw Material" name="input-raw-material"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="medicine-address" label="Medicine Address" name="medicine-address"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="transporter-no" label="Transporter Number/Type" name="transporter-no"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="contract-address" label="Contract Address" name="contract-address"/>
-            </Grid>
-                    
-            </Grid>
-            <Button
-              type="submit" fullWidth variant="contained" color="primary" className={classes.submit} >
-              Submit
-            </Button>
-           
-          </form>
+class Transporter extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      buttonClicked: false
+    }
+  }
+  handleClick(){
+    this.setState({
+      buttonClicked: true
+    })
+    console.log("Button Clicked");
+  }
+  render(){
+    return (
+      <Router>
+        <div style= {{ backgroundImage: `url(${BackgroundImg})`,
+                        backgroundSize: "cover", backgroundRepeat: "no-repeat", height: '1000px',
+                        }}>
+          <Header/>
+          <div className="body-container">
+            <h3 style={{ textAlign: "center", color: "black" }}>Welcome Transporter!</h3>
+            <Button variant="contained" color="primary" onClick = {()=> this.handleClick()}>Enter Package Details</Button>
+           <div className= "button-clicked">{(this.state.buttonClicked)? <PackageDetails/> : ''}</div>
+  
+          </div>
         </div>
-      </Container>
-    </Router>
-  );
+      </Router>
+    );
+  }
+
 }
 export default withRouter(Transporter);

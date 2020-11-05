@@ -5,17 +5,17 @@ import AddNewUser from './entities/Owner/AddNewUser';
 import ViewUser from './entities/Owner/ViewUser';
 import NavBar from './components/Navbar';
 import SupplyChain from './build/SupplyChain.json';
-import Header from './components/header/Header';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignIn from '../src/components/login/SignIn';
 import SignUp from '../src/components/login/SignUp';
 import Supplier from '../src/components/supplier/Supplier';
 import Transporter from '../src/components/transporter/Transporter';
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
-import Cards from './components/cards/Cards';
+import Landing from '../src/components/home/Landing';
 import Routes from '../src/components/views/Routes';
 import AddRawMaterial from './components/supplier/AddRawMaterial';
+import PackageDetails from '../src/components/transporter/PackageDetails';
+
 class App extends Component {
 
   // constructor() {
@@ -74,12 +74,13 @@ class App extends Component {
       return (
         <Router>
           <Switch>
-            <Route exact path= "/" component= {Header}/>
+            <Route exact path ="/" component = { Landing }/>
             <Route exact path="/signup" component = {SignUp}/>
-            <Route exact path="/signin" component = {SignIn}/>
+            <Route  path="/signin" component = {SignIn}/>
             <Route exact path= "/supplier" component= {Supplier}/>
-            <Route exact path= "/supplier/addrawmaterial" component= {AddRawMaterial}/>
-            <Route exact path= "/transporter/package" component= {Transporter}/>
+            {/* <Route exact path= "/supplier/addrawmaterial" component= {AddRawMaterial}/> */}
+            <Route exact path= "/transporter" component= {Transporter}/>
+            {/* <Route exact path="/transporter/package" component= {PackageDetails}/> */}
 
           </Switch>
             <div className="App">
@@ -93,6 +94,7 @@ class App extends Component {
                 {/*<Route exact path="/doctors" component={(() => <AddDoctor account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
                 <Route exact path="/view/:id" component={Analysis} /> */}
               </main>
+              {/* <Sample/> */}
                {/* <Header/>
                 <div></div>
                 <br/> */}

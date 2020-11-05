@@ -33,39 +33,41 @@ function AddRawMaterial() {
 
   return (
     <Router>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          
-          <Typography component="h1" variant="h5"> Add Raw Material</Typography>
-          <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="description" label="Material Description" name="description"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="quantity" label="Material Quantity" name="quantity"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="supplier-location" label="Supplier Location" name="supplier-location"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="transport-address" label="Transport Address" name="transport-address"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" required fullWidth  id="manufacturer-address" label="Manufacturer Address" name="manufacturer-address"/>
-            </Grid>
+      <Grid container style={{ backgroundColor: "white", display: "center", alignItems: "center", maxWidth: 400, justify: "center"}}>
+          <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
             
-            </Grid>
-            <Button
-              type="submit" fullWidth variant="contained" color="primary" className={classes.submit} >
-              Submit
-            </Button>
-           
-          </form>
-        </div>
-      </Container>
+            <Typography component="h1" variant="h5"> Add Raw Material</Typography>
+            <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+
+              <Grid item xs={12}>
+                  <TextField variant="outlined" required fullWidth  id="description" label="Material Description" name="description"/>
+              </Grid>
+              <Grid item xs={12}>
+                  <TextField variant="outlined" required fullWidth  id="quantity" label="Material Quantity" name="quantity"/>
+              </Grid>
+              <Grid item xs={12}>
+                  <TextField variant="outlined" required fullWidth  id="supplier-location" label="Supplier Location" name="supplier-location"/>
+              </Grid>
+              <Grid item xs={12}>
+                  <TextField variant="outlined" required fullWidth  id="transport-address" label="Transport Address" name="transport-address"/>
+              </Grid>
+              <Grid item xs={12}>
+                  <TextField variant="outlined" required fullWidth  id="manufacturer-address" label="Manufacturer Address" name="manufacturer-address"/>
+              </Grid>
+              
+              </Grid>
+              <Button
+                type="submit" fullWidth variant="contained" color="primary" className={classes.submit} >
+                Submit
+              </Button>
+            
+            </form>
+          </div>
+        </Container>
+      </Grid>
     </Router>
   );
 }

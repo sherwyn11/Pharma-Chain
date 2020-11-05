@@ -38,7 +38,7 @@ function Header() {
             </Toolbar>
           </AppBar>
         </div>
-        <Cards />
+        {/* <Cards /> */}
       </div>
   );
 }
