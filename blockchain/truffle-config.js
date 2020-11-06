@@ -8,7 +8,7 @@ module.exports = {
       from: '0xF353de384d13e5C1c07FA63ABB0e4051871b0EbC',
     },
   },
-  contracts_directory: './src/contracts/',
+  contracts_directory: './contracts/',
   contracts_build_directory: './src/build/',
   compilers: {
     solc: {
