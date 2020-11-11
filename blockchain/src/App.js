@@ -15,6 +15,7 @@ import Landing from '../src/components/home/Landing';
 import Routes from '../src/components/views/Routes';
 import AddRawMaterial from './entities/Supplier/AddRawMaterial';
 import ViewRawMaterials from './entities/Supplier/ViewRawMaterials';
+import RawMaterialInfo from './entities/Supplier/RawMaterialInfo';
 import PackageDetails from '../src/components/transporter/PackageDetails';
 import Manufacturer from '../src/components/manufacturer/Manufacturer';
 import Loader from '../src/components/Loader';
@@ -78,17 +79,18 @@ class App extends Component {
       return (
         <Router>
           <Switch>
-            <Route exact path ="/" component = { Landing }/>
-            <Route exact path="/signup" component = {SignUp}/>
+            <Route exact path ="/" component={Landing}/>
+            <Route exact path="/signup" component={SignUp}/>
             <Route  path="/signin" component = {SignIn}/>
 
             <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
             <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
             <Route exact path="/owner/view-user" component={(() => <ViewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
 
-            <Route exact path= "/supplier" component= {Supplier}/>
+            <Route exact path= "/supplier" component={Supplier}/>
             <Route exact path= "/supplier/add-raw-material" component = {(() => <AddRawMaterial account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
             <Route exact path= "/supplier/view-raw-materials" component = {(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+            <Route exact path= "/supplier/view-raw-materials/:id" component = {RawMaterialInfo}/>
 
             <Route exact path= "/transporter" component= {Transporter}/>
             <Route exact path="/manufacturer" component= {Manufacturer}/>
