@@ -8,7 +8,6 @@ import Sample from '../../components/images/supplierbg.jpg';
 
 class Supplier extends Component{
    
-    
     constructor(props){
         super(props);
         this.state = {

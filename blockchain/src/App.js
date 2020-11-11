@@ -17,6 +17,7 @@ import AddRawMaterial from './entities/Supplier/AddRawMaterial';
 import ViewRawMaterials from './entities/Supplier/ViewRawMaterials';
 import PackageDetails from '../src/components/transporter/PackageDetails';
 import Manufacturer from '../src/components/manufacturer/Manufacturer';
+import Loader from '../src/components/Loader';
 
 class App extends Component {
 
@@ -31,49 +32,49 @@ class App extends Component {
     }
   }
 
-  // async componentWillMount() {
-  //   await this.loadWeb3()
-  //   await this.loadBlockChain()
-  // }
+  async componentWillMount() {
+    await this.loadWeb3()
+    await this.loadBlockChain()
+  }
 
-  // async loadWeb3() {
-  //   if (window.ethereum) {
-  //     window.web3 = new Web3(window.ethereum);
-  //     await window.ethereum.enable();
-  //   }
-  //   else if (window.web3) {
-  //     window.web3 = new Web3(window.web3.currentProvider);
-  //   }
-  //   else {
-  //     window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
-  //   }
-  // }
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+  }
 
-  // handleInputChange = (e) => {
-  //   this.setState({
-  //     [e.target.id]: e.target.value,
-  //   })
-  // }
+  handleInputChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    })
+  }
 
-  // async loadBlockChain() {
-  //   const web3 = window.web3
-  //   const accounts = await web3.eth.getAccounts();
-  //   console.log(accounts);
-  //   this.setState({ 'account': accounts[0] });
-  //   const networkId = await web3.eth.net.getId();
-  //   const networkData = SupplyChain.networks[networkId];
-  //   if(networkData) {
-  //     const supplyChain = new web3.eth.Contract(SupplyChain.abi, networkData.address);
-  //     this.setState({ 'supplyChain': supplyChain, 'loading': false, 'web3': web3 });
-  //     console.log(supplyChain);
-  //   } else {
-  //     window.alert('Supply chain contract not deployed to detected network.');
-  //   }
-  // }
+  async loadBlockChain() {
+    const web3 = window.web3
+    const accounts = await web3.eth.getAccounts();
+    console.log(accounts);
+    this.setState({ 'account': accounts[0] });
+    const networkId = await web3.eth.net.getId();
+    const networkData = SupplyChain.networks[networkId];
+    if(networkData) {
+      const supplyChain = new web3.eth.Contract(SupplyChain.abi, networkData.address);
+      this.setState({ 'supplyChain': supplyChain, 'loading': false, 'web3': web3 });
+      console.log(supplyChain);
+    } else {
+      window.alert('Supply chain contract not deployed to detected network.');
+    }
+  }
 
   render() {
-    // if(this.state.loading === false)
-    // {
+    if(this.state.loading === false)
+    {
       return (
         <Router>
           <Switch>
@@ -81,26 +82,26 @@ class App extends Component {
             <Route exact path="/signup" component = {SignUp}/>
             <Route  path="/signin" component = {SignIn}/>
 
-            {/* <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
+            <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
             <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
             <Route exact path="/owner/view-user" component={(() => <ViewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
 
             <Route exact path= "/supplier" component= {Supplier}/>
             <Route exact path= "/supplier/add-raw-material" component = {(() => <AddRawMaterial account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
-            <Route exact path= "/supplier/view-raw-materials" component = {(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/> */}
+            <Route exact path= "/supplier/view-raw-materials" component = {(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
 
             <Route exact path= "/transporter" component= {Transporter}/>
             <Route exact path="/manufacturer" component= {Manufacturer}/>
           </Switch>
         </Router>
         );
-      // } 
-      // else {
-      //   return (
-      //     <h1>Hello!</h1>
-      //   )
-      // }
+      } 
+      else {
+        return (
+          <Loader></Loader>
+        );
+      }
     }
   }
 
-export default App
+export default App;

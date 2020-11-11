@@ -20,20 +20,26 @@ export default function ViewRawMaterials(props) {
   const [web3, setWeb3] = useState(props.web3);
   const [supplyChain] = useState(props.supplyChain);
   const [loading, isLoading] = useState(false);
+  const [addresses, setAddresses] = useState([]);
+
+  function handleAddressClick(e) {
+    console.log(e.target.id);
+  }
 
   async function handleSubmit() {
-    var test = await supplyChain.methods.supplierGetRawMaterialAddresses().call();
-    console.log(test);
-    // var contract = new web3.eth.Contract(RawMaterial.abi, test);
-    // console.log(contract);
-    // let weiRaisedValue = await contract.methods.getSuppliedRawMaterials().call()
-    // console.log(weiRaisedValue);
+    var rawMaterialAddresses = await supplyChain.methods.supplierGetRawMaterialAddresses().call({from: account});
+    var components = rawMaterialAddresses.map((addr) => {
+      return <div><ul><li><p key={addr} id={addr} onClick={handleAddressClick}>{ addr }</p></li></ul></div>;
+    });
+    setAddresses(components);
     isLoading(true);
   }
 
   if (loading) { 
     return (
       <div>
+          <h4>Raw Material addresses created by Supplier</h4>
+          { addresses }
       </div>
     );
   } else{
