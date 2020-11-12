@@ -27,7 +27,7 @@ export default function ViewRawMaterials(props) {
     var rawMaterialAddresses = await supplyChain.methods.supplierGetRawMaterialAddresses().call({from: account});
     var components = rawMaterialAddresses.map((addr) => {
       return <div><ul><li>
-        <Link to={{pathname: `/supplier/view-raw-materials/${addr}`, query: {address: addr, account: account, web3: web3, supplyChain: supplyChain}}}>{addr}</Link>;
+        <Link to={{pathname: `/supplier/view-raw-materials/${addr}`, query: {address: addr, account: account, web3: web3, supplyChain: supplyChain}}}>{addr}</Link>
       </li></ul></div>;
     });
     setAddresses(components);

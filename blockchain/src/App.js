@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
+
+// Web3 & Blockchain imports
 import Web3 from 'web3';
+import SupplyChain from './build/SupplyChain.json';
+
+// Owner imports
 import Owner from './entities/Owner/Owner';
 import AddNewUser from './entities/Owner/AddNewUser';
 import ViewUser from './entities/Owner/ViewUser';
-import NavBar from './components/Navbar';
-import SupplyChain from './build/SupplyChain.json';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import SignIn from '../src/components/login/SignIn';
-import SignUp from '../src/components/login/SignUp';
+// Supplier imports
 import Supplier from './entities/Supplier/Supplier';
-import Transporter from '../src/components/transporter/Transporter';
-import Landing from '../src/components/home/Landing';
-import Routes from '../src/components/views/Routes';
 import AddRawMaterial from './entities/Supplier/AddRawMaterial';
 import ViewRawMaterials from './entities/Supplier/ViewRawMaterials';
 import RawMaterialInfo from './entities/Supplier/RawMaterialInfo';
-import PackageDetails from '../src/components/transporter/PackageDetails';
-import Manufacturer from '../src/components/manufacturer/Manufacturer';
-import Loader from '../src/components/Loader';
+
+// Transporter imports
+import Transporter from './entities/Transporter/Transporter';
+import HandlePackage from './entities/Transporter/HandlePackage';
+
+// Utils
+import NavBar from './components/Navbar';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import SignIn from './components/login/SignIn';
+import SignUp from './components/login/SignUp';
+import Landing from './components/home/Landing';
+import Routes from './components/views/Routes';
+import Manufacturer from './components/manufacturer/Manufacturer';
+import Loader from './components/Loader';
 
 class App extends Component {
 
@@ -93,6 +102,8 @@ class App extends Component {
             <Route exact path= "/supplier/view-raw-materials/:id" component = {RawMaterialInfo}/>
 
             <Route exact path= "/transporter" component= {Transporter}/>
+            <Route exact path= "/transporter/handle-package" component = {(() => <HandlePackage account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+
             <Route exact path="/manufacturer" component= {Manufacturer}/>
           </Switch>
         </Router>
