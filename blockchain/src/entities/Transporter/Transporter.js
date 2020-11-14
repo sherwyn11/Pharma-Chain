@@ -8,8 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom';
 
-import Header from '../header/Header';
-import BackgroundImg from '../images/Transporterbg.jpg';
+import Header from '../../components/header/Header';
+import BackgroundImg from '../../components/images/Transporterbg.jpg';
 
 class Transporter extends Component {
   constructor(props){
@@ -33,8 +33,7 @@ class Transporter extends Component {
           <Header/>
           <div className="body-container">
             <h3 style={{ textAlign: "center", color: "black" }}>Welcome Transporter!</h3>
-            <Button variant="contained" color="primary" onClick = {()=> this.handleClick()}>Enter Package Details</Button>
-           <div className= "button-clicked">{(this.state.buttonClicked)? <PackageDetails/> : ''}</div>
+            <Button variant="contained" color="primary" onClick={()=>{this.props.history.push('/transporter/handle-package')}}>Handle Package</Button>  
           </div>
         </div>
       </Router>

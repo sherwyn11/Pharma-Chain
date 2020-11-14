@@ -87,8 +87,6 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
     
     function supplierCreatesRawPackage(
         bytes32 _description,
-        string memory _locationx,
-        string memory _locationy,
         uint _quantity,
         address _transporterAddr,
         address _manufacturerAddr
@@ -98,8 +96,6 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         
         createRawMaterialPackage(
             _description,
-            _locationx,
-            _locationy,
             _quantity,
             _transporterAddr,
             _manufacturerAddr
@@ -112,7 +108,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         return getNoOfPackagesOfSupplier();
     }
     
-    function supplierGetRawMaterialAddresses() public returns(address[] memory) {
+    function supplierGetRawMaterialAddresses() public view returns(address[] memory) {
         address[] memory ret = getAllPackages();
         return ret;
     }
@@ -143,7 +139,7 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
     ///////////////  Manufacturer ///////////////
     
     
-    function manufacturerRecivedRawMaterials(address _addr) public {
+    function manufacturerReceivedRawMaterials(address _addr) public {
         require(userInfo[msg.sender].role == roles.manufacturer, "Only Manufacturer can access this function");
         manufacturerReceivedPackage(_addr, msg.sender);
     }
@@ -286,47 +282,48 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         );
         medicineRecievedAtCustomer(_address, cid);
     }
-
-    function updateStatus(
-        address _address,
-        uint Status
-    ) public {
-        require(
-            userInfo[msg.sender].role == roles.customer &&
-            msg.sender == Medicine(_address).getWDC()[2],
-            "Only Customer or current owner of package can call this function"
-        );
-        require(sale[_address] == salestatus(1), "Medicine Must be at Customer");
-        
-        updateSaleStatus(_address, Status);
-    }
-
-    function getSalesInfo(
-        address _address
-    ) public
-    view
-    returns(
-        uint Status 
-    ){
-        return salesInfo(_address);
-    }
-
-    
-    function getBatchesCountC() public view returns(uint count){
-        require(
-            userInfo[msg.sender].role == roles.customer,
-            "Only Wholesaler or current owner of package can call this function"
-        );
-        return  MedicineBatchAtCustomer[msg.sender].length;
-    }
-
-    function getBatchIdByIndexC(uint index) public view returns(address _address){
-        require(
-            userInfo[msg.sender].role == roles.customer,
-            "Only Wholesaler or current owner of package can call this function"
-        );
-        return MedicineBatchAtCustomer[msg.sender][index];
-    }
-    
 }    
+    
+
+    // function updateStatus(
+    //     address _address,
+    //     uint Status
+    // ) public {
+    //     require(
+    //         userInfo[msg.sender].role == roles.customer &&
+    //         msg.sender == Medicine(_address).getWDC()[2],
+    //         "Only Customer or current owner of package can call this function"
+    //     );
+    //     require(sale[_address] == salestatus(1), "Medicine Must be at Customer");
+        
+    //     updateSaleStatus(_address, Status);
+    // }
+
+    // function getSalesInfo(
+    //     address _address
+    // ) public
+    // view
+    // returns(
+    //     uint Status 
+    // ){
+    //     return salesInfo(_address);
+    // }
+
+    
+    // function getBatchesCountC() public view returns(uint count) {
+    //     require(
+    //         userInfo[msg.sender].role == roles.customer,
+    //         "Only Wholesaler or current owner of package can call this function"
+    //     );
+    //     return  MedicineBatchAtCustomer[msg.sender].length;
+    // }
+
+    // function getBatchIdByIndexC(uint index) public view returns(address _address) {
+    //     require(
+    //         userInfo[msg.sender].role == roles.customer,
+    //         "Only Wholesaler or current owner of package can call this function"
+    //     );
+    //     return MedicineBatchAtCustomer[msg.sender][index];
+    // }
+    
     

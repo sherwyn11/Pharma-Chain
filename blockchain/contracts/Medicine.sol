@@ -1,5 +1,7 @@
 pragma solidity ^0.6.6;
 
+import './Transactions.sol';
+
 contract Medicine {
 
     address Owner;
@@ -23,6 +25,7 @@ contract Medicine {
     address customer;
     uint quantity;
     medicineStatus status;
+    address txnContractAddress;
 
     event ShippmentUpdate(
         address indexed BatchID,
@@ -53,6 +56,8 @@ contract Medicine {
         } else if( RcvrType == 2){
             distributor = _receiverAddr;
         }
+        Transactions txnContract = new Transactions(_manufacturerAddr);
+        txnContractAddress = address(txnContract);
     }
 
 

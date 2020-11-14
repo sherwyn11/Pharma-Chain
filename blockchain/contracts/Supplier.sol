@@ -10,8 +10,6 @@ contract Supplier {
     
     function createRawMaterialPackage(
         bytes32 _description,
-        string memory _locx,
-        string memory _locy,
         uint _quantity,
         address _transporterAddr,
         address _manufacturerAddr
@@ -21,8 +19,6 @@ contract Supplier {
             msg.sender,
             address(bytes20(sha256(abi.encodePacked(msg.sender, now)))),
             _description,
-            _locx,
-            _locy,
             _quantity,
             _transporterAddr,
             _manufacturerAddr
