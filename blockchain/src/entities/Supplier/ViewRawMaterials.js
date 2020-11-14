@@ -24,6 +24,7 @@ export default function ViewRawMaterials(props) {
   async function handleSubmit() {
     var test = await supplyChain.methods.supplierGetRawMaterialAddresses().call();
     console.log(test);
+    console.log(account);
     // var contract = new web3.eth.Contract(RawMaterial.abi, test);
     // console.log(contract);
     // let weiRaisedValue = await contract.methods.getSuppliedRawMaterials().call()
