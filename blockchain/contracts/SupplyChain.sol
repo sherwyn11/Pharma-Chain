@@ -282,6 +282,10 @@ contract SupplyChain is Supplier, Transporter, Manufacturer, Wholesaler, Distrib
         );
         medicineRecievedAtCustomer(_address, cid);
     }
+
+    function verify(address p, bytes32 hash, uint8 v, bytes32 r, bytes32 s) public view returns(bool) {
+        return ecrecover(hash, v, r, s) == p;
+    }
 }    
     
 
