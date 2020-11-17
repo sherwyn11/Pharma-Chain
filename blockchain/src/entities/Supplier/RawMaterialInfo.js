@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Loader from '../../components/Loader';
 import RawMaterial from '../../build/RawMaterial.json';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,14 +25,15 @@ export default function RawMaterialInfo(props) {
 
   async function getRawMaterialData() {
     const rawMaterial = new web3.eth.Contract(RawMaterial.abi, rawMaterialAddress);
-    let data = await rawMaterial.methods.getSuppliedRawMaterials().call();
-    let status = await rawMaterial.methods.getRawMaterialStatus().call();
+    let data = await rawMaterial.methods.getSuppliedRawMaterials().call({from: account});
+    let status = await rawMaterial.methods.getRawMaterialStatus().call({from: account});
+    let txt = "";
     if(status == 0) {
-      status = 'At Supplier';
+      txt = 'At Supplier';
     } else if(status == 1) {
-      status = 'Collected by Transporter';
+      txt = 'Collected by Transporter';
     } else {
-      status = 'Delivered to Manufacturer';
+      txt = 'Delivered to Manufacturer';
     }
     data[1] = web3.utils.hexToUtf8(data[1])
     let display = <div>
@@ -41,8 +43,10 @@ export default function RawMaterialInfo(props) {
       <p>Product Supplier: {data[3]}</p>
       <p>Product Transporter: {data[4]}</p>
       <p>Product Manufacturer: {data[5]}</p>
-      <p>Product Transaction contract address: {data[6]}</p>
-      <p>Product Status: {status}</p>
+      <p>Product Transaction contract address: 
+        <Link to={{pathname: `/supplier/view-transactions/${data[6]}`, query: {address: data[6], account: account, web3: web3}}}>{data[6]}</Link>
+      </p>
+      <p>Product Status: {txt}</p>
     </div>;
     setDetails(display);
     isLoading(false);

@@ -19,6 +19,10 @@ import RawMaterialInfo from './entities/Supplier/RawMaterialInfo';
 import Transporter from './entities/Transporter/Transporter';
 import HandlePackage from './entities/Transporter/HandlePackage';
 
+// Transaction imports
+import ViewTransations from './entities/Transactions/ViewTransactions';
+
+
 // Utils
 import NavBar from './components/Navbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -100,6 +104,7 @@ class App extends Component {
             <Route exact path= "/supplier/add-raw-material" component = {(() => <AddRawMaterial account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
             <Route exact path= "/supplier/view-raw-materials" component = {(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
             <Route exact path= "/supplier/view-raw-materials/:id" component = {RawMaterialInfo}/>
+            <Route exact path= "/supplier/view-transactions/:id" component = {ViewTransations}/>
 
             <Route exact path= "/transporter" component= {Transporter}/>
             <Route exact path= "/transporter/handle-package" component = {(() => <HandlePackage account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>

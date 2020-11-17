@@ -38,8 +38,6 @@ export default function AddRawMaterial(props) {
   const [supplyChain] = useState(props.supplyChain);
   const [loading, isLoading] = useState(false);
   const [description, setDescription] = useState("");
-  const [locationx, setLocationX] = useState("");
-  const [locationy, setLocationY] = useState("");
   const [quantity, setQuantity] = useState("");
 
   const classes = useStyles();
@@ -47,10 +45,6 @@ export default function AddRawMaterial(props) {
   const handleInputChange = (e) => {
     if (e.target.id === 'description') {
        setDescription(e.target.value);     
-    } else if(e.target.id === 'locationx') {
-        setLocationX(e.target.value);     
-    } else if(e.target.id === 'locationy') {
-        setLocationY(e.target.value);
     } else if(e.target.id === 'quantity') {
         setQuantity(e.target.value);
     } else if(e.target.id === 'transport-address') {
@@ -64,20 +58,16 @@ export default function AddRawMaterial(props) {
     e.preventDefault();
     isLoading(true);
     var d = web3.utils.padRight(web3.utils.fromAscii(description), 64);
-    const addr = supplyChain.methods.createRawMaterialPackage(d, quantity, transporterAddress, manufacturerAddress).send({ from: account })
+    supplyChain.methods.createRawMaterialPackage(d, quantity, transporterAddress, manufacturerAddress).send({ from: account })
     .once('receipt', async (receipt) => {
-      console.log(addr);
       var rawMaterialAddresses = await supplyChain.methods.getAllPackages().call({from: account});
       let rawMaterialAddress = rawMaterialAddresses[rawMaterialAddresses.length - 1];
       const rawMaterial = new web3.eth.Contract(RawMaterial.abi, rawMaterialAddress);
       let data = await rawMaterial.methods.getSuppliedRawMaterials().call({from: account});
-      console.log(data);
       let txnContractAddress = data[6];
       let txnHash = receipt.transactionHash;
       const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
       transactions.methods.createTxnEntry(txnHash, account, rawMaterialAddress, txnHash, '10', '10').send({ from: account });
-      var txns = await transactions.methods.getAllTransactions().call({from: account});
-      console.log(txns);
       isLoading(false);
     });
   }
@@ -97,12 +87,6 @@ export default function AddRawMaterial(props) {
             </Grid>
             <Grid item xs={12}>
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="quantity" label="Material Quantity" name="quantity"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="locationx" label="Location - x" name="supplier-location"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="locationy" label="Location - y" name="supplier-location"/>
             </Grid>
             <Grid item xs={12}>
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="transport-address" label="Transporter Address" name="transport-address"/>
