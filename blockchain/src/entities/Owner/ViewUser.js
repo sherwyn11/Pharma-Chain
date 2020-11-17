@@ -51,6 +51,7 @@ export default function ViewUser(props) {
       </div>
     );
   }
+
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <TextField id="address" label="Account" variant="outlined" onChange={ handleInputChange }/><br></br>

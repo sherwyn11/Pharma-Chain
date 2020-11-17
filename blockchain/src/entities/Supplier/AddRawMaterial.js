@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Transactions from '../../build/Transactions.json';
+import RawMaterial from '../../build/RawMaterial.json';
 import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -62,13 +64,23 @@ export default function AddRawMaterial(props) {
     e.preventDefault();
     isLoading(true);
     var d = web3.utils.padRight(web3.utils.fromAscii(description), 64);
-    supplyChain.methods.supplierCreatesRawPackage(d, locationx, locationy, quantity, transporterAddress, manufacturerAddress).send({ from: account })
+    const addr = supplyChain.methods.createRawMaterialPackage(d, quantity, transporterAddress, manufacturerAddress).send({ from: account })
     .once('receipt', async (receipt) => {
-        console.log(receipt);
-        isLoading(false);
-    })
+      console.log(addr);
+      var rawMaterialAddresses = await supplyChain.methods.getAllPackages().call({from: account});
+      let rawMaterialAddress = rawMaterialAddresses[rawMaterialAddresses.length - 1];
+      const rawMaterial = new web3.eth.Contract(RawMaterial.abi, rawMaterialAddress);
+      let data = await rawMaterial.methods.getSuppliedRawMaterials().call({from: account});
+      console.log(data);
+      let txnContractAddress = data[6];
+      let txnHash = receipt.transactionHash;
+      const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
+      transactions.methods.createTxnEntry(txnHash, account, rawMaterialAddress, txnHash, '10', '10').send({ from: account });
+      var txns = await transactions.methods.getAllTransactions().call({from: account});
+      console.log(txns);
+      isLoading(false);
+    });
   }
-
 
   return (
     <Grid container style={{ backgroundColor: "white", display: "center", alignItems: "center", maxWidth: 400, justify: "center"}}>

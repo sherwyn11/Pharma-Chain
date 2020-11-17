@@ -8,7 +8,7 @@ module.exports = {
       from: '0x02582591F6401bCCA43a677A970148E040926524',
     },
   },
-  contracts_directory: './contracts/',
+  contracts_directory: './testing/',
   contracts_build_directory: './src/build/',
   compilers: {
     solc: {
@@ -16,7 +16,7 @@ module.exports = {
       settings: {
         optimizer: {
           enabled: true,
-          runs: 200
+          runs: 100
         }
       }
     }

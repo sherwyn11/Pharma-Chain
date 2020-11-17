@@ -37,11 +37,11 @@ export default function RawMaterialInfo(props) {
     let display = <div>
       <p>Generated Product ID: {data[0]}</p>
       <p>Description: {data[1]}</p>
-      <p>Product Location: {data[2][0] + ', ' + data[2][1]}</p>
-      <p>Product Quantity: {data[3]}</p>
-      <p>Product Supplier: {data[4]}</p>
-      <p>Product Transporter: {data[5]}</p>
-      <p>Product Manufacturer: {data[6]}</p>
+      <p>Product Quantity: {data[2]}</p>
+      <p>Product Supplier: {data[3]}</p>
+      <p>Product Transporter: {data[4]}</p>
+      <p>Product Manufacturer: {data[5]}</p>
+      <p>Product Transaction contract address: {data[6]}</p>
       <p>Product Status: {status}</p>
     </div>;
     setDetails(display);

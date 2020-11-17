@@ -51,9 +51,16 @@ export default function AddNewUser(props) {
         })
     }
 
+    function getEventData() {
+        supplyChain.events.UserRegister({fromBlock: 0, toBlock: 'latest'}).on('data', event => {
+          console.log(event);
+        })
+    }
+
     if(loading) {
         return <Loader></Loader>;
     }
+    getEventData();
     return (
         <form className={classes.root} noValidate autoComplete="on">
             <TextField id="name" label="Name" variant="outlined" onChange={ handleInputChange } /><br></br>
