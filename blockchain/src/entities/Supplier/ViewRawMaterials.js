@@ -34,6 +34,12 @@ export default function ViewRawMaterials(props) {
     isLoading(true);
   }
 
+  function getEventData() {
+    supplyChain.events.buyEvent({fromBlock: 0, toBlock: 'latest'}).on('data', event => {
+      console.log(event);
+    })
+}
+
   if (loading) { 
     return (
       <div>
@@ -43,6 +49,7 @@ export default function ViewRawMaterials(props) {
     );
   } else{
     handleSubmit();
+    getEventData();
     return (
       <p>Getting addresses</p>    
     );

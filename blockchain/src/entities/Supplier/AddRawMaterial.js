@@ -67,7 +67,7 @@ export default function AddRawMaterial(props) {
       let txnContractAddress = data[6];
       let txnHash = receipt.transactionHash;
       const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
-      transactions.methods.createTxnEntry(txnHash, account, rawMaterialAddress, txnHash, '10', '10').send({ from: account });
+      transactions.methods.createTxnEntry(txnHash, account, rawMaterialAddress, txnHash, '10', '10').send({ from: account }); //TODO: get user location -> (latitude, longitude)
       isLoading(false);
     });
   }

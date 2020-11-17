@@ -165,8 +165,8 @@ contract SupplyChain {
     mapping (address => address[]) public manufacturerRawMaterials;
     mapping (address => address[]) public manufacturerMedicines;
     
-    function requestRawMaterial(address supplierAddr, address manuAddr, address rawMaterialAddr, bytes memory signature) public {
-        emit buyEvent(supplierAddr, manuAddr, rawMaterialAddr, signature, now);
+    function requestRawMaterial(address manuAddr, address supplierAddr, address rawMaterialAddr, bytes memory signature) public {
+        emit buyEvent(manuAddr, supplierAddr, rawMaterialAddr, signature, now);
     }
 
     

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import AddRawMaterial from './AddRawMaterial';
 import Button from '@material-ui/core/Button';
 import history from '../../components/views/history';
 import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom'; 
 import Header from '../../components/header/Header';
 import Sample from '../../components/images/supplierbg.jpg';
 
-class Supplier extends Component{
+class Manufacturer extends Component{
    
     constructor(props){
         super(props);
@@ -41,4 +40,4 @@ class Supplier extends Component{
         }
 
 }
-export default withRouter(Supplier);
+export default withRouter(Manufacturer);

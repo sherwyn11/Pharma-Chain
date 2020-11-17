@@ -1,3 +1,4 @@
+// Import React
 import React, { Component } from 'react';
 
 // Web3 & Blockchain imports
@@ -19,18 +20,18 @@ import RawMaterialInfo from './entities/Supplier/RawMaterialInfo';
 import Transporter from './entities/Transporter/Transporter';
 import HandlePackage from './entities/Transporter/HandlePackage';
 
+// Manufacturer imports
+import Manufacturer from './entities/Manufacturer/Manufacturer';
+import RequestProduct from './entities/Manufacturer/RequestProduct';
+
 // Transaction imports
 import ViewTransations from './entities/Transactions/ViewTransactions';
 
-
 // Utils
-import NavBar from './components/Navbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignIn from './components/login/SignIn';
 import SignUp from './components/login/SignUp';
 import Landing from './components/home/Landing';
-import Routes from './components/views/Routes';
-import Manufacturer from './components/manufacturer/Manufacturer';
 import Loader from './components/Loader';
 
 class App extends Component {
@@ -80,7 +81,6 @@ class App extends Component {
     if(networkData) {
       const supplyChain = new web3.eth.Contract(SupplyChain.abi, networkData.address);
       this.setState({ 'supplyChain': supplyChain, 'loading': false, 'web3': web3 });
-      console.log(supplyChain);
     } else {
       window.alert('Supply chain contract not deployed to detected network.');
     }
@@ -110,6 +110,8 @@ class App extends Component {
             <Route exact path= "/transporter/handle-package" component = {(() => <HandlePackage account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
 
             <Route exact path="/manufacturer" component= {Manufacturer}/>
+            <Route exact path= "/manufacturer/request-product" component = {(() => <RequestProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+          
           </Switch>
         </Router>
         );

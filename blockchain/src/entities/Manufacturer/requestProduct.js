@@ -36,7 +36,6 @@ export default function RequestProduct(props) {
   const [rawMaterialAddress, setrawMaterialAddress] = useState("");
   const [supplierAddress, setSupplierAddress] = useState("");
   const [signature, setSignature] = useState("");
-  const [cid, setCid] = useState("");
 
   const classes = useStyles();
 
@@ -53,14 +52,13 @@ export default function RequestProduct(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     isLoading(true);
-    supplyChain.methods.transporterRequestProduct(rawMaterialAddress, supplierAddress, cid).send({ from: account })
+    supplyChain.methods.requestRawMaterial(account, supplierAddress, rawMaterialAddress, signature).send({ from: account })
     .once('receipt', async (receipt) => {
-        alert('Package Handled!');
+        alert('Request Made to Supplier!');
         console.log(receipt);
         isLoading(false);
     })
   }
-
 
   return (
     <Grid container style={{ backgroundColor: "white", display: "center", alignItems: "center", maxWidth: 400, justify: "center"}}>
@@ -68,7 +66,7 @@ export default function RequestProduct(props) {
         <CssBaseline />
         <div className={classes.paper}>
           
-          <Typography component="h1" variant="h5">Enter Package Details</Typography>
+          <Typography component="h1" variant="h5">Enter Package To be Requested</Typography>
           <form className={classes.form} noValidate>
           <Grid container spacing={2}>
 
@@ -76,7 +74,7 @@ export default function RequestProduct(props) {
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="rawMaterialAddress" label="Package Address" name="rawMaterialAddress"/>
             </Grid>
             <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="supplierAddress" label="Transporter supplierAddress" name="supplierAddress"/>
+                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="supplierAddress" label="Supplier Address" name="supplierAddress"/>
             </Grid>
             <Grid item xs={12}>
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="signature" label="Signature" name="signature"/>
