@@ -34,7 +34,7 @@ export default function ViewTransactions(props) {
                 <td>{data[3]}</td>
                 <td>{data[4]}</td>
                 <td>{data[5]}</td>
-                <td>{Date(data[6] * 1000)}</td>
+                <td>{new Date(data[6] * 1000).toString()}</td>
             </tr>
         )
     });
