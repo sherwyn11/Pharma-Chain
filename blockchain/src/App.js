@@ -15,7 +15,6 @@ import Supplier from './entities/Supplier/Supplier';
 import AddRawMaterial from './entities/Supplier/AddRawMaterial';
 import ViewRawMaterials from './entities/Supplier/ViewRawMaterials';
 import RawMaterialInfo from './entities/Supplier/RawMaterialInfo';
-import ViewRequests from './entities/Supplier/ViewRequests';
 
 // Transporter imports
 import Transporter from './entities/Transporter/Transporter';
@@ -27,6 +26,9 @@ import RequestProduct from './entities/Manufacturer/RequestProduct';
 
 // Transaction imports
 import ViewTransations from './entities/Transactions/ViewTransactions';
+
+// Event imports
+import ViewRequests from './entities/Events/ViewRequests';
 
 // Utils
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
