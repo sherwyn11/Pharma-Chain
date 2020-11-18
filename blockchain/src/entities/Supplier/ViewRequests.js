@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ViewEvents(props) {
+export default function ViewRequests(props) {
   const classes = useStyles();
   const [address] = useState(props.location.query.address);
   const [account] = useState(props.location.query.account);

@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Loader from '../../components/Loader';
 import Transactions from '../../build/Transactions.json';
 
@@ -18,7 +16,7 @@ export default function ViewTransactions(props) {
   const classes = useStyles();
   const [account] = useState(props.location.query.account);
   const [txnAddress] = useState(props.location.query.address);
-  const [web3, setWeb3] = useState(props.location.query.web3);
+  const [web3] = useState(props.location.query.web3);
   const [details, setDetails] = useState({});
   const [loading, isLoading] = useState(true);
 

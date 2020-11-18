@@ -15,7 +15,7 @@ import Supplier from './entities/Supplier/Supplier';
 import AddRawMaterial from './entities/Supplier/AddRawMaterial';
 import ViewRawMaterials from './entities/Supplier/ViewRawMaterials';
 import RawMaterialInfo from './entities/Supplier/RawMaterialInfo';
-import ViewEvents from './entities/Supplier/ViewEvents';
+import ViewRequests from './entities/Supplier/ViewRequests';
 
 // Transporter imports
 import Transporter from './entities/Transporter/Transporter';
@@ -106,7 +106,7 @@ class App extends Component {
             <Route exact path= "/supplier/view-raw-materials" component = {(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
             <Route exact path= "/supplier/view-raw-materials/:id" component = {RawMaterialInfo}/>
             <Route exact path= "/supplier/view-transactions/:id" component = {ViewTransations}/>
-            <Route exact path= "/supplier/view-requests/:id" component = {ViewEvents}/>
+            <Route exact path= "/supplier/view-requests/:id" component = {ViewRequests}/>
 
             <Route exact path= "/transporter" component= {Transporter}/>
             <Route exact path= "/transporter/handle-package" component = {(() => <HandlePackage account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
