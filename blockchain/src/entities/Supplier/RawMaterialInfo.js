@@ -19,7 +19,8 @@ export default function RawMaterialInfo(props) {
   const classes = useStyles();
   const [account] = useState(props.location.query.account);
   const [rawMaterialAddress] = useState(props.location.query.address);
-  const [web3, setWeb3] = useState(props.location.query.web3);
+  const [web3] = useState(props.location.query.web3);
+  const [supplyChain] = useState(props.location.query.supplyChain);
   const [details, setDetails] = useState({});
   const [loading, isLoading] = useState(true);
 
@@ -62,6 +63,7 @@ export default function RawMaterialInfo(props) {
       <div>
       <h1>Product Details</h1>
       <p>{details}</p>
+      <Button variant="contained" color="primary"><Link to={{pathname: `/supplier/view-requests/${rawMaterialAddress}`, query: {address: rawMaterialAddress, account: account, web3: web3, supplyChain: supplyChain}}}>View Requests</Link></Button>
       </div>
     );
   }
