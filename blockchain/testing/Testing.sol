@@ -48,8 +48,8 @@ contract SupplyChain {
     
     event UserRegister(address indexed _address, bytes32 name);
     event buyEvent(address buyer, address indexed seller, address packageAddr, bytes signature, uint indexed timestamp);
-    event respondEvent(address buyer, address indexed seller, address packageAddr, bytes signature, uint indexed timestamp);
-    event sendEvent(address indexed seller, address buyer, address packageAddr, bytes signature, uint indexed timestamp);
+    event respondEvent(address indexed buyer, address seller, address packageAddr, bytes signature, uint indexed timestamp);
+    event sendEvent(address seller, address buyer, address indexed packageAddr, bytes signature, uint indexed timestamp);
     event receivedEvent(address indexed buyer, address seller, address packageAddr, bytes signature, uint indexed timestamp);
     
     /////////////// Users (Only Owner Executable) //////////////////////

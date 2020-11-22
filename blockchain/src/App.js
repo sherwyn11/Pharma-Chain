@@ -29,6 +29,7 @@ import ViewTransations from './entities/Transactions/ViewTransactions';
 
 // Event imports
 import ViewRequests from './entities/Events/ViewRequests';
+import ViewResponses from './entities/Events/ViewResponses';
 
 // Utils
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -115,7 +116,8 @@ class App extends Component {
 
             <Route exact path="/manufacturer" component= {Manufacturer}/>
             <Route exact path= "/manufacturer/request-product" component = {(() => <RequestProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
-          
+            <Route exact path= "/manufacturer/view-responses" component = {(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+
           </Switch>
         </Router>
         );

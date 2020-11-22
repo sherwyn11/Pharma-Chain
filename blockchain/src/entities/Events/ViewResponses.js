@@ -12,26 +12,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ViewRequests(props) {
+export default function ViewResponse(props) {
   const classes = useStyles();
-  const [address] = useState(props.location.query.address);
-  const [account] = useState(props.location.query.account);
-  const [web3] = useState(props.location.query.web3);
-  const [supplyChain] = useState(props.location.query.supplyChain);
+  const [account] = useState(props.account);
+  const [web3] = useState(props.web3);
+  const [supplyChain] = useState(props.supplyChain);
   const [details, setDetails] = useState({});
   const [loading, isLoading] = useState(true);
 
-  async function verifySignature(buyerAddress, signature) {
+  async function verifySignature(sellerAddress, address, signature) {
     let v = '0x' + signature.slice(130, 132).toString();
     let r = signature.slice(0, 66).toString();
     let s = '0x' + signature.slice(66, 130).toString();
     let messageHash = web3.eth.accounts.hashMessage(address);
-    let verificationOutput = await supplyChain.methods.verify(buyerAddress, messageHash, v, r, s).call({from: account});
+
+    let verificationOutput = await supplyChain.methods.verify(sellerAddress, messageHash, v, r, s).call({from: account});
     if(verificationOutput) {
-      alert('Buyer is Verified successfully!');
-      signature = prompt('Enter signature');
-      supplyChain.methods.respondToManufacturer(buyerAddress, account, address, signature).send({ from: account })
-      alert('Response sent to manufacturer');
+      alert('Seller is Verified successfully!');
     } else {
       alert('Buyer is NOT Verified!');
     }
@@ -42,10 +39,10 @@ export default function ViewRequests(props) {
   }, []);
 
   async function getEvents() {
-    // let events = await supplyChain.getPastEvents('buyEvent', {filter: {packageAddr: address}, fromBlock: 0, toBlock: 'latest'});
-    let events = await supplyChain.getPastEvents('buyEvent', {fromBlock: 0, toBlock: 'latest'});
+    // let events = await supplyChain.getPastEvents('respondEvent', {filter: {buyer: account}, fromBlock: 0, toBlock: 'latest'});
+    let events = await supplyChain.getPastEvents('respondEvent', {fromBlock: 0, toBlock: 'latest'});
     events = events.filter((event) => {
-        return event.returnValues.packageAddr == address;
+        return event.returnValues.buyer == account;
     });
     
     const lst = events.map(data => {
@@ -56,7 +53,7 @@ export default function ViewRequests(props) {
                 <td>{data.returnValues[2]}</td>
                 <td>{data.returnValues[3]}</td>
                 <td>{new Date(data.returnValues[4] * 1000).toString()}</td>
-                <td><Button variant="contained" color="secondary" onClick={() => verifySignature(data.returnValues[0], data.returnValues[3])}>Verify Signature</Button></td>
+                <td><Button variant="contained" color="secondary" onClick={() => verifySignature(data.returnValues[1], data.returnValues[2], data.returnValues[3])}>Verify Signature</Button></td>
             </tr>
         )
     });
@@ -84,7 +81,7 @@ export default function ViewRequests(props) {
                     </tr>
                 </thead>
                 <tbody>
-                        {details}
+                    {details}
                 </tbody>
             </table>
         </div>
