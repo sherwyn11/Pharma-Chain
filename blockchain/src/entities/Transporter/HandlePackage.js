@@ -56,17 +56,6 @@ export default function HandlePackage(props) {
     isLoading(true);
     supplyChain.methods.transporterHandlePackage(pAddress, type, cid).send({from: account})
     .once('receipt', async (receipt) => {
-      const rawMaterial = new web3.eth.Contract(RawMaterial.abi, pAddress);
-      let data = await rawMaterial.methods.getSuppliedRawMaterials().call({from: account});
-      let txnContractAddress = data[6];
-      let supplierAddress = data[3];
-      let txnHash = receipt.transactionHash;
-      const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
-      let txns = await transactions.methods.getAllTransactions().call({ from: account });
-      console.log(txns);
-      let prevTxn = txns[txns.length - 1][0];
-      console.log(prevTxn);
-      transactions.methods.createTxnEntry(txnHash, account, supplierAddress, prevTxn, '10', '10').send({ from: account });
       console.log(receipt);
       isLoading(false);
     })
