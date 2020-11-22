@@ -68,7 +68,9 @@ contract RawMaterial {
         return uint(status);
     }
 
-
+    function updateManufacturerAddress(address addr) public {
+        manufacturer = addr;
+    }
 
     function pickPackage(
         address _transporterAddr

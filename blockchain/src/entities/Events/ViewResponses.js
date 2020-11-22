@@ -39,8 +39,8 @@ export default function ViewResponse(props) {
   }, []);
 
   async function getEvents() {
-    // let events = await supplyChain.getPastEvents('respondEvent', {filter: {buyer: account}, fromBlock: 0, toBlock: 'latest'});
-    let events = await supplyChain.getPastEvents('respondEvent', {fromBlock: 0, toBlock: 'latest'});
+    let events = await supplyChain.getPastEvents('respondEvent', {filter: {buyer: account}, fromBlock: 0, toBlock: 'latest'});
+    // let events = await supplyChain.getPastEvents('respondEvent', {fromBlock: 0, toBlock: 'latest'});
     events = events.filter((event) => {
         return event.returnValues.buyer == account;
     });

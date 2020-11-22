@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom';
+import RawMaterial from '../../build/RawMaterial.json';
+import Transactions from '../../build/Transactions.json';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,11 +54,21 @@ export default function HandlePackage(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     isLoading(true);
-    supplyChain.methods.transporterHandlePackage(pAddress, type, cid).send({ from: account })
+    supplyChain.methods.transporterHandlePackage(pAddress, type, cid).send({from: account})
     .once('receipt', async (receipt) => {
-        alert('Package Handled!');
-        console.log(receipt);
-        isLoading(false);
+      const rawMaterial = new web3.eth.Contract(RawMaterial.abi, pAddress);
+      let data = await rawMaterial.methods.getSuppliedRawMaterials().call({from: account});
+      let txnContractAddress = data[6];
+      let supplierAddress = data[3];
+      let txnHash = receipt.transactionHash;
+      const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
+      let txns = await transactions.methods.getAllTransactions().call({ from: account });
+      console.log(txns);
+      let prevTxn = txns[txns.length - 1][0];
+      console.log(prevTxn);
+      transactions.methods.createTxnEntry(txnHash, account, supplierAddress, prevTxn, '10', '10').send({ from: account });
+      console.log(receipt);
+      isLoading(false);
     })
   }
 

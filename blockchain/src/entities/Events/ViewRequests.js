@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Loader from '../../components/Loader';
+import RawMaterial from '../../build/RawMaterial.json';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +29,14 @@ export default function ViewRequests(props) {
     let messageHash = web3.eth.accounts.hashMessage(address);
     let verificationOutput = await supplyChain.methods.verify(buyerAddress, messageHash, v, r, s).call({from: account});
     if(verificationOutput) {
-      alert('Buyer is Verified successfully!');
+      alert('Buyer is verified successfully!');
       signature = prompt('Enter signature');
       supplyChain.methods.respondToManufacturer(buyerAddress, account, address, signature).send({ from: account })
+      const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
+      rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({from: account});
       alert('Response sent to manufacturer');
     } else {
-      alert('Buyer is NOT Verified!');
+      alert('Buyer is not verified!');
     }
   }
 
@@ -42,12 +45,12 @@ export default function ViewRequests(props) {
   }, []);
 
   async function getEvents() {
-    // let events = await supplyChain.getPastEvents('buyEvent', {filter: {packageAddr: address}, fromBlock: 0, toBlock: 'latest'});
-    let events = await supplyChain.getPastEvents('buyEvent', {fromBlock: 0, toBlock: 'latest'});
+    let events = await supplyChain.getPastEvents('buyEvent', {filter: {packageAddr: address}, fromBlock: 0, toBlock: 'latest'});
+    // let events = await supplyChain.getPastEvents('buyEvent', {fromBlock: 0, toBlock: 'latest'});
     events = events.filter((event) => {
         return event.returnValues.packageAddr == address;
     });
-    
+
     const lst = events.map(data => {
         return(
             <tr key={data.returnValues[0]} style={{height: 100}}>

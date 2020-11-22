@@ -125,6 +125,10 @@ contract SupplyChain {
         }
         return ret;
     }
+
+    function sendPackageToManufacturer(address buyer, address seller, address packageAddr, bytes memory signature) public {
+        emit sendEvent(seller, buyer, packageAddr, signature, now);
+    }
     
     ///////////////  Transporter ///////////////
     
@@ -169,7 +173,6 @@ contract SupplyChain {
         emit buyEvent(manuAddr, supplierAddr, rawMaterialAddr, signature, now);
     }
 
-    
     function manufacturerReceivedPackage(
         address _addr,
         address _manufacturerAddress,

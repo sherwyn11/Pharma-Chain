@@ -34,7 +34,7 @@ export default function AddRawMaterial(props) {
   const [account] = useState(props.account);
   const [web3, setWeb3] = useState(props.web3);
   const [transporterAddress, setTransporterAddress] = useState("");
-  const [manufacturerAddress, setManufacturerAddress] = useState("");
+  // const [manufacturerAddress, setManufacturerAddress] = useState("");
   const [supplyChain] = useState(props.supplyChain);
   const [loading, isLoading] = useState(false);
   const [description, setDescription] = useState("");
@@ -49,8 +49,6 @@ export default function AddRawMaterial(props) {
         setQuantity(e.target.value);
     } else if(e.target.id === 'transport-address') {
       setTransporterAddress(e.target.value);
-    } else if(e.target.id === 'manufacturer-address') {
-      setManufacturerAddress(e.target.value);
     }
   }
 
@@ -58,7 +56,7 @@ export default function AddRawMaterial(props) {
     e.preventDefault();
     isLoading(true);
     var d = web3.utils.padRight(web3.utils.fromAscii(description), 64);
-    supplyChain.methods.createRawMaterialPackage(d, quantity, transporterAddress, manufacturerAddress).send({ from: account })
+    supplyChain.methods.createRawMaterialPackage(d, quantity, transporterAddress, account).send({ from: account })
     .once('receipt', async (receipt) => {
       var rawMaterialAddresses = await supplyChain.methods.getAllPackages().call({from: account});
       let rawMaterialAddress = rawMaterialAddresses[rawMaterialAddresses.length - 1];
@@ -91,10 +89,6 @@ export default function AddRawMaterial(props) {
             <Grid item xs={12}>
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="transport-address" label="Transporter Address" name="transport-address"/>
             </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="manufacturer-address" label="Manufacturer Address" name="manufacturer-address"/>
-            </Grid>
-            
             </Grid>
             <Button
               type="submit" fullWidth variant="contained" color="primary" className={classes.submit} onClick={ handleSubmit } >
