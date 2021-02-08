@@ -24,6 +24,7 @@ import HandlePackage from './entities/Transporter/HandlePackage';
 import Manufacturer from './entities/Manufacturer/Manufacturer';
 import RequestProduct from './entities/Manufacturer/RequestProduct';
 import ReceiveProduct from './entities/Manufacturer/ReceiveProduct';
+import CreateMedicine from './entities/Manufacturer/CreateMedicine';
 
 // Transaction imports
 import ViewTransations from './entities/Transactions/ViewTransactions';
@@ -119,6 +120,7 @@ class App extends Component {
             <Route exact path= "/manufacturer/request-product" component = {(() => <RequestProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
             <Route exact path= "/manufacturer/view-responses" component = {(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
             <Route exact path= "/manufacturer/receive-product" component = {(() => <ReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+            <Route exact path= "/manufacturer/create-medicine" component = {(() => <CreateMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
 
           </Switch>
         </Router>
