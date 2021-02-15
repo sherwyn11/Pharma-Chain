@@ -6,7 +6,7 @@ import './RawMaterial.sol';
 // import './Transporter.sol';
 import './Medicine.sol';
 // import './Manufacturer.sol';
-// import './MedicineW_D.sol';
+import './MedicineW_D.sol';
 // import './Wholesaler.sol';
 // import './MedicineD_C.sol';
 // import './Distributor.sol';
@@ -213,19 +213,39 @@ contract SupplyChain {
 
     ///////////////  Wholesaler  ///////////////
 
+    mapping(address => address[]) public MedicinesAtWholesaler;
+    mapping(address => address[]) public MedicineWtoD;
+    mapping(address => address) public MedicineWtoDTxContract;
     
-//     function wholesalerReceivedMedicine(
-//         address _address
-//         ) public {
-//         require(
-//             userInfo[msg.sender].role == roles.wholesaler || userInfo[msg.sender].role == roles.distributor,
-//             "Only Wholesaler and Distributor can call this function"
-//         );
+    function wholesalerReceivedMedicine(
+        address _address
+        ) public {
+        require(
+            userInfo[msg.sender].role == roles.wholesaler || userInfo[msg.sender].role == roles.distributor,
+            "Only Wholesaler and Distributor can call this function"
+        );
         
-//         medicineRecievedAtWholesaler(
-//             _address
-//         );
-//     }
+        uint rtype = Medicine(_address).receivedMedicine(msg.sender);
+        if(rtype == 1) {
+            MedicinesAtWholesaler[msg.sender].push(_address);
+        }
+    }
+    
+    function transferMedicineWtoD(
+            address _address,
+            address transporter,
+            address receiver
+        ) public {
+            
+        MedicineW_D wd = new MedicineW_D(
+            _address,
+            msg.sender,
+            transporter,
+            receiver
+        );
+        MedicineWtoD[msg.sender].push(address(wd));
+        MedicineWtoDTxContract[_address] = address(wd);
+    }
     
 //     function transferMedicineW_D(
 //         address _address,
@@ -369,4 +389,3 @@ contract SupplyChain {
         return ecrecover(hash, v, r, s) == p;
     }   
 }
-    
