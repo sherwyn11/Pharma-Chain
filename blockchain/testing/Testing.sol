@@ -8,7 +8,7 @@ import './Medicine.sol';
 // import './Manufacturer.sol';
 import './MedicineW_D.sol';
 // import './Wholesaler.sol';
-// import './MedicineD_C.sol';
+import './MedicineD_C.sol';
 // import './Distributor.sol';
 // import './Customer.sol';
 
@@ -156,7 +156,7 @@ contract SupplyChain {
             Medicine(_addr).pickMedicine(msg.sender);
         } else if(transportertype == 3) {   
             // Wholesaler to Distributer
-            // MedicineW_D(cid).pickWD(_addr, msg.sender);
+            MedicineW_D(cid).pickWD(_addr, msg.sender);
         } else if(transportertype == 4) {   
             // Distrubuter to Customer
             // MedicineD_C(cid).pickDC(_addr, msg.sender);
@@ -246,88 +246,86 @@ contract SupplyChain {
         MedicineWtoD[msg.sender].push(address(wd));
         MedicineWtoDTxContract[_address] = address(wd);
     }
-    
-//     function transferMedicineW_D(
-//         address _address,
-//         address transporter,
-//         address receiver) public {
-//         require(
-//             userInfo[msg.sender].role == roles.wholesaler &&
-//             msg.sender == Medicine(_address).getWDC()[0],
-//             "Only Wholesaler or current owner of package can call this function"
-//         );
-        
-//         transferMedicineWtoD(
-//             _address,
-//             transporter,
-//             receiver
-//         );
-//     }
-    
-//     function getBatchIdByIndexWD(uint index) public view returns(address packageID) {
-//         require(
-//             userInfo[msg.sender].role == roles.wholesaler,
-//             "Only Wholesaler Can call this function."
-//         );
-//         return MedicineWtoD[msg.sender][index];
-//     }
 
-//     function getSubContractWD(address _address) public view returns (address SubContractWD) {
-//         return MedicineWtoDTxContract[_address];
-//     }
+    
+    function getBatchIdByIndexWD(uint index) public view returns(address packageID) {
+        require(
+            userInfo[msg.sender].role == roles.wholesaler,
+            "Only Wholesaler Can call this function."
+        );
+        return MedicineWtoD[msg.sender][index];
+    }
+
+    function getSubContractWD(address _address) public view returns (address SubContractWD) {
+        return MedicineWtoDTxContract[_address];
+    }
 
 
 //     ///////////////  Distributor  ///////////////
 
+    mapping(address => address[]) public MedicinesAtDistributor;
+    mapping(address => address[]) public MedicineDtoC;
+    mapping(address => address) public MedicineDtoCTxContract;
 
-//     function distributorReceivedMedicine(
-//       address _address,
-//       address cid
-//     ) public {
-//         require(
-//             userInfo[msg.sender].role == roles.distributor &&
-//             msg.sender == Medicine(_address).getWDC()[1],
-//             "Only Distributor or current owner of package can call this function"  
-//         );
+
+    function distributorReceivedMedicine(
+      address _address,
+      address cid
+    ) public {
+        require(
+            userInfo[msg.sender].role == roles.distributor &&
+            msg.sender == Medicine(_address).getWDC()[1],
+            "Only Distributor or current owner of package can call this function"  
+        );
         
-//         medicineRecievedAtDistributor(
-//             _address,
-//             cid
-//         );
-//     }
+        uint rtype = Medicine(_address).receivedMedicine(msg.sender);
+        if(rtype == 2){
+            MedicinesAtDistributor[msg.sender].push(_address);
+            if(Medicine(_address).getWDC()[0] != address(0)){
+                MedicineW_D(cid).receiveWD(_address, msg.sender);
+            }
+        }
+    }
 
-//     function distributorTransferMedicinetoCustomer(
-//         address _address,
-//         address transporter,
-//         address receiver
-//     ) public {
-//         require(
-//             userInfo[msg.sender].role == roles.distributor &&
-//             msg.sender == Medicine(_address).getWDC()[1],
-//             "Only Distributor or current owner of package can call this function"
-//         );
-//         transferMedicineDtoC(_address, transporter, receiver);
-//     }
+    function distributorTransferMedicinetoCustomer(
+        address _address,
+        address transporter,
+        address receiver
+    ) public {
+        require(
+            userInfo[msg.sender].role == roles.distributor &&
+            msg.sender == Medicine(_address).getWDC()[1],
+            "Only Distributor or current owner of package can call this function"
+        );
+        MedicineD_C dp = new MedicineD_C(
+            _address,
+            msg.sender,
+            transporter,
+            receiver
+        );
+        MedicineDtoC[msg.sender].push(address(dp));
+        MedicineDtoCTxContract[_address] = address(dp);
+    }
     
-//     function getBatchesCountDC() public view returns (uint count){
-//         require(
-//             userInfo[msg.sender].role == roles.distributor,
-//             "Only Distributor Can call this function."
-//         );
-//         return MedicineDtoC[msg.sender].length;
-//     }
+    function getBatchesCountDC() public view returns (uint count){
+        require(
+            userInfo[msg.sender].role == roles.distributor,
+            "Only Distributor Can call this function."
+        );
+        return MedicineDtoC[msg.sender].length;
+    }
 
-//     function getBatchIdByIndexDC(uint index) public view returns(address packageID) {
-//         require(
-//             userInfo[msg.sender].role == roles.distributor,
-//             "Only Distributor Can call this function."
-//         );
-//         return MedicineDtoC[msg.sender][index];
-//     }
+    function getBatchIdByIndexDC(uint index) public view returns(address packageID) {
+        require(
+            userInfo[msg.sender].role == roles.distributor,
+            "Only Distributor Can call this function."
+        );
+        return MedicineDtoC[msg.sender][index];
+    }
 
-//     function getSubContractDC(address _address) public view returns (address SubContractDP) {
-//         return MedicineDtoCTxContract[_address];
-//     }
+    function getSubContractDC(address _address) public view returns (address SubContractDP) {
+        return MedicineDtoCTxContract[_address];
+    }
     
     
 //     ///////////////  Customer  ///////////////
@@ -389,3 +387,4 @@ contract SupplyChain {
         return ecrecover(hash, v, r, s) == p;
     }   
 }
+    
