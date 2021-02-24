@@ -31,7 +31,7 @@ export default function ViewRequests(props) {
     if(verificationOutput) {
       alert('Buyer is verified successfully!');
       signature = prompt('Enter signature');
-      supplyChain.methods.respondToManufacturer(buyerAddress, account, address, signature).send({ from: account })
+      supplyChain.methods.respondToEntity(buyerAddress, account, address, signature).send({ from: account })
       const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
       rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({from: account});
       alert('Response sent to manufacturer');

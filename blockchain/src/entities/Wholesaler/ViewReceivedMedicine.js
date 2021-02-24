@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -7,10 +8,11 @@ const useStyles = makeStyles((theme)=>({
           margin: theme.spacing(1),
           width: '25ch',
         },
-      },
-})
+    },
+    })
 );
-export default function ViewReceivedMedicine(props){
+
+export default function ViewReceivedMedicines(props){
     const classes = useStyles();
     const [account] = useState(props.account);
     const [web3, setWeb3] = useState(props.web3);

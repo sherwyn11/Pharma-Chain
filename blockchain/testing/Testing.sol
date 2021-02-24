@@ -1,4 +1,4 @@
-pragma solidity ^0.6.6;
+pragma solidity >=0.4.21 <0.7.0;
 pragma experimental ABIEncoderV2;
 
 import './RawMaterial.sol';
@@ -52,6 +52,22 @@ contract SupplyChain {
     event sendEvent(address seller, address buyer, address indexed packageAddr, bytes signature, uint indexed timestamp);
     event receivedEvent(address indexed buyer, address seller, address packageAddr, bytes signature, uint indexed timestamp);
     
+    
+    //////////////// Event functions (All entities) ////////////////////
+
+    
+    function requestProduct(address manuAddr, address supplierAddr, address rawMaterialAddr, bytes memory signature) public {
+        emit buyEvent(manuAddr, supplierAddr, rawMaterialAddr, signature, now);
+    }
+    
+    function respondToEntity(address buyer, address seller, address packageAddr, bytes memory signature) public {
+        emit respondEvent(buyer, seller, packageAddr, signature, now);
+    }
+    
+    function sendPackageToEntity(address buyer, address seller, address packageAddr, bytes memory signature) public {
+        emit sendEvent(seller, buyer, packageAddr, signature, now);
+    }
+    
     /////////////// Users (Only Owner Executable) //////////////////////
     
     struct userData {
@@ -88,9 +104,6 @@ contract SupplyChain {
     
     mapping (address => address[]) public supplierRawMaterials;
     
-    function respondToManufacturer(address buyer, address seller, address packageAddr, bytes memory signature) public {
-        emit respondEvent(buyer, seller, packageAddr, signature, now);
-    }
     
     function createRawMaterialPackage(
         bytes32 _description,
@@ -124,10 +137,6 @@ contract SupplyChain {
             ret[i] = supplierRawMaterials[msg.sender][i];
         }
         return ret;
-    }
-
-    function sendPackageToManufacturer(address buyer, address seller, address packageAddr, bytes memory signature) public {
-        emit sendEvent(seller, buyer, packageAddr, signature, now);
     }
     
     ///////////////  Transporter ///////////////
@@ -169,10 +178,7 @@ contract SupplyChain {
     mapping (address => address[]) public manufacturerRawMaterials;
     mapping (address => address[]) public manufacturerMedicines;
     
-    function requestRawMaterial(address manuAddr, address supplierAddr, address rawMaterialAddr, bytes memory signature) public {
-        emit buyEvent(manuAddr, supplierAddr, rawMaterialAddr, signature, now);
-    }
-
+    
     function manufacturerReceivedPackage(
         address _addr,
         address _manufacturerAddress,
@@ -208,6 +214,15 @@ contract SupplyChain {
         
         manufacturerMedicines[_manufacturerAddr].push(address(_medicine));
         
+    }
+    
+    function getAllCreatedMedicines() public view returns(address[] memory) {
+        uint len = manufacturerMedicines[msg.sender].length;
+        address[] memory ret = new address[](len);
+        for (uint i = 0; i < len; i++) {
+            ret[i] = manufacturerMedicines[msg.sender][i];
+        }
+        return ret;
     }
     
 

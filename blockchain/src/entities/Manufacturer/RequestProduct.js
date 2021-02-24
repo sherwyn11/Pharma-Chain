@@ -52,7 +52,7 @@ export default function RequestProduct(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     isLoading(true);
-    supplyChain.methods.requestRawMaterial(account, supplierAddress, rawMaterialAddress, signature).send({ from: account })
+    supplyChain.methods.requestProduct(account, supplierAddress, rawMaterialAddress, signature).send({ from: account })
     .once('receipt', async (receipt) => {
         alert('Request Made to Supplier!');
         console.log(receipt);

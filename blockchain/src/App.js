@@ -26,6 +26,10 @@ import RequestProduct from './entities/Manufacturer/RequestProduct';
 import ReceiveProduct from './entities/Manufacturer/ReceiveProduct';
 import CreateMedicine from './entities/Manufacturer/CreateMedicine';
 
+// Wholesaler imports
+import Wholesaler from './entities/Wholesaler/Wholesaler';
+import ViewReceivedMedicines from './entities/Wholesaler/ViewReceivedMedicine'
+
 // Transaction imports
 import ViewTransations from './entities/Transactions/ViewTransactions';
 
@@ -84,7 +88,7 @@ class App extends Component {
     this.setState({ 'account': accounts[0] });
     const networkId = await web3.eth.net.getId();
     const networkData = SupplyChain.networks[networkId];
-    if(networkData) {
+    if (networkData) {
       const supplyChain = new web3.eth.Contract(SupplyChain.abi, networkData.address);
       this.setState({ 'supplyChain': supplyChain, 'loading': false, 'web3': web3 });
     } else {
@@ -93,45 +97,47 @@ class App extends Component {
   }
 
   render() {
-    if(this.state.loading === false)
-    {
+    if (this.state.loading === false) {
       return (
         <Router>
           <Switch>
-            <Route exact path ="/" component={Landing}/>
-            <Route exact path="/signup" component={SignUp}/>
-            <Route  path="/signin" component = {SignIn}/>
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/signup" component={SignUp} />
+            <Route path="/signin" component={SignIn} />
 
-            <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain}/>)} />
-            <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
-            <Route exact path="/owner/view-user" component={(() => <ViewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)} />
+            <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain} />)} />
+            <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/owner/view-user" component={(() => <ViewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
-            <Route exact path= "/supplier" component={Supplier}/>
-            <Route exact path= "/supplier/add-raw-material" component = {(() => <AddRawMaterial account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
-            <Route exact path= "/supplier/view-raw-materials" component = {(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
-            <Route exact path= "/supplier/view-raw-materials/:id" component = {RawMaterialInfo}/>
-            <Route exact path= "/supplier/view-transactions/:id" component = {ViewTransations}/>
-            <Route exact path= "/supplier/view-requests/:id" component = {ViewRequests}/>
+            <Route exact path="/supplier" component={Supplier} />
+            <Route exact path="/supplier/add-raw-material" component={(() => <AddRawMaterial account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/supplier/view-raw-materials" component={(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/supplier/view-raw-materials/:id" component={RawMaterialInfo} />
+            <Route exact path="/supplier/view-transactions/:id" component={ViewTransations} />
+            <Route exact path="/supplier/view-requests/:id" component={ViewRequests} />
 
-            <Route exact path= "/transporter" component= {Transporter}/>
-            <Route exact path= "/transporter/handle-package" component = {(() => <HandlePackage account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+            <Route exact path="/transporter" component={Transporter} />
+            <Route exact path="/transporter/handle-package" component={(() => <HandlePackage account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
-            <Route exact path="/manufacturer" component= {Manufacturer}/>
-            <Route exact path= "/manufacturer/request-product" component = {(() => <RequestProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
-            <Route exact path= "/manufacturer/view-responses" component = {(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
-            <Route exact path= "/manufacturer/receive-product" component = {(() => <ReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
-            <Route exact path= "/manufacturer/create-medicine" component = {(() => <CreateMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3}/>)}/>
+            <Route exact path="/manufacturer" component={Manufacturer} />
+            <Route exact path="/manufacturer/request-product" component={(() => <RequestProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/manufacturer/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/manufacturer/receive-product" component={(() => <ReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/manufacturer/create-medicine" component={(() => <CreateMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+
+            <Route exact path="/wholesaler" component={Wholesaler} />
+            <Route exact path="/wholesaler/view-medicines" component={(() => <ViewReceivedMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
           </Switch>
         </Router>
-        );
-      } 
-      else {
-        return (
-          <Loader></Loader>
-        );
-      }
+      );
+    }
+    else {
+      return (
+        <Loader></Loader>
+      );
     }
   }
+}
 
 export default App;

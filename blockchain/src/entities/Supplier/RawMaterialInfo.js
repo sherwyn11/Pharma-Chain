@@ -59,7 +59,7 @@ export default function RawMaterialInfo(props) {
   function sendPackage() {
     let rawMaterial = new web3.eth.Contract(RawMaterial.abi, rawMaterialAddress);
     let signature = prompt('Enter signature');
-    supplyChain.methods.sendPackageToManufacturer(manufacturer, account, rawMaterialAddress, signature).send({from: account})
+    supplyChain.methods.sendPackageToEntity(manufacturer, account, rawMaterialAddress, signature).send({from: account})
     .once('receipt', async (receipt) => {
       let data = await rawMaterial.methods.getSuppliedRawMaterials().call({from: account});
       let txnContractAddress = data[6];

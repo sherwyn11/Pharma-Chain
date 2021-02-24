@@ -96,6 +96,14 @@ function Manufacturer(props) {
               </div>
              </ListItemIcon>
         </ListItem>
+        <ListItem button key={'Create-Medicine'}>
+          <ListItemIcon>
+            <div>
+              <CollectionsIcon />
+              <Button href="/manufacturer/create-medicine" color="inherit">{'Create-Medicine'}</Button>
+            </div>
+          </ListItemIcon>
+        </ListItem>
         </List>
     </div>
   );
