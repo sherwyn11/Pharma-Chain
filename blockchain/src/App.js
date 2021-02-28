@@ -28,7 +28,10 @@ import CreateMedicine from './entities/Manufacturer/CreateMedicine';
 
 // Wholesaler imports
 import Wholesaler from './entities/Wholesaler/Wholesaler';
-import ViewReceivedMedicines from './entities/Wholesaler/ViewReceivedMedicine'
+import ViewReceivedMedicines from './entities/Wholesaler/ViewReceivedMedicine';
+import RequestProductManufacturer from './entities/Wholesaler/RequestProduct';
+import TransferMedicine from './entities/Wholesaler/TransferMedicine';
+import WholesalerReceiveProduct from './entities/Wholesaler/ReceiveProduct';
 
 // Transaction imports
 import ViewTransations from './entities/Transactions/ViewTransactions';
@@ -127,6 +130,10 @@ class App extends Component {
 
             <Route exact path="/wholesaler" component={Wholesaler} />
             <Route exact path="/wholesaler/view-medicines" component={(() => <ViewReceivedMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/wholesaler/request-product" component={(() => <RequestProductManufacturer account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/wholesaler/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/wholesaler/transfer-medicine" component={(() => <TransferMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/wholesaler/receive-medicine" component={(() => <WholesalerReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
           </Switch>
         </Router>

@@ -56,8 +56,8 @@ contract SupplyChain {
     //////////////// Event functions (All entities) ////////////////////
 
     
-    function requestProduct(address manuAddr, address supplierAddr, address rawMaterialAddr, bytes memory signature) public {
-        emit buyEvent(manuAddr, supplierAddr, rawMaterialAddr, signature, now);
+    function requestProduct(address buyer, address seller, address packageAddr, bytes memory signature) public {
+        emit buyEvent(buyer, seller, packageAddr, signature, now);
     }
     
     function respondToEntity(address buyer, address seller, address packageAddr, bytes memory signature) public {
@@ -233,17 +233,18 @@ contract SupplyChain {
     mapping(address => address) public MedicineWtoDTxContract;
     
     function wholesalerReceivedMedicine(
-        address _address
+        address _address,
+        address _sellerAddr,
+        bytes memory signature
         ) public {
         require(
-            userInfo[msg.sender].role == roles.wholesaler || userInfo[msg.sender].role == roles.distributor,
-            "Only Wholesaler and Distributor can call this function"
+            userInfo[msg.sender].role == roles.wholesaler,
+            "Only Wholesaler can call this function"
         );
         
         uint rtype = Medicine(_address).receivedMedicine(msg.sender);
-        if(rtype == 1) {
-            MedicinesAtWholesaler[msg.sender].push(_address);
-        }
+        MedicinesAtWholesaler[msg.sender].push(_address);
+        emit receivedEvent(msg.sender, _sellerAddr, _address, signature, now);
     }
     
     function transferMedicineWtoD(
@@ -273,6 +274,15 @@ contract SupplyChain {
 
     function getSubContractWD(address _address) public view returns (address SubContractWD) {
         return MedicineWtoDTxContract[_address];
+    }
+    
+    function getAllMedicinesAtWholesaler() public view returns(address[] memory) {
+        uint len = MedicinesAtWholesaler[msg.sender].length;
+        address[] memory ret = new address[](len);
+        for (uint i = 0; i < len; i++) {
+            ret[i] = MedicinesAtWholesaler[msg.sender][i];
+        }
+        return ret;
     }
 
 
@@ -340,6 +350,15 @@ contract SupplyChain {
 
     function getSubContractDC(address _address) public view returns (address SubContractDP) {
         return MedicineDtoCTxContract[_address];
+    }
+    
+    function getAllMedicinesAtDistributor() public view returns(address[] memory) {
+        uint len = MedicinesAtDistributor[msg.sender].length;
+        address[] memory ret = new address[](len);
+        for (uint i = 0; i < len; i++) {
+            ret[i] = MedicinesAtDistributor[msg.sender][i];
+        }
+        return ret;
     }
     
     
