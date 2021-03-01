@@ -62,7 +62,7 @@ export default function CreateMedicine(props) {
     e.preventDefault();
     isLoading(true);
     var d = web3.utils.padRight(web3.utils.fromAscii(description), 64);
-    supplyChain.methods.manufacturerCreatesNewMedicine(d, rawMatAddress, quantity, transporterAddress, manufacturerAddress, wholesalerAddress).send({ from: account })
+    supplyChain.methods.manufacturerCreatesMedicine(manufacturerAddress, d, [rawMatAddress], quantity, [transporterAddress], wholesalerAddress, 1).send({ from: account })
     .once('receipt', async (receipt) => {
         console.log(receipt);
         isLoading(false);
@@ -90,7 +90,7 @@ export default function CreateMedicine(props) {
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="rawMatAddress" label="Raw Material Address" name="rawMatAddress"/>
             </Grid>
             <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="manufacturerAddress" label="Manufacturer Location" name="manufacturerAddress"/>
+                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="manufacturerAddress" label="Manufacturer Address" name="manufacturerAddress"/>
             </Grid>
             <Grid item xs={12}>
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="transporterAddress" label="Transporter Address" name="transporterAddress"/>

@@ -25,6 +25,7 @@ import Manufacturer from './entities/Manufacturer/Manufacturer';
 import RequestProduct from './entities/Manufacturer/RequestProduct';
 import ReceiveProduct from './entities/Manufacturer/ReceiveProduct';
 import CreateMedicine from './entities/Manufacturer/CreateMedicine';
+import ViewMedicines from './entities/Manufacturer/ViewMedicines';
 
 // Wholesaler imports
 import Wholesaler from './entities/Wholesaler/Wholesaler';
@@ -46,6 +47,7 @@ import SignIn from './components/login/SignIn';
 import SignUp from './components/login/SignUp';
 import Landing from './components/home/Landing';
 import Loader from './components/Loader';
+import NotFound from './components/NotFound';
 
 class App extends Component {
 
@@ -127,6 +129,7 @@ class App extends Component {
             <Route exact path="/manufacturer/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/receive-product" component={(() => <ReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/create-medicine" component={(() => <CreateMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/manufacturer/view-medicines" component={(() => <ViewMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
             <Route exact path="/wholesaler" component={Wholesaler} />
             <Route exact path="/wholesaler/view-medicines" component={(() => <ViewReceivedMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
@@ -135,6 +138,8 @@ class App extends Component {
             <Route exact path="/wholesaler/transfer-medicine" component={(() => <TransferMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/wholesaler/receive-medicine" component={(() => <WholesalerReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
+            <Route path="" component={NotFound} />
+            
           </Switch>
         </Router>
       );
