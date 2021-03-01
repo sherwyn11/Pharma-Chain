@@ -27,7 +27,7 @@ export default function ViewMedicines(props) {
         var rawMaterialAddresses = await supplyChain.methods.getAllCreatedMedicines().call({ from: account });
         var components = rawMaterialAddresses.map((addr) => {
             return <div><ul><li>
-                <Link to={{ pathname: `/manufacturer/view-raw-materials/${addr}`, query: { address: addr, account: account, web3: web3, supplyChain: supplyChain } }}>{addr}</Link>
+                <Link to={{ pathname: `/manufacturer/view-medicines/${addr}`, query: { address: addr, account: account, web3: web3, supplyChain: supplyChain } }}>{addr}</Link>
             </li></ul></div>;
         });
         setAddresses(components);

@@ -6,7 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom';
+import Transactions from '../../build/Transactions.json';
+import Medicine from '../../build/Medicine.json';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -64,8 +65,16 @@ export default function CreateMedicine(props) {
     var d = web3.utils.padRight(web3.utils.fromAscii(description), 64);
     supplyChain.methods.manufacturerCreatesMedicine(manufacturerAddress, d, [rawMatAddress], quantity, [transporterAddress], wholesalerAddress, 1).send({ from: account })
     .once('receipt', async (receipt) => {
-        console.log(receipt);
-        isLoading(false);
+      console.log(receipt);
+      var medicineAddresses = await supplyChain.methods.getAllCreatedMedicines().call({ from: account });
+      let medicineAddress = medicineAddresses[medicineAddresses.length - 1];
+      const medicine = new web3.eth.Contract(Medicine.abi, medicineAddress);
+      let data = await medicine.methods.getMedicineInfo().call({ from: account });
+      let txnContractAddress = data[7];
+      let txnHash = receipt.transactionHash;
+      const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
+      transactions.methods.createTxnEntry(txnHash, account, medicineAddress, txnHash, '10', '10').send({ from: account }); //TODO: get user location -> (latitude, longitude)
+      isLoading(false);
     })
   }
 

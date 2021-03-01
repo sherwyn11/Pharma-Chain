@@ -26,6 +26,7 @@ import RequestProduct from './entities/Manufacturer/RequestProduct';
 import ReceiveProduct from './entities/Manufacturer/ReceiveProduct';
 import CreateMedicine from './entities/Manufacturer/CreateMedicine';
 import ViewMedicines from './entities/Manufacturer/ViewMedicines';
+import MedicineInfo from './entities/Manufacturer/MedicineInfo';
 
 // Wholesaler imports
 import Wholesaler from './entities/Wholesaler/Wholesaler';
@@ -130,6 +131,9 @@ class App extends Component {
             <Route exact path="/manufacturer/receive-product" component={(() => <ReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/create-medicine" component={(() => <CreateMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/view-medicines" component={(() => <ViewMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/manufacturer/view-medicines/:id" component={MedicineInfo} />
+            <Route exact path="/manufacturer/view-transactions/:id" component={ViewTransations} />
+          
 
             <Route exact path="/wholesaler" component={Wholesaler} />
             <Route exact path="/wholesaler/view-medicines" component={(() => <ViewReceivedMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />

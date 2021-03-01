@@ -56,6 +56,7 @@ contract Medicine {
         } else if( RcvrType == 2){
             distributor = _receiverAddr;
         }
+        status = medicineStatus(0);
         Transactions txnContract = new Transactions(_manufacturerAddr);
         txnContractAddress = address(txnContract);
     }
@@ -68,7 +69,8 @@ contract Medicine {
         uint _quantity,
         address[] memory _transporterAddr,
         address _distributor,
-        address _customer
+        uint _status,
+        address _txnContract
     ) {
         return(
             manufacturer,
@@ -77,7 +79,8 @@ contract Medicine {
             quantity,
             transporters,
             distributor,
-            customer
+            uint(status),
+            txnContractAddress
         );
     }
 
