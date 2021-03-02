@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Loader from '../../components/Loader';
-import RawMaterial from '../../build/RawMaterial.json';
+import Medicine from '../../build/Medicine.json';
 import Transactions from '../../build/Transactions.json';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,23 +38,23 @@ export default function WholesalerReceiveProduct(props) {
   }
 
   async function handleSubmit() {
-    let rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
-    let data = await rawMaterial.methods.getSuppliedRawMaterials().call({from: account});
+    let medicine = new web3.eth.Contract(Medicine.abi, address);
+    let data = await medicine.methods.getMedicineInfo().call({from: account});
     let events = await supplyChain.getPastEvents('sendEvent', {filter: {packageAddr: address}, fromBlock: 0, toBlock: 'latest'});
     events = events.filter((event) => {
       return event.returnValues.packageAddr == address;
     });
 
     console.log(events);
-    let supplier = data[3];
+    let manufacturer = data[0];
     let signature = events[0]['returnValues'][3];
-    let verificationOutput = await verifySignature(supplier, signature);
+    let verificationOutput = await verifySignature(manufacturer, signature);
     if(verificationOutput) {
       alert('Signature verified');
-      supplyChain.methods.manufacturerReceivedPackage(address, account, supplier, signature).send({from: account})
+      supplyChain.methods.wholesalerReceivedMedicine(address, manufacturer, signature).send({from: account})
         .once('receipt', async (receipt) => {
-          let txnContractAddress = data[6];
-          let transporterAddress = data[4];
+          let txnContractAddress = data[7];
+          let transporterAddress = data[4][data[4].length - 1];
           let txnHash = receipt.transactionHash;
           const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
           let txns = await transactions.methods.getAllTransactions().call({from: account});
