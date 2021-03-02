@@ -93,7 +93,7 @@ contract SupplyChain {
        return "Role Updated!";
     }
     
-    function getUserInfo(address _address) public view onlyOwner returns(
+    function getUserInfo(address _address) public view returns(
         userData memory
         ) {
         return userInfo[_address];
@@ -197,9 +197,7 @@ contract SupplyChain {
         bytes32 _description,
         address[] memory _rawAddr,
         uint _quantity,
-        address[] memory _transporterAddr,
-        address _recieverAddr,
-        uint RcvrType
+        address[] memory _transporterAddr
         ) public {
             
         Medicine _medicine = new Medicine(
@@ -207,9 +205,7 @@ contract SupplyChain {
             _description,
             _rawAddr,
             _quantity,
-            _transporterAddr,
-            _recieverAddr,
-            RcvrType
+            _transporterAddr
         );
         
         manufacturerMedicines[_manufacturerAddr].push(address(_medicine));

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RequestProduct(props) {
+export default function RequestProductManufacturer(props) {
   const [account] = useState(props.account);
   const [web3, setWeb3] = useState(props.web3);
   const [supplyChain] = useState(props.supplyChain);

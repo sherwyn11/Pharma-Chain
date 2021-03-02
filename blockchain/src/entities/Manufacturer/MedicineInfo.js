@@ -47,6 +47,7 @@ export default function MedicineInfo(props) {
       <p>Product Raw Materials: {data[2]}</p>
       <p>Product Quantity: {data[3]}</p>
       <p>Product Transporter: {data[4]}</p>
+      <p>Product Wholesaler: {data[8]}</p>
       <p>Product Distributor: {data[5]}</p>
       <p>Product Transaction contract address: <Link to={{pathname: `/manufacturer/view-transactions/${data[7]}`, query: {address: data[7], account: account, web3: web3}}}>{data[7]}</Link>
       </p>

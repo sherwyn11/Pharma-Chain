@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Loader from '../../components/Loader';
 import RawMaterial from '../../build/RawMaterial.json';
+import Medicine from '../../build/Medicine.json';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,7 @@ export default function ViewRequests(props) {
   const [web3] = useState(props.location.query.web3);
   const [supplyChain] = useState(props.location.query.supplyChain);
   const [details, setDetails] = useState({});
+  const [role, setRole] = useState(0);
   const [loading, isLoading] = useState(true);
 
   async function verifySignature(buyerAddress, signature) {
@@ -32,9 +34,21 @@ export default function ViewRequests(props) {
       alert('Buyer is verified successfully!');
       signature = prompt('Enter signature');
       supplyChain.methods.respondToEntity(buyerAddress, account, address, signature).send({ from: account })
-      const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
-      rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({from: account});
-      alert('Response sent to manufacturer');
+      if (role === 1) {
+        const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
+        rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({ from: account });
+        alert('Response sent to manufacturer');
+      } else if(role === 3) {
+        const medicine = new web3.eth.Contract(Medicine.abi, address);
+        medicine.methods.updateWholesalerAddress(buyerAddress).send({ from: account });
+        alert('Response sent to wholesaler');
+      } else if (role === 4) {
+        const medicine = new web3.eth.Contract(Medicine.abi, address);
+        medicine.methods.updateDistributorAddress(buyerAddress).send({ from: account });
+        alert('Response sent to distributor');
+      } else {
+        console.log('error');
+      }
     } else {
       alert('Buyer is not verified!');
     }
@@ -45,6 +59,11 @@ export default function ViewRequests(props) {
   }, []);
 
   async function getEvents() {
+
+    var test = await supplyChain.methods.getUserInfo(address).call();
+    setRole(test.role);
+    console.log(test.role);
+
     let events = await supplyChain.getPastEvents('buyEvent', {filter: {packageAddr: address}, fromBlock: 0, toBlock: 'latest'});
     // let events = await supplyChain.getPastEvents('buyEvent', {fromBlock: 0, toBlock: 'latest'});
     events = events.filter((event) => {

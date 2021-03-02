@@ -41,9 +41,7 @@ contract Medicine {
         bytes32 _description,
         address[] memory _rawAddr,
         uint _quantity,
-        address[] memory _transporterAddr,
-        address _receiverAddr,
-        uint RcvrType
+        address[] memory _transporterAddr
     ) public {
         Owner = _manufacturerAddr;
         manufacturer = _manufacturerAddr;
@@ -51,11 +49,8 @@ contract Medicine {
         rawMaterials = _rawAddr;
         quantity = _quantity;
         transporters = _transporterAddr;
-        if(RcvrType == 1) {
-            wholesaler = _receiverAddr;
-        } else if( RcvrType == 2){
-            distributor = _receiverAddr;
-        }
+        wholesaler = address(0x0);
+        distributor = address(0x0);
         status = medicineStatus(0);
         Transactions txnContract = new Transactions(_manufacturerAddr);
         txnContractAddress = address(txnContract);
@@ -70,7 +65,8 @@ contract Medicine {
         address[] memory _transporterAddr,
         address _distributor,
         uint _status,
-        address _txnContract
+        address _txnContract,
+        address _wholesaler
     ) {
         return(
             manufacturer,
@@ -80,7 +76,8 @@ contract Medicine {
             transporters,
             distributor,
             uint(status),
-            txnContractAddress
+            txnContractAddress,
+            wholesaler
         );
     }
 
@@ -125,12 +122,17 @@ contract Medicine {
         transporters.push(_transporterAddr);
     }
 
+    function updateWholesalerAddress(address addr) public {
+        wholesaler = addr;
+    }
+
+    function updateDistributorAddress(address addr) public {
+        distributor = addr;
+    }
 
     function receivedMedicine(
         address _receiverAddr
-    ) public
-    returns(uint)
-    {
+    ) public returns(uint) {
 
         require(
             _receiverAddr == wholesaler || _receiverAddr == distributor,

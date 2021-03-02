@@ -22,7 +22,7 @@ import HandlePackage from './entities/Transporter/HandlePackage';
 
 // Manufacturer imports
 import Manufacturer from './entities/Manufacturer/Manufacturer';
-import RequestProduct from './entities/Manufacturer/RequestProduct';
+import RequestProductManufacturer from './entities/Manufacturer/RequestProduct';
 import ReceiveProduct from './entities/Manufacturer/ReceiveProduct';
 import CreateMedicine from './entities/Manufacturer/CreateMedicine';
 import ViewMedicines from './entities/Manufacturer/ViewMedicines';
@@ -31,7 +31,7 @@ import MedicineInfo from './entities/Manufacturer/MedicineInfo';
 // Wholesaler imports
 import Wholesaler from './entities/Wholesaler/Wholesaler';
 import ViewReceivedMedicines from './entities/Wholesaler/ViewReceivedMedicine';
-import RequestProductManufacturer from './entities/Wholesaler/RequestProduct';
+import RequestProductWholesaler from './entities/Wholesaler/RequestProduct';
 import TransferMedicine from './entities/Wholesaler/TransferMedicine';
 import WholesalerReceiveProduct from './entities/Wholesaler/ReceiveProduct';
 
@@ -126,18 +126,19 @@ class App extends Component {
             <Route exact path="/transporter/handle-package" component={(() => <HandlePackage account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
             <Route exact path="/manufacturer" component={Manufacturer} />
-            <Route exact path="/manufacturer/request-product" component={(() => <RequestProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/manufacturer/request-product" component={(() => <RequestProductManufacturer account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/receive-product" component={(() => <ReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/create-medicine" component={(() => <CreateMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/view-medicines" component={(() => <ViewMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/view-medicines/:id" component={MedicineInfo} />
             <Route exact path="/manufacturer/view-transactions/:id" component={ViewTransations} />
-          
+            <Route exact path="/manufacturer/view-requests/:id" component={ViewRequests} />
+
 
             <Route exact path="/wholesaler" component={Wholesaler} />
             <Route exact path="/wholesaler/view-medicines" component={(() => <ViewReceivedMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
-            <Route exact path="/wholesaler/request-product" component={(() => <RequestProductManufacturer account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/wholesaler/request-product" component={(() => <RequestProductWholesaler account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/wholesaler/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/wholesaler/transfer-medicine" component={(() => <TransferMedicine account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/wholesaler/receive-medicine" component={(() => <WholesalerReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />

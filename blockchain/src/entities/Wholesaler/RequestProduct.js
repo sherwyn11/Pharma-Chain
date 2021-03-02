@@ -74,7 +74,7 @@ export default function RequestProductWholesaler(props) {
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="medicineAddress" label="Package Address" name="medicineAddress"/>
             </Grid>
             <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="manufacturerAddress" label="Supplier Address" name="manufacturerAddress"/>
+                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="manufacturerAddress" label="Manufacturer Address" name="manufacturerAddress"/>
             </Grid>
             <Grid item xs={12}>
                 <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="signature" label="Signature" name="signature"/>
