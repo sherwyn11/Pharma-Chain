@@ -62,9 +62,9 @@ export default function MedicineInfo(props) {
     let signature = prompt('Enter signature');
     supplyChain.methods.sendPackageToEntity(manufacturer, account, medicineAddress, signature).send({from: account})
     .once('receipt', async (receipt) => {
-      let data = await medicine.methods.getSuppliedRawMaterials().call({from: account});
-      let txnContractAddress = data[6];
-      let transporterAddress = data[4];
+      let data = await medicine.methods.getMedicineInfo().call({from: account});
+      let txnContractAddress = data[7];
+      let transporterAddress = data[4][data[4].length - 1];
       let txnHash = receipt.transactionHash;
       const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
       let txns = await transactions.methods.getAllTransactions().call({from: account});

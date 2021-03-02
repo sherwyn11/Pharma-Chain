@@ -21,7 +21,6 @@ export default function ViewRequests(props) {
   const [web3] = useState(props.location.query.web3);
   const [supplyChain] = useState(props.location.query.supplyChain);
   const [details, setDetails] = useState({});
-  const [role, setRole] = useState(0);
   const [loading, isLoading] = useState(true);
 
   async function verifySignature(buyerAddress, signature) {
@@ -34,15 +33,18 @@ export default function ViewRequests(props) {
       alert('Buyer is verified successfully!');
       signature = prompt('Enter signature');
       supplyChain.methods.respondToEntity(buyerAddress, account, address, signature).send({ from: account })
-      if (role === 1) {
+      const data = await supplyChain.methods.getUserInfo(account).call();
+      const role = data['role'];
+
+      if (role === "1") {
         const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
         rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({ from: account });
         alert('Response sent to manufacturer');
-      } else if(role === 3) {
+      } else if(role === "3") {
         const medicine = new web3.eth.Contract(Medicine.abi, address);
         medicine.methods.updateWholesalerAddress(buyerAddress).send({ from: account });
         alert('Response sent to wholesaler');
-      } else if (role === 4) {
+      } else if (role === "4") {
         const medicine = new web3.eth.Contract(Medicine.abi, address);
         medicine.methods.updateDistributorAddress(buyerAddress).send({ from: account });
         alert('Response sent to distributor');
@@ -59,11 +61,6 @@ export default function ViewRequests(props) {
   }, []);
 
   async function getEvents() {
-
-    var test = await supplyChain.methods.getUserInfo(address).call();
-    setRole(test.role);
-    console.log(test.role);
-
     let events = await supplyChain.getPastEvents('buyEvent', {filter: {packageAddr: address}, fromBlock: 0, toBlock: 'latest'});
     // let events = await supplyChain.getPastEvents('buyEvent', {fromBlock: 0, toBlock: 'latest'});
     events = events.filter((event) => {
@@ -82,6 +79,7 @@ export default function ViewRequests(props) {
             </tr>
         )
     });
+
     setDetails(lst);
     isLoading(false);
   }
