@@ -50,6 +50,9 @@ import Landing from './components/home/Landing';
 import Loader from './components/Loader';
 import NotFound from './components/NotFound';
 
+import Admin from './main_dashboard/layouts/Admin';
+import RTL from './main_dashboard/layouts/RTL'; 
+
 class App extends Component {
 
   constructor() {
@@ -111,21 +114,21 @@ class App extends Component {
             <Route exact path="/signup" component={SignUp} />
             <Route path="/signin" component={SignIn} />
 
-            <Route exact path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain} />)} />
+            <Route path="/owner" component={(() => <Owner account={this.state.account} supplyChain={this.state.supplyChain} />)} />
             <Route exact path="/owner/add-new-user" component={(() => <AddNewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/owner/view-user" component={(() => <ViewUser account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
-            <Route exact path="/supplier" component={Supplier} />
+            <Route path="/supplier" component={Supplier} />
             <Route exact path="/supplier/add-raw-material" component={(() => <AddRawMaterial account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/supplier/view-raw-materials" component={(() => <ViewRawMaterials account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/supplier/view-raw-materials/:id" component={RawMaterialInfo} />
             <Route exact path="/supplier/view-transactions/:id" component={ViewTransations} />
             <Route exact path="/supplier/view-requests/:id" component={ViewRequests} />
 
-            <Route exact path="/transporter" component={Transporter} />
+            <Route path="/transporter" component={Transporter} />
             <Route exact path="/transporter/handle-package" component={(() => <HandlePackage account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
-            <Route exact path="/manufacturer" component={Manufacturer} />
+            <Route path="/manufacturer" component={Manufacturer} />
             <Route exact path="/manufacturer/request-product" component={(() => <RequestProductManufacturer account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/manufacturer/receive-product" component={(() => <ReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
@@ -136,7 +139,7 @@ class App extends Component {
             <Route exact path="/manufacturer/view-requests/:id" component={ViewRequests} />
 
 
-            <Route exact path="/wholesaler" component={Wholesaler} />
+            <Route path="/wholesaler" component={Wholesaler} />
             <Route exact path="/wholesaler/view-medicines" component={(() => <ViewReceivedMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/wholesaler/request-product" component={(() => <RequestProductWholesaler account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/wholesaler/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
@@ -144,7 +147,8 @@ class App extends Component {
             <Route exact path="/wholesaler/receive-medicine" component={(() => <WholesalerReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
 
             <Route path="" component={NotFound} />
-            
+             <Route path="/admin" component={Admin} />
+            <Route path="/rtl" component={RTL} />
           </Switch>
         </Router>
       );
