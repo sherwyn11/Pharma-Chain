@@ -74,7 +74,7 @@ export default function WholesalerReceiveProduct(props) {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="address" label="Account" variant="outlined" onChange={ handleInputChange }/><br></br>
+      <TextField id="address" label="Package Address" variant="outlined" onChange={ handleInputChange }/><br></br>
       <Button variant="contained" color="primary" onClick={ handleSubmit } >
         Submit
       </Button>   
