@@ -73,10 +73,10 @@ export default function TransferMedicine(props) {
                                 <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="medicineAddress" label="Package Address" name="medicineAddress" />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="transporterAddress" label="Supplier Address" name="transporterAddress" />
+                                <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="transporterAddress" label="Transporter Address" name="transporterAddress" />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="distributorAddress" label="distributorAddress" name="distributorAddress" />
+                                <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="distributorAddress" label="Distributor Address" name="distributorAddress" />
                             </Grid>
 
                         </Grid>
