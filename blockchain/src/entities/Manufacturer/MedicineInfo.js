@@ -22,7 +22,7 @@ export default function MedicineInfo(props) {
   const [medicineAddress] = useState(props.location.query.address);
   const [web3] = useState(props.location.query.web3);
   const [supplyChain] = useState(props.location.query.supplyChain);
-  const [manufacturer, setManufacturer] = useState("");
+  const [wholesaler, setWholesaler] = useState("");
   const [details, setDetails] = useState({});
   const [loading, isLoading] = useState(true);
 
@@ -39,7 +39,7 @@ export default function MedicineInfo(props) {
       txt = 'Delivered to Wholesaler';
     }
     data[1] = web3.utils.hexToUtf8(data[1]);
-    setManufacturer(data[5]);
+    setWholesaler(data[8]);
 
     let display = <div>
       <p>Product Manufacturer: {data[0]}</p>
@@ -60,7 +60,7 @@ export default function MedicineInfo(props) {
   function sendPackage() {
     let medicine = new web3.eth.Contract(Medicine.abi, medicineAddress);
     let signature = prompt('Enter signature');
-    supplyChain.methods.sendPackageToEntity(manufacturer, account, medicineAddress, signature).send({from: account})
+    supplyChain.methods.sendPackageToEntity(wholesaler, account, medicineAddress, signature).send({from: account})
     .once('receipt', async (receipt) => {
       let data = await medicine.methods.getMedicineInfo().call({from: account});
       let txnContractAddress = data[7];

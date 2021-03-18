@@ -291,7 +291,9 @@ contract SupplyChain {
 
     function distributorReceivedMedicine(
       address _address,
-      address cid
+      address cid,
+      address _sellerAddr,
+      bytes memory signature
     ) public {
         require(
             userInfo[msg.sender].role == roles.distributor &&
@@ -306,6 +308,7 @@ contract SupplyChain {
                 MedicineW_D(cid).receiveWD(_address, msg.sender);
             }
         }
+        emit receivedEvent(msg.sender, _sellerAddr, _address, signature, now);
     }
 
     function distributorTransferMedicinetoCustomer(

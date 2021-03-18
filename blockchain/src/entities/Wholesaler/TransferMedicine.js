@@ -53,7 +53,6 @@ export default function TransferMedicine(props) {
         isLoading(true);
         supplyChain.methods.transferMedicineWtoD(medicineAddress, transporterAddress, distributorAddress).send({ from: account })
             .once('receipt', async (receipt) => {
-                alert('Request Made to Supplier!');
                 console.log(receipt);
                 isLoading(false);
             })

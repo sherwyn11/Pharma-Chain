@@ -64,7 +64,7 @@ export default function ViewRequests(props) {
     let events = await supplyChain.getPastEvents('buyEvent', {filter: {packageAddr: address}, fromBlock: 0, toBlock: 'latest'});
     // let events = await supplyChain.getPastEvents('buyEvent', {fromBlock: 0, toBlock: 'latest'});
     events = events.filter((event) => {
-        return event.returnValues.packageAddr == address;
+        return event.returnValues.packageAddr === address && event.returnValues.seller === account;
     });
 
     const lst = events.map(data => {

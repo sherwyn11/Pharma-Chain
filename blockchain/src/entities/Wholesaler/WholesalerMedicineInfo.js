@@ -22,7 +22,7 @@ export default function WholesalerMedicineInfo(props) {
     const [medicineAddress] = useState(props.location.query.address);
     const [web3] = useState(props.location.query.web3);
     const [supplyChain] = useState(props.location.query.supplyChain);
-    const [wholesaler, setWholesaler] = useState("");
+    const [distributor, setDistributor] = useState("");
     const [details, setDetails] = useState({});
     const [loading, isLoading] = useState(true);
 
@@ -31,16 +31,21 @@ export default function WholesalerMedicineInfo(props) {
         let data = await medicine.methods.getMedicineInfo().call({ from: account });
         let subcontractAddress = await supplyChain.methods.getSubContractWD(medicineAddress).call({ from: account });
         let status = data[6];
-        let txt = "";
+        console.log(status);
+        let txt = "NA";
         if (status == 0) {
             txt = 'At Manufacturer';
-        } else if (status == 1) {
+        } else if (status == 1 || status == 2 || status == 5) {
             txt = 'Collected by Transporter';
-        } else {
+        } else if (status == 3) {
             txt = 'Delivered to Wholesaler';
+        } else if (status == 4) {
+            txt = 'Delivered to Distributor';
+        } else if (status == 6) {
+            txt = 'Delivered to Distributor';
         }
         data[1] = web3.utils.hexToUtf8(data[1]);
-        setWholesaler(data[8]);
+        setDistributor(data[5]);
 
         let display = <div>
             <p>Product Manufacturer: {data[0]}</p>
@@ -62,7 +67,7 @@ export default function WholesalerMedicineInfo(props) {
     function sendPackage() {
         let medicine = new web3.eth.Contract(Medicine.abi, medicineAddress);
         let signature = prompt('Enter signature');
-        supplyChain.methods.sendPackageToEntity(wholesaler, account, medicineAddress, signature).send({ from: account })
+        supplyChain.methods.sendPackageToEntity(distributor, account, medicineAddress, signature).send({ from: account })
             .once('receipt', async (receipt) => {
                 let data = await medicine.methods.getMedicineInfo().call({ from: account });
                 let txnContractAddress = data[7];
