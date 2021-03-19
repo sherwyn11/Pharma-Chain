@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ViewUser(props) {
+  console.log(props);
+  console.log(props.account); 
+
   const classes = useStyles();
   const [account] = useState(props.account);
   const [web3, setWeb3] = useState(props.web3);
@@ -25,6 +28,9 @@ export default function ViewUser(props) {
   const [locationy, setLocationY] = useState("");
   const [role, setRole] = useState("");
 
+  console.log([account]);
+  console.log("Check view SupplyChain");
+  console.log([supplyChain]);
   const handleInputChange = (e) => {
     setAddress(e.target.value);
   }
