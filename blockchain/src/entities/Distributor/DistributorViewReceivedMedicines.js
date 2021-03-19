@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme)=>({
     })
 );
 
-export default function DistributorViewReceivedMedicine(props){
+export default function DistributorViewReceivedMedicine(props) {
     const classes = useStyles();
     const [account] = useState(props.account);
     const [web3, setWeb3] = useState(props.web3);
@@ -21,7 +21,7 @@ export default function DistributorViewReceivedMedicine(props){
     const [addresses, setAddresses] = useState([]);
 
     async function handleSubmit(){
-        var medicineAddresses = await supplyChain.methods.getAllMedicinesAtWholesaler().call({from: account});
+        var medicineAddresses = await supplyChain.methods.getAllMedicinesAtDistributor().call({from: account});
 
         var components = medicineAddresses.map((addr) => {
           return <div><ul><li>
