@@ -66,7 +66,10 @@ import WholesalerReceiveProduct from './ReceiveProduct';
 import RequestProductWholesaler from './RequestProduct';
 import TransferMedicine from './TransferMedicine';
 import ViewResponses from '../Events/ViewResponses';
+import WholesalerMedicineInfo from './WholesalerMedicineInfo';
 
+import ViewRequests from '../Events/ViewRequests';
+import ViewTransactions from '../Transactions/ViewTransactions';
 
 import WholesalerDashboard from '../../main_dashboard/views/Dashboard/Dashboard';
 import UserProfile from '../../main_dashboard/views/UserProfile/UserProfile';
@@ -85,6 +88,13 @@ const routes = [
     layout: "/wholesaler"
   },
   {
+    path: "/view-medicines",
+    name: "View Received Medicine",
+    icon: ViewItem,
+    component: ViewReceivedMedicine,
+    layout: "/wholesaler"
+  },
+  {
     path: "/request-product",
     name: "Request Product",
     icon: ViewItem,
@@ -98,13 +108,7 @@ const routes = [
     component: ViewResponses,
     layout: "/wholesaler"
   },
-  {
-    path: "/view-medicines",
-    name: "View Received Medicine",
-    icon: ViewItem,
-    component: ViewReceivedMedicine,
-    layout: "/wholesaler"
-  },
+  
   {
     path: "/transfer-medicine",
     name: "Transfer Medicine",
@@ -155,6 +159,9 @@ export default function Wholesaler({ ...rest }) {
         }
         return null;
       })}
+      <Route exact path="/wholesaler/view-medicine/:id" component={WholesalerMedicineInfo} />
+      <Route exact path="/wholesaler/view-request/:id" component={ViewRequests} />
+      <Route exact path="/wholesaler/view-transaction/:id" component={ViewTransactions} /> 
       <Redirect from="/wholesaler" to="/wholesaler/dashboard" />
     </Switch>
   );
