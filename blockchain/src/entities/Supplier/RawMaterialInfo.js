@@ -48,7 +48,7 @@ export default function RawMaterialInfo(props) {
       <p>Product Supplier: {data[3]}</p>
       <p>Product Transporter: {data[4]}</p>
       <p>Product Manufacturer: {data[5]}</p>
-      <p>Product Transaction contract address: <Link to={{pathname: `/supplier/view-transactions/${data[6]}`, query: {address: data[6], account: account, web3: web3}}}>{data[6]}</Link>
+      <p>Product Transaction contract address: <Link to={{pathname: `/supplier/view-transaction/${data[6]}`, query: {address: data[6], account: account, web3: web3}}}>{data[6]}</Link>
       </p>
       <p>Product Status: {txt}</p>
     </div>;
@@ -85,7 +85,7 @@ export default function RawMaterialInfo(props) {
       <div>
         <h1>Product Details</h1>
         <p>{details}</p>
-        <Button variant="contained" color="primary" ><Link to={{pathname: `/supplier/view-requests/${rawMaterialAddress}`, query: {address: rawMaterialAddress, account: account, web3: web3, supplyChain: supplyChain}}}>View Requests</Link></Button>&nbsp;&nbsp;&nbsp;
+        <Button variant="contained" color="primary" ><Link to={{pathname: `/supplier/view-request/${rawMaterialAddress}`, query: {address: rawMaterialAddress, account: account, web3: web3, supplyChain: supplyChain}}}>View Requests</Link></Button>&nbsp;&nbsp;&nbsp;
         <Button variant="contained" color="primary" onClick={sendPackage}>Send Package</Button>
       </div>
     );

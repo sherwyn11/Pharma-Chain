@@ -55,7 +55,7 @@ export default function WholesalerMedicineInfo(props) {
             <p>Product Transporter: {data[4]}</p>
             <p>Product Wholesaler: {data[8]}</p>
             <p>Product Distributor: {data[5]}</p>
-            <p>Product Transaction contract address: <Link to={{ pathname: `/wholesaler/view-transactions/${data[7]}`, query: { address: data[7], account: account, web3: web3 } }}>{data[7]}</Link>
+            <p>Product Transaction contract address: <Link to={{ pathname: `/wholesaler/view-transaction/${data[7]}`, query: { address: data[7], account: account, web3: web3 } }}>{data[7]}</Link>
             </p>
             <p>Product Status: {txt}</p>
             <p>Subcontract Address: {subcontractAddress}</p>
@@ -93,7 +93,7 @@ export default function WholesalerMedicineInfo(props) {
             <div>
                 <h1>Product Details</h1>
                 <p>{details}</p>
-                <Button variant="contained" color="primary" ><Link to={{ pathname: `/wholesaler/view-requests/${medicineAddress}`, query: { address: medicineAddress, account: account, web3: web3, supplyChain: supplyChain } }}>View Requests</Link></Button>&nbsp;&nbsp;&nbsp;
+                <Button variant="contained" color="primary" ><Link to={{ pathname: `/wholesaler/view-request/${medicineAddress}`, query: { address: medicineAddress, account: account, web3: web3, supplyChain: supplyChain } }}>View Requests</Link></Button>&nbsp;&nbsp;&nbsp;
                 <Button variant="contained" color="primary" onClick={sendPackage}>Send Package</Button>
             </div>
         );
