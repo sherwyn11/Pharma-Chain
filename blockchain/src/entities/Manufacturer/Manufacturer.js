@@ -238,7 +238,6 @@ const routes = [
     component: RequestProductManufacturer,
     layout: "/manufacturer"
   },
-  // <Route exact path="/supplier/view-raw-materials/:id" component={RawMaterialInfo} />
   {
     path: "/receive-product",
     name: "Receive Product",

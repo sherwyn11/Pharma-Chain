@@ -17,34 +17,34 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ViewRawMaterials(props) {
   const classes = useStyles();
-  const [account] = useState(props.account);
-  const [web3, setWeb3] = useState(props.web3);
-  const [supplyChain] = useState(props.supplyChain);
-  const [loading, isLoading] = useState(false);
-  const [addresses, setAddresses] = useState([]);
+  const [ account ] = useState(props.account);
+  const [ web3, setWeb3 ] = useState(props.web3);
+  const [ supplyChain ] = useState(props.supplyChain);
+  const [ loading, isLoading ] = useState(false);
+  const [ addresses, setAddresses ] = useState([]);
 
   async function handleSubmit() {
-    var rawMaterialAddresses = await supplyChain.methods.getAllPackages().call({from: account});
+    var rawMaterialAddresses = await supplyChain.methods.getAllPackages().call({ from: account });
     var components = rawMaterialAddresses.map((addr) => {
       return <div><ul><li>
-        <Link to={{pathname: `/supplier/view-raw-materials/${addr}`, query: {address: addr, account: account, web3: web3, supplyChain: supplyChain}}}>{addr}</Link>
+        <Link to={{ pathname: `/supplier/view-raw-material/${addr}`, query: { address: addr, account: account, web3: web3, supplyChain: supplyChain } }}>{addr}</Link>
       </li></ul></div>;
     });
     setAddresses(components);
     isLoading(true);
   }
 
-  if (loading) { 
+  if (loading) {
     return (
       <div>
         <h4>Raw Material addresses created by Supplier</h4>
-        { addresses }
+        { addresses}
       </div>
     );
-  } else{
+  } else {
     handleSubmit();
     return (
-      <p>Getting addresses</p>    
+      <p>Getting addresses</p>
     );
   }
-} 
+}

@@ -194,7 +194,6 @@ import Person from "@material-ui/icons/Person";
 import LocationOn from "@material-ui/icons/LocationOn";
 import AddItem from "@material-ui/icons/AddBox";
 import ViewItem from "@material-ui/icons/ViewList";
-import ViewTrans from "@material-ui/icons/Visibility";
 
 import AddRawMaterial from './AddRawMaterial';
 import RawMaterialInfo from './RawMaterialInfo';
@@ -232,21 +231,6 @@ const routes = [
     component: ViewRawMaterials,
     layout: "/supplier"
   },
-  // <Route exact path="/supplier/view-raw-materials/:id" component={RawMaterialInfo} />
-  {
-    path: "/view-transactions/:id",
-    name: "View Transactions",
-    icon: ViewTrans,
-    component: ViewTransactions,
-    layout: "/supplier"
-  },
-  {
-    path: "/view-requests/:id",
-    name: "View Requests",
-    icon: ViewItem,
-    component: ViewRequests,
-    layout: "/supplier"
-  },
   {
     path: "/user",
     name: "User Profile",
@@ -282,6 +266,9 @@ export default function Supplier({ ...rest }) {
         }
         return null;
       })}
+      <Route exact path="/supplier/view-raw-material/:id" component={RawMaterialInfo} />
+      <Route exact path="/supplier/view-transaction/:id" component={ViewTransactions} />
+      <Route exact path="/supplier/view-request/:id" component={ViewRequests} />
       <Redirect from="/supplier" to="/supplier/dashboard" />
     </Switch>
   );

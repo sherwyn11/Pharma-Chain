@@ -6,6 +6,9 @@ import RawMaterial from '../../build/RawMaterial.json';
 import Medicine from '../../build/Medicine.json';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import styles from "../../main_dashboard/assets/jss/material-dashboard-react/components/tableStyle.js";
+import CardBody from '../../main_dashboard/components/Card/CardBody';
+import CardHeader from '../../main_dashboard/components/Card/CardHeader';
+import Card from '../../main_dashboard/components/Card/Card';
 
 const useStyles = makeStyles(styles);
 
@@ -17,6 +20,10 @@ export default function ViewRequests(props) {
   const [ supplyChain ] = useState(props.location.query.supplyChain);
   const [ details, setDetails ] = useState({});
   const [ loading, isLoading ] = useState(true);
+  const [ message, setMessage ] = useState({
+    title: "",
+    description: ""
+  })
 
   async function verifySignature(buyerAddress, signature) {
     let v = '0x' + signature.slice(130, 132).toString();
@@ -34,14 +41,17 @@ export default function ViewRequests(props) {
       if (role === "1") {
         const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
         rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({ from: account });
+        setMessage({ title: "Raw Materials", description: "New Raw Materials created by Supplier" })
         alert('Response sent to manufacturer');
       } else if (role === "3") {
         const medicine = new web3.eth.Contract(Medicine.abi, address);
         medicine.methods.updateWholesalerAddress(buyerAddress).send({ from: account });
+        setMessage({ title: "Medicines", description: "New Medicines created by Manufacturer" })
         alert('Response sent to wholesaler');
       } else if (role === "4") {
         const medicine = new web3.eth.Contract(Medicine.abi, address);
         medicine.methods.updateDistributorAddress(buyerAddress).send({ from: account });
+        setMessage({ title: "Medicines", description: "New Medicines created by Manufacturer" })
         alert('Response sent to distributor');
       } else {
         console.log('error');
@@ -64,13 +74,13 @@ export default function ViewRequests(props) {
 
     const lst = events.map(data => {
       return (
-        <TableRow className={classes.tableBodyRow}>
-          <TableCell className={classes.tableCell}>{data.returnValues[ 0 ]}</TableCell>
-          <TableCell className={classes.tableCell}>{data.returnValues[ 1 ]}</TableCell>
-          <TableCell className={classes.tableCell}>{data.returnValues[ 2 ]}</TableCell>
-          <TableCell className={classes.tableCell}>{data.returnValues[ 3 ]}</TableCell>
-          <TableCell className={classes.tableCell}>{new Date(data.returnValues[ 4 ] * 1000).toString()}</TableCell>
-          <TableCell className={classes.tableCell}><Button variant="contained" color="secondary" onClick={() => verifySignature(data.returnValues[ 0 ], data.returnValues[ 3 ])}>Verify Signature</Button></TableCell>
+        <TableRow key={data.returnValues[ 0 ]} className={classes.tableBodyRow}>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 0 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 1 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 2 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 3 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{new Date(data.returnValues[ 4 ] * 1000).toString()}</TableCell>
+          <TableCell multiline className={classes.tableCell}><Button variant="contained" color="secondary" onClick={() => verifySignature(data.returnValues[ 0 ], data.returnValues[ 3 ])}>Verify Signature</Button></TableCell>
         </TableRow>
       )
     });
@@ -85,25 +95,33 @@ export default function ViewRequests(props) {
     );
   } else {
     return (
-      <div className="container">
-        <div className={classes.tableResponsive}>
-          <Table border="1" className={classes.table} style={{ marginTop: 20 }}>
-            <TableHead className={classes[ "purpleTableHeader" ]}>
-              <TableRow className={classes.tableHeadRow}>
-                <TableCell className={classes.tableCell + " " + classes.tableHeadCell} scope="col-xs-2">Buyer Address</TableCell>
-                <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell} scope="col-xs-2">Seller Address</TableCell>
-                <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell} scope="col-xs-2">Package Address</TableCell>
-                <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell} scope="col-xs-2">Signature</TableCell>
-                <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell} scope="col-xs-2">Timestamp</TableCell>
-                <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell} scope="col-xs-2">Verify</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {details}
-            </TableBody>
-          </Table>
-        </div>
-      </div>
+      <Card>
+        <CardHeader color="danger">
+          <h4 className={classes.cardTitleWhite}>{message.title}</h4>
+          <p className={classes.cardCategoryWhite}>
+            {message.description}
+          </p>
+        </CardHeader>
+        <CardBody>
+          <div className={classes.tableResponsive}>
+            <Table className={classes.table}>
+              <TableHead className={classes[ "dangerTableHeader" ]}>
+                <TableRow className={classes.tableHeadRow}>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Buyer Address</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Seller Address</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Package Address</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Signature</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Timestamp</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Verify</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {details}
+              </TableBody>
+            </Table>
+          </div>
+        </CardBody>
+      </Card>
     );
   }
 }
