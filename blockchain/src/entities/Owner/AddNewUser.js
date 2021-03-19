@@ -36,7 +36,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddNewUser(props) {
+function AddNewUser(props) {
+    console.log("Its working");
+    console.log(props);
+    console.log(props.account); 
+    console.log('Try');
     const classes = useStyles();
     const [account] = useState(props.account);
     const [web3, setWeb3] = useState(props.web3);
@@ -48,6 +52,9 @@ export default function AddNewUser(props) {
     const [address, setAddress] = useState("");
     const [loading, isLoading] = useState(false);
 
+    console.log([account]); 
+    console.log("Check?");
+    console.log([supplyChain]);
     const handleInputChange = (e) => {
         if (e.target.id === 'name') {
            setName(e.target.value);     
@@ -107,3 +114,4 @@ export default function AddNewUser(props) {
     );
 }
 
+export default AddNewUser

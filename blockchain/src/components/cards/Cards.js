@@ -84,7 +84,7 @@ function Cards() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button  href="/signin" size="small" color="primary"> Login </Button>
+            <Button  href="/owner" size="small" color="primary"> Click Here </Button>
           </CardActions>
         </Card>
       </Grid>
@@ -98,7 +98,7 @@ function Cards() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button href="/signin"size="small" color="primary">Login</Button>
+            <Button href="/supplier"size="small" color="primary">Click Here</Button>
           </CardActions>
         </Card>
       </Grid>
@@ -112,7 +112,7 @@ function Cards() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button href= "/signin" size="small" color="primary">Login</Button>
+            <Button href= "/transporter" size="small" color="primary">Click Here</Button>
           </CardActions>
         </Card>
       </Grid>
@@ -127,7 +127,7 @@ function Cards() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button href="/signin" size="small" color="primary">Login</Button>
+            <Button href="/manufacturer" size="small" color="primary">Click Here</Button>
           </CardActions>
         </Card>
       </Grid>
@@ -141,7 +141,7 @@ function Cards() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button href="/signin" size="small" color="primary">Login</Button>
+            <Button href="/wholesaler" size="small" color="primary">Click Here</Button>
           </CardActions>
         </Card>
       </Grid>

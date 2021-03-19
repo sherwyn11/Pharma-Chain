@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CreateMedicine(props) {
+  console.log(props);
   const [account] = useState(props.account);
   const [web3, setWeb3] = useState(props.web3);
   const [loading, isLoading] = useState(false);
