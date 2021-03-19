@@ -55,19 +55,19 @@ import logo from "../../main_dashboard/assets/img/reactlogo.png";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 import LocationOn from "@material-ui/icons/LocationOn";
-import AddItem from "@material-ui/icons/AddBox";
+// import AddItem from "@material-ui/icons/AddBox";
 import ViewItem from "@material-ui/icons/ViewList";
 import ViewTrans from "@material-ui/icons/Visibility";
 
-import CreateMedicine from './CreateMedicine';
-import RequestProduct from './RequestProduct';
+// import CreateMedicine from './CreateMedicine';
+// import RequestProduct from './RequestProduct';
 import DistributorReceiveProduct from './DistributorReceiveProduct';
 import ViewResponses from '../Events/ViewResponses';
-import ViewRequests from '../Events/ViewRequests';
+// import ViewRequests from '../Events/ViewRequests';
 import RequestProductDistributor from './RequestProduct';
 import DistributorViewReceivedMedicines from './DistributorViewReceivedMedicines';
-import MedicineInfo from './MedicineInfo';
-import ViewTransactions from '../Transactions/ViewTransactions';
+// import MedicineInfo from './MedicineInfo';
+// import ViewTransactions from '../Transactions/ViewTransactions';
 
 import DistributorDashboard from '../../main_dashboard/views/Dashboard/Dashboard';
 import UserProfile from '../../main_dashboard/views/UserProfile/UserProfile';

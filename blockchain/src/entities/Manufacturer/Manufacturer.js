@@ -247,13 +247,6 @@ const routes = [
     layout: "/manufacturer"
   },
   {
-    path: "/view-requests/:id",
-    name: "View Requests",
-    icon: ViewItem,
-    component: ViewRequests,
-    layout: "/manufacturer"
-  },
-  {
     path: "/view-responses",
     name: "View Response",
     icon: ViewTrans,
@@ -265,20 +258,6 @@ const routes = [
     name: "View Medicines",
     icon: ViewItem,
     component: ViewMedicines,
-    layout: "/manufacturer"
-  },
-  {
-    path: "/view-transactions/:id",
-    name: "View Transactions",
-    icon: ViewTrans,
-    component: ViewTransactions,
-    layout: "/manufacturer"
-  },
-  {
-    path: "/view-medicines/:id",
-    name: "Medicine Info",
-    icon: ViewItem,
-    component: MedicineInfo,
     layout: "/manufacturer"
   },
   {
@@ -316,6 +295,9 @@ export default function Manufacturer({ ...rest }) {
         }
         return null;
       })}
+      <Route exact path="/manufacturer/view-medicine/:id" component={MedicineInfo} />
+      <Route exact path="/manufacturer/view-transaction/:id" component={ViewTransactions} />
+      <Route exact path="/manufacturer/view-request/:id" component={ViewRequests} />
       <Redirect from="/manufacturer" to="/manufacturer/dashboard" />
     </Switch>
   );
