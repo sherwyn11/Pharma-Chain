@@ -20,7 +20,7 @@ export default function DistributorViewReceivedMedicine(props) {
     const [loading, isLoading] = useState(false);
     const [addresses, setAddresses] = useState([]);
 
-    async function handleSubmit(){
+    async function handleSubmit() {
         var medicineAddresses = await supplyChain.methods.getAllMedicinesAtDistributor().call({from: account});
 
         var components = medicineAddresses.map((addr) => {
