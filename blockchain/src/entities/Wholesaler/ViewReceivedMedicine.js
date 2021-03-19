@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme)=>({
     })
 );
 
-export default function ViewReceivedMedicines(props){
+export default function ViewReceivedMedicines(props) {
     const classes = useStyles();
     const [account] = useState(props.account);
     const [web3, setWeb3] = useState(props.web3);
