@@ -41,6 +41,7 @@ import Distributor from './entities/Distributor/Distributor';
 import RequestProductDistributor from './entities/Distributor/RequestProduct';
 import DistributorReceiveProduct from './entities/Distributor/DistributorReceiveProduct';
 import DistributorViewReceivedMedicines from './entities/Distributor/DistributorViewReceivedMedicines';
+import DistributorMedicineInfo from './entities/Distributor/DistributorMedicineInfo';
 
 // Transaction imports
 import ViewTransations from './entities/Transactions/ViewTransactions';
@@ -157,6 +158,7 @@ class App extends Component {
             <Route exact path="/distributor/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/distributor/receive-medicine" component={(() => <DistributorReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/distributor/view-medicines" component={(() => <DistributorViewReceivedMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route exact path="/distributor/view-medicines/:id" component={DistributorMedicineInfo} />
 
             <Route path="" component={NotFound} />
             
