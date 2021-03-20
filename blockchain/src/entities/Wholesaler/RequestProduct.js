@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {NavLink, withRouter, BrowserRouter as Router, Route} from 'react-router-dom';
+import { NavLink, withRouter, BrowserRouter as Router, Route } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,23 +29,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RequestProductWholesaler(props) {
-  const [account] = useState(props.account);
-  const [web3, setWeb3] = useState(props.web3);
-  const [supplyChain] = useState(props.supplyChain);
-  const [loading, isLoading] = useState(false);
-  const [medicineAddress, setmedicineAddress] = useState("");
-  const [manufacturerAddress, setmanufacturerAddress] = useState("");
-  const [signature, setSignature] = useState("");
+  const [ account ] = useState(props.account);
+  const [ web3, setWeb3 ] = useState(props.web3);
+  const [ supplyChain ] = useState(props.supplyChain);
+  const [ loading, isLoading ] = useState(false);
+  const [ medicineAddress, setmedicineAddress ] = useState("");
+  const [ manufacturerAddress, setmanufacturerAddress ] = useState("");
+  const [ signature, setSignature ] = useState("");
 
   const classes = useStyles();
 
   const handleInputChange = (e) => {
     if (e.target.id === 'medicineAddress') {
-        setmedicineAddress(e.target.value);     
-    } else if(e.target.id === 'manufacturerAddress') {
-        setmanufacturerAddress(e.target.value);     
-    } else if(e.target.id === 'signature') {
-        setSignature(e.target.value);
+      setmedicineAddress(e.target.value);
+    } else if (e.target.id === 'manufacturerAddress') {
+      setmanufacturerAddress(e.target.value);
+    } else if (e.target.id === 'signature') {
+      setSignature(e.target.value);
     }
   }
 
@@ -53,39 +53,39 @@ export default function RequestProductWholesaler(props) {
     e.preventDefault();
     isLoading(true);
     supplyChain.methods.requestProduct(account, manufacturerAddress, medicineAddress, signature).send({ from: account })
-    .once('receipt', async (receipt) => {
+      .once('receipt', async (receipt) => {
         alert('Request Made to Manufacturer!');
         console.log(receipt);
         isLoading(false);
-    })
+      })
   }
 
   return (
-    <Grid container style={{ backgroundColor: "white", display: "center", alignItems: "center", maxWidth: 400, justify: "center"}}>
-        <Container component="main" maxWidth="xs">
+    <Grid container style={{ backgroundColor: "white", display: "center", alignItems: "center", maxWidth: 400, justify: "center" }}>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          
+
           <Typography component="h1" variant="h5">Enter Package To be Requested</Typography>
           <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
+            <Grid container spacing={2}>
 
-            <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="medicineAddress" label="Package Address" name="medicineAddress"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="manufacturerAddress" label="Manufacturer Address" name="manufacturerAddress"/>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="signature" label="Signature" name="signature"/>
-            </Grid>
+              <Grid item xs={12}>
+                <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="medicineAddress" label="Package Address" name="medicineAddress" />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="manufacturerAddress" label="Manufacturer Address" name="manufacturerAddress" />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="signature" label="Signature" name="signature" />
+              </Grid>
 
             </Grid>
             <Button
-              manufacturerAddress="submit" fullWidth variant="contained" color="primary" className={classes.submit} onClick={ handleSubmit } >
+              manufacturerAddress="submit" fullWidth variant="contained" color="primary" className={classes.submit} onClick={handleSubmit} >
               Submit
             </Button>
-          
+
           </form>
         </div>
       </Container>

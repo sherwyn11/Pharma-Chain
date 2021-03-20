@@ -36,57 +36,57 @@ export default function ViewReceivedRawMat(props) {
       margin: theme.spacing(3, 0, 2),
     },
   }));
-  const [account] = useState(props.account);
-  const [web3, setWeb3] = useState(props.web3);
-  const [supplyChain] = useState(props.supplyChain);
-  const [loading, isLoading] = useState(false);
-  const [address, setAddress] = useState("");
-  const [rawMatAddress, setRawMatAddress] = useState("");
+  const [ account ] = useState(props.account);
+  const [ web3, setWeb3 ] = useState(props.web3);
+  const [ supplyChain ] = useState(props.supplyChain);
+  const [ loading, isLoading ] = useState(false);
+  const [ address, setAddress ] = useState("");
+  const [ rawMatAddress, setRawMatAddress ] = useState("");
 
-  const handleInputChange= (e) =>{
-    if(e.target.id == rawMatAddress){
+  const handleInputChange = (e) => {
+    if (e.target.id == rawMatAddress) {
       setRawMatAddress(e.target.value);
     }
   }
-  const handleSubmit= (e)=> {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    var rawMaterialAddress =  supplyChain.methods.manufacturerReceivedRawMaterials(rawMatAddress).call({from: account});
+    var rawMaterialAddress = supplyChain.methods.manufacturerReceivedRawMaterials(rawMatAddress).call({ from: account });
     console.log(rawMaterialAddress);
     console.log("Please Work");
     var components = rawMaterialAddress.map((addr) => {
       return <div><ul><li>
-        <Link to={{pathname: `/manufacturer/view-received-raw-materials/${addr}`, query: {address: addr, account: account, web3: web3, supplyChain: supplyChain}}}>{addr}</Link>
+        <Link to={{ pathname: `/manufacturer/view-received-raw-material/${addr}`, query: { address: addr, account: account, web3: web3, supplyChain: supplyChain } }}>{addr}</Link>
       </li></ul></div>;
     });
     setAddress(components);
     isLoading(true);
   }
 
-  if (loading) { 
+  if (loading) {
     return (
       <div>
         <h4>Received Raw Material</h4>
-        { address }
+        { address}
       </div>
     );
-  } else{
+  } else {
     // handleSubmit();
     console.log("Okay");
     return (
       <div className={classes.paper}>
-         <h2>Enter Information</h2> 
-         <Grid container style={{ backgroundColor: "white", display: "center", alignItems: "center", maxWidth: 400, justify: "center"}}>
+        <h2>Enter Information</h2>
+        <Grid container style={{ backgroundColor: "white", display: "center", alignItems: "center", maxWidth: 400, justify: "center" }}>
           <form className={classes.form} noValidate>
             <Grid item xs={12}>
-                <TextField variant="outlined" onChange={ handleInputChange } required fullWidth  id="rawMatAddress" label="Raw Material Address" name="rawMatAddress"/>
+              <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="rawMatAddress" label="Raw Material Address" name="rawMatAddress" />
             </Grid>
           </form>
         </Grid>
         <Button
-              type="submit"  variant="contained" color="primary"className={classes.submit} onClick={ handleSubmit } >
-              Submit
+          type="submit" variant="contained" color="primary" className={classes.submit} onClick={handleSubmit} >
+          Submit
             </Button>
-      </div>    
+      </div>
     );
   }
-} 
+}

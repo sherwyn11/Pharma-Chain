@@ -40,6 +40,10 @@ export default function AddRawMaterial(props) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
 
+  console.log([account]);
+  console.log("Supp SupplyChain");
+  console.log([supplyChain]); 
+  
   const classes = useStyles();
 
   const handleInputChange = (e) => {

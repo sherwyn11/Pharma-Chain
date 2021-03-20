@@ -2,71 +2,77 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Loader from '../../components/Loader';
 import Transactions from '../../build/Transactions.json';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import styles from "../../main_dashboard/assets/jss/material-dashboard-react/components/tableStyle.js";
+import CardBody from '../../main_dashboard/components/Card/CardBody';
+import CardHeader from '../../main_dashboard/components/Card/CardHeader';
+import Card from '../../main_dashboard/components/Card/Card';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-}));
+const useStyles = makeStyles(styles);
 
 export default function ViewTransactions(props) {
   const classes = useStyles();
-  const [account] = useState(props.location.query.account);
-  const [txnAddress] = useState(props.location.query.address);
-  const [web3] = useState(props.location.query.web3);
-  const [details, setDetails] = useState({});
-  const [loading, isLoading] = useState(true);
+  const [ account ] = useState(props.location.query.account);
+  const [ txnAddress ] = useState(props.location.query.address);
+  const [ web3 ] = useState(props.location.query.web3);
+  const [ details, setDetails ] = useState({});
+  const [ loading, isLoading ] = useState(true);
 
   async function getTxnData() {
     const transaction = new web3.eth.Contract(Transactions.abi, txnAddress);
-    let txns = await transaction.methods.getAllTransactions().call({from: account});
+    let txns = await transaction.methods.getAllTransactions().call({ from: account });
     const txnsList = txns.map(data => {
-        return(
-            <tr key={data[0]} style={{height: 100}}>
-                <td>{data[0]}</td>
-                <td>{data[1]}</td>
-                <td>{data[2]}</td>
-                <td>{data[3]}</td>
-                <td>{data[4]}</td>
-                <td>{data[5]}</td>
-                <td>{new Date(data[6] * 1000).toString()}</td>
-            </tr>
-        )
+      return (
+        <TableRow key={data.returnValues[ 0 ]} className={classes.tableBodyRow}>
+          <TableCell multiline className={classes.tableCell}>{data[ 0 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[ 1 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[ 2 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[ 3 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[ 4 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[ 5 ]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{new Date(data[ 6 ] * 1000).toString()}</TableCell>
+        </TableRow>
+      )
     });
     setDetails(txnsList);
     isLoading(false);
   }
 
-  if(loading) {
+  if (loading) {
     getTxnData();
     return (
       <Loader></Loader>
     );
   } else {
     return (
-        <div className="container">
-        <div className="table-responsive">
-            <table border="1" className="table" style={{marginTop: 20}}>
-                <thead>
-                    <tr>
-                    <th scope="col-xs-2">TxnHash</th>
-                    <th scope="col-xs-2">From</th>
-                    <th scope="col-xs-2">To</th>
-                    <th scope="col-xs-5">Previous TxnHash</th>
-                    <th scope="col-xs-3">Latitude</th>
-                    <th scope="col-xs-2">Longitude</th>
-                    <th scope="col-xs-2">Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        {details}
-                </tbody>
-            </table>
-        </div>
-    </div>
+      <Card>
+        <CardHeader color="danger">
+          <h4 className={classes.cardTitleWhite}>Transactions List</h4>
+          <p className={classes.cardCategoryWhite}>
+            View all transactions for this Medicine
+          </p>
+        </CardHeader>
+        <CardBody>
+          <div className={classes.tableResponsive}>
+            <Table className={classes.table}>
+              <TableHead className={classes[ "dangerTableHeader" ]}>
+                <TableRow className={classes.tableHeadRow}>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>From</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>TxnHash</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>To</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Previous TxnHash</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Latitude</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Longitude</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Timestamp</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {details}
+              </TableBody>
+            </Table>
+          </div>
+        </CardBody>
+      </Card>
     );
   }
-} 
+}
