@@ -6,6 +6,7 @@ import Loader from '../../components/Loader';
 import RawMaterial from '../../build/RawMaterial.json';
 import Transactions from '../../build/Transactions.json';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import CustomStepper from '../../main_dashboard/components/Stepper/Stepper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,13 +31,12 @@ export default function RawMaterialInfo(props) {
     let rawMaterial = new web3.eth.Contract(RawMaterial.abi, rawMaterialAddress);
     let data = await rawMaterial.methods.getSuppliedRawMaterials().call({ from: account });
     let status = await rawMaterial.methods.getRawMaterialStatus().call({ from: account });
-    let txt = "";
-    if (status == 0) {
-      txt = 'At Supplier';
-    } else if (status == 1) {
-      txt = 'Collected by Transporter';
-    } else {
-      txt = 'Delivered to Manufacturer';
+    let activeStep = Number(status);
+
+    if (status === 2) {
+      activeStep = 3
+    } else if (status === 3) {
+      activeStep = 2
     }
     data[ 1 ] = web3.utils.hexToUtf8(data[ 1 ]);
     setManufacturer(data[ 5 ]);
@@ -50,10 +50,39 @@ export default function RawMaterialInfo(props) {
       <p>Product Manufacturer: {data[ 5 ]}</p>
       <p>Product Transaction contract address: <Link to={{ pathname: `/supplier/view-transaction/${data[ 6 ]}`, query: { address: data[ 6 ], account: account, web3: web3 } }}>{data[ 6 ]}</Link>
       </p>
-      <p>Product Status: {txt}</p>
+      <CustomStepper
+        getSteps={getSupplyChainSteps}
+        activeStep={activeStep}
+        getStepContent={getSupplyChainStepContent}
+      />
     </div>;
     setDetails(display);
     isLoading(false);
+  }
+
+  function getSupplyChainSteps() {
+    return [ 'At Manufacturer', 'Collected by Transporter', 'Delivered to Wholesaler', 'Collected by Transporter', 'Delivered to Distributor', 'Collected by Transporter', 'Medicine Delivered' ];
+  }
+
+  function getSupplyChainStepContent(stepIndex) {
+    switch (stepIndex) {
+      case 0:
+        return 'Medicine is at manufacturing stage in the supply chain.';
+      case 1:
+        return 'Medicine collected by the Transporter is on its way to the Wholesaler.';
+      case 2:
+        return 'Medicine currently with the Wholesaler';
+      case 3:
+        return 'Medicine is collected by the Transporter! On its way to the Distributor.';
+      case 4:
+        return 'Medicine is delivered to the Distributor';
+      case 5:
+        return 'Medicine collected by Transporter is on its way to the pharmacy/customer.';
+      case 6:
+        return 'Medicine Delivered Successfully!';
+      default:
+        return 'Unknown stepIndex';
+    }
   }
 
   function sendPackage() {

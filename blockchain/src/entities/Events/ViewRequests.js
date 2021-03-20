@@ -20,10 +20,6 @@ export default function ViewRequests(props) {
   const [ supplyChain ] = useState(props.location.query.supplyChain);
   const [ details, setDetails ] = useState({});
   const [ loading, isLoading ] = useState(true);
-  const [ message, setMessage ] = useState({
-    title: "",
-    description: ""
-  })
 
   async function verifySignature(buyerAddress, signature) {
     let v = '0x' + signature.slice(130, 132).toString();
@@ -41,17 +37,14 @@ export default function ViewRequests(props) {
       if (role === "1") {
         const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
         rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({ from: account });
-        setMessage({ title: "Raw Materials", description: "New Raw Materials created by Supplier" })
         alert('Response sent to manufacturer');
       } else if (role === "3") {
         const medicine = new web3.eth.Contract(Medicine.abi, address);
         medicine.methods.updateWholesalerAddress(buyerAddress).send({ from: account });
-        setMessage({ title: "Medicines", description: "New Medicines created by Manufacturer" })
         alert('Response sent to wholesaler');
       } else if (role === "4") {
         const medicine = new web3.eth.Contract(Medicine.abi, address);
         medicine.methods.updateDistributorAddress(buyerAddress).send({ from: account });
-        setMessage({ title: "Medicines", description: "New Medicines created by Manufacturer" })
         alert('Response sent to distributor');
       } else {
         console.log('error');
@@ -74,7 +67,7 @@ export default function ViewRequests(props) {
 
     const lst = events.map(data => {
       return (
-        <TableRow key={data.returnValues[ 0 ]} className={classes.tableBodyRow}>
+        <TableRow hover key={data.returnValues[ 0 ]} className={classes.tableBodyRow}>
           <TableCell multiline className={classes.tableCell}>{data.returnValues[ 0 ]}</TableCell>
           <TableCell multiline className={classes.tableCell}>{data.returnValues[ 1 ]}</TableCell>
           <TableCell multiline className={classes.tableCell}>{data.returnValues[ 2 ]}</TableCell>
@@ -96,16 +89,13 @@ export default function ViewRequests(props) {
   } else {
     return (
       <Card>
-        <CardHeader color="danger">
-          <h4 className={classes.cardTitleWhite}>{message.title}</h4>
-          <p className={classes.cardCategoryWhite}>
-            {message.description}
-          </p>
+        <CardHeader color="primary">
+          <h4 className={classes.cardTitleWhite}>View Requests</h4>
         </CardHeader>
         <CardBody>
           <div className={classes.tableResponsive}>
-            <Table className={classes.table}>
-              <TableHead className={classes[ "dangerTableHeader" ]}>
+            <Table stickyHeader className={classes.table}>
+              <TableHead className={classes[ "primaryTableHeader" ]}>
                 <TableRow className={classes.tableHeadRow}>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Buyer Address</TableCell>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Seller Address</TableCell>

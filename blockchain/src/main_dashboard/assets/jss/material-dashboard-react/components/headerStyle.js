@@ -21,7 +21,7 @@ const headerStyle = () => ({
     width: "100%",
     paddingTop: "10px",
     zIndex: "1029",
-    color: grayColor[7],
+    color: grayColor[ 7 ],
     border: "0",
     borderRadius: "3px",
     padding: "10px 0",
@@ -53,27 +53,27 @@ const headerStyle = () => ({
     top: "8px"
   },
   primary: {
-    backgroundColor: primaryColor[0],
+    backgroundColor: primaryColor[ 0 ],
     color: whiteColor,
     ...defaultBoxShadow
   },
   info: {
-    backgroundColor: infoColor[0],
+    backgroundColor: infoColor[ 0 ],
     color: whiteColor,
     ...defaultBoxShadow
   },
   success: {
-    backgroundColor: successColor[0],
+    backgroundColor: successColor[ 0 ],
     color: whiteColor,
     ...defaultBoxShadow
   },
   warning: {
-    backgroundColor: warningColor[0],
+    backgroundColor: warningColor[ 0 ],
     color: whiteColor,
     ...defaultBoxShadow
   },
   danger: {
-    backgroundColor: dangerColor[0],
+    backgroundColor: dangerColor[ 0 ],
     color: whiteColor,
     ...defaultBoxShadow
   }

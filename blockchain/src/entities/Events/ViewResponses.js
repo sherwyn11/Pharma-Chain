@@ -71,15 +71,15 @@ export default function ViewResponse(props) {
         </CardHeader>
         <CardBody>
           <div className={classes.tableResponsive}>
-            <Table className={classes.table}>
+            <Table stickyHeader className={classes.table}>
               <TableHead className={classes[ "warningTableHeader" ]}>
                 <TableRow className={classes.tableHeadRow}>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Buyer Address</TableCell>
-                  <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Seller Address</TableCell>
-                  <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Package Address</TableCell>
-                  <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Signature</TableCell>
-                  <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Timestamp</TableCell>
-                  <TableCell TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Verify</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Seller Address</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Package Address</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Signature</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Timestamp</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Verify</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
