@@ -12,25 +12,25 @@ const useStyles = makeStyles(styles);
 
 export default function ViewTransactions(props) {
   const classes = useStyles();
-  const [ account ] = useState(props.location.query.account);
-  const [ txnAddress ] = useState(props.location.query.address);
-  const [ web3 ] = useState(props.location.query.web3);
-  const [ details, setDetails ] = useState({});
-  const [ loading, isLoading ] = useState(true);
+  const [account] = useState(props.location.query.account);
+  const [txnAddress] = useState(props.location.query.address);
+  const [web3] = useState(props.location.query.web3);
+  const [details, setDetails] = useState({});
+  const [loading, isLoading] = useState(true);
 
   async function getTxnData() {
     const transaction = new web3.eth.Contract(Transactions.abi, txnAddress);
     let txns = await transaction.methods.getAllTransactions().call({ from: account });
     const txnsList = txns.map(data => {
       return (
-        <TableRow key={data.returnValues[ 0 ]} className={classes.tableBodyRow}>
-          <TableCell multiline className={classes.tableCell}>{data[ 0 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data[ 1 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data[ 2 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data[ 3 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data[ 4 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data[ 5 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{new Date(data[ 6 ] * 1000).toString()}</TableCell>
+        <TableRow key={data[0]} className={classes.tableBodyRow}>
+          <TableCell multiline className={classes.tableCell}>{data[0]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[1]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[2]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[3]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[4]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data[5]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{new Date(data[6] * 1000).toString()}</TableCell>
         </TableRow>
       )
     });
@@ -55,10 +55,10 @@ export default function ViewTransactions(props) {
         <CardBody>
           <div className={classes.tableResponsive}>
             <Table className={classes.table}>
-              <TableHead className={classes[ "dangerTableHeader" ]}>
+              <TableHead className={classes["dangerTableHeader"]}>
                 <TableRow className={classes.tableHeadRow}>
-                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>From</TableCell>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>TxnHash</TableCell>
+                  <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>From</TableCell>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>To</TableCell>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Previous TxnHash</TableCell>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Latitude</TableCell>

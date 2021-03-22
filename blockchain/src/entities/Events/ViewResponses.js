@@ -12,11 +12,11 @@ const useStyles = makeStyles(styles);
 
 export default function ViewResponse(props) {
   const classes = useStyles();
-  const [ account ] = useState(props.account);
-  const [ web3 ] = useState(props.web3);
-  const [ supplyChain ] = useState(props.supplyChain);
-  const [ details, setDetails ] = useState({});
-  const [ loading, isLoading ] = useState(true);
+  const [account] = useState(props.account);
+  const [web3] = useState(props.web3);
+  const [supplyChain] = useState(props.supplyChain);
+  const [details, setDetails] = useState({});
+  const [loading, isLoading] = useState(true);
 
   async function verifySignature(sellerAddress, address, signature) {
     let v = '0x' + signature.slice(130, 132).toString();
@@ -45,13 +45,13 @@ export default function ViewResponse(props) {
 
     const lst = events.map(data => {
       return (
-        <TableRow key={data.returnValues[ 0 ]} className={classes.tableBodyRow}>
-          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 0 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 1 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 2 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 3 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{new Date(data.returnValues[ 4 ] * 1000).toString()}</TableCell>
-          <TableCell multiline className={classes.tableCell}><Button variant="contained" color="secondary" onClick={() => verifySignature(data.returnValues[ 1 ], data.returnValues[ 2 ], data.returnValues[ 3 ])}>Verify Signature</Button></TableCell>
+        <TableRow key={data.returnValues[0]} className={classes.tableBodyRow}>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[0]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[1]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[2]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[3]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{new Date(data.returnValues[4] * 1000).toString()}</TableCell>
+          <TableCell multiline className={classes.tableCell}><Button variant="contained" color="secondary" onClick={() => verifySignature(data.returnValues[1], data.returnValues[2], data.returnValues[3])}>Verify Signature</Button></TableCell>
         </TableRow>
       )
     });
@@ -72,7 +72,7 @@ export default function ViewResponse(props) {
         <CardBody>
           <div className={classes.tableResponsive}>
             <Table stickyHeader className={classes.table}>
-              <TableHead className={classes[ "warningTableHeader" ]}>
+              <TableHead className={classes["warningTableHeader"]}>
                 <TableRow className={classes.tableHeadRow}>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Buyer Address</TableCell>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Seller Address</TableCell>

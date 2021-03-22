@@ -14,12 +14,12 @@ const useStyles = makeStyles(styles);
 
 export default function ViewRequests(props) {
   const classes = useStyles();
-  const [ address ] = useState(props.location.query.address);
-  const [ account ] = useState(props.location.query.account);
-  const [ web3 ] = useState(props.location.query.web3);
-  const [ supplyChain ] = useState(props.location.query.supplyChain);
-  const [ details, setDetails ] = useState({});
-  const [ loading, isLoading ] = useState(true);
+  const [address] = useState(props.location.query.address);
+  const [account] = useState(props.location.query.account);
+  const [web3] = useState(props.location.query.web3);
+  const [supplyChain] = useState(props.location.query.supplyChain);
+  const [details, setDetails] = useState({});
+  const [loading, isLoading] = useState(true);
 
   async function verifySignature(buyerAddress, signature) {
     let v = '0x' + signature.slice(130, 132).toString();
@@ -32,7 +32,7 @@ export default function ViewRequests(props) {
       signature = prompt('Enter signature');
       supplyChain.methods.respondToEntity(buyerAddress, account, address, signature).send({ from: account })
       const data = await supplyChain.methods.getUserInfo(account).call();
-      const role = data[ 'role' ];
+      const role = data['role'];
 
       if (role === "1") {
         const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
@@ -67,13 +67,13 @@ export default function ViewRequests(props) {
 
     const lst = events.map(data => {
       return (
-        <TableRow hover key={data.returnValues[ 0 ]} className={classes.tableBodyRow}>
-          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 0 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 1 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 2 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{data.returnValues[ 3 ]}</TableCell>
-          <TableCell multiline className={classes.tableCell}>{new Date(data.returnValues[ 4 ] * 1000).toString()}</TableCell>
-          <TableCell multiline className={classes.tableCell}><Button variant="contained" color="secondary" onClick={() => verifySignature(data.returnValues[ 0 ], data.returnValues[ 3 ])}>Verify Signature</Button></TableCell>
+        <TableRow hover key={data.returnValues[0]} className={classes.tableBodyRow}>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[0]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[1]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[2]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{data.returnValues[3]}</TableCell>
+          <TableCell multiline className={classes.tableCell}>{new Date(data.returnValues[4] * 1000).toString()}</TableCell>
+          <TableCell multiline className={classes.tableCell}><Button variant="contained" color="secondary" onClick={() => verifySignature(data.returnValues[0], data.returnValues[3])}>Verify Signature</Button></TableCell>
         </TableRow>
       )
     });
@@ -95,7 +95,7 @@ export default function ViewRequests(props) {
         <CardBody>
           <div className={classes.tableResponsive}>
             <Table stickyHeader className={classes.table}>
-              <TableHead className={classes[ "primaryTableHeader" ]}>
+              <TableHead className={classes["primaryTableHeader"]}>
                 <TableRow className={classes.tableHeadRow}>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Buyer Address</TableCell>
                   <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>Seller Address</TableCell>
