@@ -19,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RawMaterialInfo(props) {
   const classes = useStyles();
-  const [ account ] = useState(props.location.query.account);
-  const [ rawMaterialAddress ] = useState(props.location.query.address);
-  const [ web3 ] = useState(props.location.query.web3);
-  const [ supplyChain ] = useState(props.location.query.supplyChain);
-  const [ manufacturer, setManufacturer ] = useState("");
-  const [ details, setDetails ] = useState({});
-  const [ loading, isLoading ] = useState(true);
+  const [account] = useState(props.location.query.account);
+  const [rawMaterialAddress] = useState(props.location.query.address);
+  const [web3] = useState(props.location.query.web3);
+  const [supplyChain] = useState(props.location.query.supplyChain);
+  const [manufacturer, setManufacturer] = useState("");
+  const [details, setDetails] = useState({});
+  const [loading, isLoading] = useState(true);
 
   async function getRawMaterialData() {
     let rawMaterial = new web3.eth.Contract(RawMaterial.abi, rawMaterialAddress);
@@ -38,17 +38,17 @@ export default function RawMaterialInfo(props) {
     } else if (status === 3) {
       activeStep = 2
     }
-    data[ 1 ] = web3.utils.hexToUtf8(data[ 1 ]);
-    setManufacturer(data[ 5 ]);
+    data[1] = web3.utils.hexToUtf8(data[1]);
+    setManufacturer(data[5]);
 
     let display = <div>
-      <p>Generated Product ID: {data[ 0 ]}</p>
-      <p>Description: {data[ 1 ]}</p>
-      <p>Product Quantity: {data[ 2 ]}</p>
-      <p>Product Supplier: {data[ 3 ]}</p>
-      <p>Product Transporter: {data[ 4 ]}</p>
-      <p>Product Manufacturer: {data[ 5 ]}</p>
-      <p>Product Transaction contract address: <Link to={{ pathname: `/supplier/view-transaction/${data[ 6 ]}`, query: { address: data[ 6 ], account: account, web3: web3 } }}>{data[ 6 ]}</Link>
+      <p>Generated Product ID: {data[0]}</p>
+      <p>Description: {data[1]}</p>
+      <p>Product Quantity: {data[2]}</p>
+      <p>Product Supplier: {data[3]}</p>
+      <p>Product Transporter: {data[4]}</p>
+      <p>Product Manufacturer: {data[5]}</p>
+      <p>Product Transaction contract address: <Link to={{ pathname: `/supplier/view-transaction/${data[6]}`, query: { address: data[6], account: account, web3: web3 } }}>{data[6]}</Link>
       </p>
       <CustomStepper
         getSteps={getSupplyChainSteps}
@@ -61,25 +61,17 @@ export default function RawMaterialInfo(props) {
   }
 
   function getSupplyChainSteps() {
-    return [ 'At Manufacturer', 'Collected by Transporter', 'Delivered to Wholesaler', 'Collected by Transporter', 'Delivered to Distributor', 'Collected by Transporter', 'Medicine Delivered' ];
+    return ['At Supplier', 'Collected by Transporter', 'Delivered to Manufacturer'];
   }
 
   function getSupplyChainStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return 'Medicine is at manufacturing stage in the supply chain.';
+        return 'Raw Material is at supplier stage in the supply chain.';
       case 1:
-        return 'Medicine collected by the Transporter is on its way to the Wholesaler.';
+        return 'Raw Material collected by the Transporter is on its way to the Manufacturer.';
       case 2:
-        return 'Medicine currently with the Wholesaler';
-      case 3:
-        return 'Medicine is collected by the Transporter! On its way to the Distributor.';
-      case 4:
-        return 'Medicine is delivered to the Distributor';
-      case 5:
-        return 'Medicine collected by Transporter is on its way to the pharmacy/customer.';
-      case 6:
-        return 'Medicine Delivered Successfully!';
+        return 'Raw Material currently with the Manufacturer';
       default:
         return 'Unknown stepIndex';
     }
@@ -91,12 +83,12 @@ export default function RawMaterialInfo(props) {
     supplyChain.methods.sendPackageToEntity(manufacturer, account, rawMaterialAddress, signature).send({ from: account })
       .once('receipt', async (receipt) => {
         let data = await rawMaterial.methods.getSuppliedRawMaterials().call({ from: account });
-        let txnContractAddress = data[ 6 ];
-        let transporterAddress = data[ 4 ];
+        let txnContractAddress = data[6];
+        let transporterAddress = data[4];
         let txnHash = receipt.transactionHash;
         const transactions = new web3.eth.Contract(Transactions.abi, txnContractAddress);
         let txns = await transactions.methods.getAllTransactions().call({ from: account });
-        let prevTxn = txns[ txns.length - 1 ][ 0 ];
+        let prevTxn = txns[txns.length - 1][0];
         transactions.methods.createTxnEntry(txnHash, account, transporterAddress, prevTxn, '10', '10').send({ from: account });
       });
   }
