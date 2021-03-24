@@ -48,8 +48,7 @@ export default function ViewReceivedRawMat(props) {
       setRawMatAddress(e.target.value);
     }
   }
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     var rawMaterialAddress = supplyChain.methods.manufacturerReceivedRawMaterials(rawMatAddress).call({ from: account });
     console.log(rawMaterialAddress);
     console.log("Please Work");
@@ -70,23 +69,9 @@ export default function ViewReceivedRawMat(props) {
       </div>
     );
   } else {
-    // handleSubmit();
-    console.log("Okay");
+    handleSubmit();
     return (
-      <div className={classes.paper}>
-        <h2>Enter Information</h2>
-        <Grid container style={{ backgroundColor: "white", display: "center", alignItems: "center", maxWidth: 400, justify: "center" }}>
-          <form className={classes.form} noValidate>
-            <Grid item xs={12}>
-              <TextField variant="outlined" onChange={handleInputChange} required fullWidth id="rawMatAddress" label="Raw Material Address" name="rawMatAddress" />
-            </Grid>
-          </form>
-        </Grid>
-        <Button
-          type="submit" variant="contained" color="primary" className={classes.submit} onClick={handleSubmit} >
-          Submit
-            </Button>
-      </div>
+      <p>Getting addresses</p>
     );
   }
 }
