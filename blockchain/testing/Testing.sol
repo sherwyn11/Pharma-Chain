@@ -191,7 +191,15 @@ contract SupplyChain {
         emit receivedEvent(msg.sender, _sellerAddr, _addr, signature, now);
     }
     
-    
+    function getAllRawMaterials() public view returns(address[] memory) {
+        uint len = manufacturerRawMaterials[msg.sender].length;
+        address[] memory ret = new address[](len);
+        for (uint i = 0; i < len; i++) {
+            ret[i] = manufacturerRawMaterials[msg.sender][i];
+        }
+        return ret;
+    }
+
     function manufacturerCreatesMedicine(
         address _manufacturerAddr,
         bytes32 _description,
