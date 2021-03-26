@@ -29,7 +29,8 @@ export default function DistributorMedicineInfo(props) {
     async function getMedicineData() {
         let medicine = new web3.eth.Contract(Medicine.abi, medicineAddress);
         let data = await medicine.methods.getMedicineInfo().call({ from: account });
-        let subcontractAddress = await supplyChain.methods.getSubContractWD(medicineAddress).call({ from: account });
+        let subcontractAddressWD = await supplyChain.methods.getSubContractWD(medicineAddress).call({ from: account });
+        let subcontractAddressDC = await supplyChain.methods.getSubContractDC(medicineAddress).call({ from: account });
         let status = data[6];
         console.log(status);
         let txt = "NA";
@@ -48,6 +49,7 @@ export default function DistributorMedicineInfo(props) {
         setDistributor(data[5]);
 
         let display = <div>
+            <p>Product Address: {data[7]}</p>
             <p>Product Manufacturer: {data[0]}</p>
             <p>Description: {data[1]}</p>
             <p>Product Raw Materials: {data[2]}</p>
@@ -55,10 +57,11 @@ export default function DistributorMedicineInfo(props) {
             <p>Product Transporter: {data[4]}</p>
             <p>Product Wholesaler: {data[8]}</p>
             <p>Product Distributor: {data[5]}</p>
-            <p>Product Transaction contract address: <Link to={{ pathname: `/wholesaler/view-transactions/${data[7]}`, query: { address: data[7], account: account, web3: web3 } }}>{data[7]}</Link>
+            <p>Product Transaction contract address: <Link to={{ pathname: `/distributor/view-transactions/${data[7]}`, query: { address: data[7], account: account, web3: web3 } }}>{data[7]}</Link>
             </p>
             <p>Product Status: {txt}</p>
-            <p>Subcontract Address: {subcontractAddress}</p>
+            <p>Subcontract Address W-D: {subcontractAddressWD}</p>
+            <p>Subcontract Address D-C: {subcontractAddressDC}</p>
         </div>;
         setDetails(display);
         isLoading(false);

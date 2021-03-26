@@ -45,6 +45,7 @@ export default function WholesalerMedicineInfo(props) {
         setDistributor(data[ 5 ]);
 
         let display = <div>
+            <p>Product Address: {data[7]}</p>
             <p>Product Manufacturer: {data[ 0 ]}</p>
             <p>Description: {data[ 1 ]}</p>
             <p>Product Raw Materials: {data[ 2 ]}</p>
