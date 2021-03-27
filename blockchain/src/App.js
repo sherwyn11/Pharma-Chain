@@ -174,7 +174,7 @@ class App extends Component {
             <Route exact path="/wholesaler/view-requests/:id" component={ViewRequests} />
             <Route exact path="/wholesaler/view-transactions/:id" component={ViewTransations} /> */}
 
-            <Route exact path="/distributor" render={(props) => (<Distributor account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
+            <Route path="/distributor" render={(props) => (<Distributor account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             {/* <Route exact path="/distributor/request-product" component={(() => <RequestProductDistributor account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/distributor/view-responses" component={(() => <ViewResponses account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />
             <Route exact path="/distributor/receive-medicine" component={(() => <DistributorReceiveProduct account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} />            <Route exact path="/distributor/view-medicines" component={(() => <DistributorViewReceivedMedicines account={this.state.account} supplyChain={this.state.supplyChain} web3={this.state.web3} />)} /> */}

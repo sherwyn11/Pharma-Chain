@@ -41,20 +41,14 @@ export default function ViewReceivedRawMat(props) {
   const [ supplyChain ] = useState(props.supplyChain);
   const [ loading, isLoading ] = useState(false);
   const [ address, setAddress ] = useState("");
-  const [ rawMatAddress, setRawMatAddress ] = useState("");
 
-  const handleInputChange = (e) => {
-    if (e.target.id == rawMatAddress) {
-      setRawMatAddress(e.target.value);
-    }
-  }
   const handleSubmit = async () => {
-    var rawMaterialAddress = supplyChain.methods.manufacturerReceivedRawMaterials(rawMatAddress).call({ from: account });
+    var rawMaterialAddress = await supplyChain.methods.getAllRawMaterials().call({ from: account });
     console.log(rawMaterialAddress);
     console.log("Please Work");
     var components = rawMaterialAddress.map((addr) => {
       return <div><ul><li>
-        <Link to={{ pathname: `/manufacturer/view-received-raw-material/${addr}`, query: { address: addr, account: account, web3: web3, supplyChain: supplyChain } }}>{addr}</Link>
+        <Link to={{ pathname: `/manufacturer/view-raw-material/${addr}`, query: { address: addr, account: account, web3: web3, supplyChain: supplyChain } }}>{addr}</Link>
       </li></ul></div>;
     });
     setAddress(components);

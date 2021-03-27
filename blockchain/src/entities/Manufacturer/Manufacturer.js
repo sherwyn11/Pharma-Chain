@@ -199,6 +199,7 @@ import ViewItem from "@material-ui/icons/ViewList";
 import ViewTrans from "@material-ui/icons/Visibility";
 
 import CreateMedicine from './CreateMedicine';
+import ReceivedRawMaterial from './ReceivedRawMaterial';
 import ViewReceivedRawMat from './ViewReceivedRawMat';
 import ReceiveProduct from './ReceiveProduct';
 import ViewResponses from '../Events/ViewResponses';
@@ -232,7 +233,7 @@ const routes = [
     layout: "/manufacturer"
   },
   {
-    path: "/view-received-raw-material",
+    path: "/view-raw-materials",
     name: "View Raw Materials",
     icon: ViewItem,
     component: ViewReceivedRawMat,
@@ -301,6 +302,7 @@ export default function Manufacturer({ ...rest }) {
         }
         return null;
       })}
+      <Route exact path="/manufacturer/view-raw-material/:id" component={ReceivedRawMaterial} />
       <Route exact path="/manufacturer/view-medicine/:id" component={MedicineInfo} />
       <Route exact path="/manufacturer/view-transaction/:id" component={ViewTransactions} />
       <Route exact path="/manufacturer/view-request/:id" component={ViewRequests} />

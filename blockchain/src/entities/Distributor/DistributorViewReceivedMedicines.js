@@ -25,7 +25,7 @@ export default function DistributorViewReceivedMedicine(props) {
 
         var components = medicineAddresses.map((addr) => {
           return <div><ul><li>
-              <Link to={{ pathname: `/distributor/view-medicines/${addr}`, query: {address: addr, account: account, web3: web3, supplyChain: supplyChain}}}>{addr}</Link>
+              <Link to={{ pathname: `/distributor/view-medicine/${addr}`, query: {address: addr, account: account, web3: web3, supplyChain: supplyChain}}}>{addr}</Link>
           </li></ul></div>;
         });
         setAddresses(components);

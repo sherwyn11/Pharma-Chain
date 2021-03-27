@@ -42,7 +42,7 @@ export default function RawMaterialInfo(props) {
     setManufacturer(data[5]);
 
     let display = <div>
-      <p>Generated Product ID: {data[0]}</p>
+      <p>Generated Product ID: {rawMaterialAddress}</p>
       <p>Description: {data[1]}</p>
       <p>Product Quantity: {data[2]}</p>
       <p>Product Supplier: {data[3]}</p>

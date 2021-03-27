@@ -66,8 +66,10 @@ import ViewResponses from '../Events/ViewResponses';
 // import ViewRequests from '../Events/ViewRequests';
 import RequestProductDistributor from './RequestProduct';
 import DistributorViewReceivedMedicines from './DistributorViewReceivedMedicines';
-// import MedicineInfo from './MedicineInfo';
+import DistributorMedicineInfo from './DistributorMedicineInfo';
 // import ViewTransactions from '../Transactions/ViewTransactions';
+import ViewRequests from '../Events/ViewRequests';
+import ViewTransactions from '../Transactions/ViewTransactions';
 
 import DistributorDashboard from '../../main_dashboard/views/Dashboard/Dashboard';
 import UserProfile from '../../main_dashboard/views/UserProfile/UserProfile';
@@ -132,6 +134,7 @@ const routes = [
 const useStyles = makeStyles(styles);
 
 export default function Distributor({ ...rest }) {
+    console.log('bugggggg')
     const switchRoutes = (
         <Switch>
             {routes.map((prop, key) => {
@@ -148,6 +151,10 @@ export default function Distributor({ ...rest }) {
                 }
                 return null;
             })}
+
+            <Route exact path="/distributor/view-medicine/:id" component={DistributorMedicineInfo} />
+            <Route exact path="/distributor/view-request/:id" component={ViewRequests} />
+            <Route exact path="/distributor/view-transaction/:id" component={ViewTransactions} />
             <Redirect from="/distributor" to="/distributor/dashboard" />
         </Switch>
     );
@@ -175,7 +182,7 @@ export default function Distributor({ ...rest }) {
         setMobileOpen(!mobileOpen);
     };
     const getRoute = () => {
-        return window.location.pathname !== "/manufacturer/maps";
+        return window.location.pathname !== "/distributor/maps";
     };
     const resizeFunction = () => {
         if (window.innerWidth >= 960) {

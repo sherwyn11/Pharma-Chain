@@ -149,16 +149,13 @@ function Cards() {
       <Grid item md={4}>
         <Card className={classes.root6}>
           <CardActionArea>
-            <CardMedia className={classes.media}image={Distributer}title="Distributer"/>
+            <CardMedia className={classes.media}image={Distributer}title="Distributor"/>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">Distributer</Typography>
+              <Typography gutterBottom variant="h5" component="h2">Distributor</Typography>
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button href= "/signin"size="small" color= "primary">Login
-
-            </Button>
-            
+            <Button href= "/distributor"size="small" color= "primary">Click Here</Button>
           </CardActions>
         </Card>
       </Grid>

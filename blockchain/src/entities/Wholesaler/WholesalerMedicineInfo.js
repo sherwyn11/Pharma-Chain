@@ -45,7 +45,7 @@ export default function WholesalerMedicineInfo(props) {
         setDistributor(data[ 5 ]);
 
         let display = <div>
-            <p>Product Address: {data[7]}</p>
+            <p>Product Address: {medicineAddress}</p>
             <p>Product Manufacturer: {data[ 0 ]}</p>
             <p>Description: {data[ 1 ]}</p>
             <p>Product Raw Materials: {data[ 2 ]}</p>
@@ -54,13 +54,13 @@ export default function WholesalerMedicineInfo(props) {
             <p>Product Wholesaler: {data[ 8 ]}</p>
             <p>Product Distributor: {data[ 5 ]}</p>
             <p>Product Transaction contract address: <Link to={{ pathname: `/wholesaler/view-transaction/${data[ 7 ]}`, query: { address: data[ 7 ], account: account, web3: web3 } }}>{data[ 7 ]}</Link>
+            <p>Subcontract Address: {subcontractAddress}</p>
             </p>
             <CustomStepper
                 getSteps={getSupplyChainSteps}
                 activeStep={activeStep}
                 getStepContent={getSupplyChainStepContent}
             />
-            <p>Subcontract Address: {subcontractAddress}</p>
         </div>;
         setDetails(display);
         isLoading(false);

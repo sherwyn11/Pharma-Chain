@@ -6,6 +6,7 @@ import Loader from '../../components/Loader';
 import Medicine from '../../build/Medicine.json';
 import Transactions from '../../build/Transactions.json';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import CustomStepper from '../../main_dashboard/components/Stepper/Stepper';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,22 +35,20 @@ export default function DistributorMedicineInfo(props) {
         let status = data[6];
         console.log(status);
         let txt = "NA";
-        if (status == 0) {
-            txt = 'At Manufacturer';
-        } else if (status == 1 || status == 2 || status == 5) {
-            txt = 'Collected by Transporter';
-        } else if (status == 3) {
-            txt = 'Delivered to Wholesaler';
-        } else if (status == 4) {
-            txt = 'Delivered to Distributor';
-        } else if (status == 6) {
-            txt = 'Delivered to Distributor';
+        let activeStep = Number(status);
+        console.log(status);
+
+        if (status === 2) {
+            activeStep = 3
+        } else if (status === 3) {
+            activeStep = 2
+            // txt = 'Delivered to Wholesaler';
         }
         data[1] = web3.utils.hexToUtf8(data[1]);
         setDistributor(data[5]);
 
         let display = <div>
-            <p>Product Address: {data[7]}</p>
+            <p>Product Address: {medicineAddress}</p>
             <p>Product Manufacturer: {data[0]}</p>
             <p>Description: {data[1]}</p>
             <p>Product Raw Materials: {data[2]}</p>
@@ -57,14 +56,43 @@ export default function DistributorMedicineInfo(props) {
             <p>Product Transporter: {data[4]}</p>
             <p>Product Wholesaler: {data[8]}</p>
             <p>Product Distributor: {data[5]}</p>
-            <p>Product Transaction contract address: <Link to={{ pathname: `/distributor/view-transactions/${data[7]}`, query: { address: data[7], account: account, web3: web3 } }}>{data[7]}</Link>
+            <p>Product Transaction contract address: <Link to={{ pathname: `/distributor/view-transaction/${data[7]}`, query: { address: data[7], account: account, web3: web3 } }}>{data[7]}</Link>
             </p>
-            <p>Product Status: {txt}</p>
             <p>Subcontract Address W-D: {subcontractAddressWD}</p>
             <p>Subcontract Address D-C: {subcontractAddressDC}</p>
+            <CustomStepper
+                getSteps={getSupplyChainSteps}
+                activeStep={activeStep}
+                getStepContent={getSupplyChainStepContent}
+            />
         </div>;
         setDetails(display);
         isLoading(false);
+    }
+
+    function getSupplyChainSteps() {
+        return ['At Manufacturer', 'Collected by Transporter', 'Delivered to Wholesaler', 'Collected by Transporter', 'Delivered to Distributor', 'Collected by Transporter', 'Medicine Delivered'];
+    }
+
+    function getSupplyChainStepContent(stepIndex) {
+        switch (stepIndex) {
+            case 0:
+                return 'Medicine at manufacturing stage in the supply chain.';
+            case 1:
+                return 'Medicine collected by the Transporter is on its way to you.';
+            case 2:
+                return 'Wholesaler, the medicine is currently with you!';
+            case 3:
+                return 'Medicine is collected by the Transporter! On its way to the Distributor.';
+            case 4:
+                return 'Medicine is delivered to the Distributor';
+            case 5:
+                return 'Medicine collected by Transporter is on its way to the pharmacy/customer.';
+            case 6:
+                return 'Medicine Delivered Successfully!';
+            default:
+                return 'Unknown stepIndex';
+        }
     }
 
     function sendPackage() {
