@@ -164,11 +164,11 @@ contract SupplyChain {
             /// Manufacturer -> Wholesaler
             Medicine(_addr).pickMedicine(msg.sender);
         } else if(transportertype == 3) {   
-            // Wholesaler to Distributer
+            // Wholesaler to Distributor
             MedicineW_D(cid).pickWD(_addr, msg.sender);
         } else if(transportertype == 4) {   
-            // Distrubuter to Customer
-            // MedicineD_C(cid).pickDC(_addr, msg.sender);
+            // Distrubutor to Customer
+            MedicineD_C(cid).pickDC(_addr, msg.sender);
         }
     }
     
