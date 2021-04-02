@@ -1,0 +1,6 @@
+::1 - - [02/Apr/2021:17:33:23 +0000] "POST /api/medicine/save-details HTTP/1.1" 201 34 "-" "PostmanRuntime/7.26.8"
+::1 - - [02/Apr/2021:17:34:37 +0000] "OPTIONS /api/medicine/save-details HTTP/1.1" 204 0 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+::1 - - [02/Apr/2021:17:34:37 +0000] "POST /api/medicine/save-details HTTP/1.1" 201 34 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+::1 - - [02/Apr/2021:17:35:52 +0000] "POST /api/medicine/save-details HTTP/1.1" 201 34 "-" "PostmanRuntime/7.26.8"
+::1 - - [02/Apr/2021:17:37:08 +0000] "OPTIONS /api/medicine/save-details HTTP/1.1" 204 0 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+::1 - - [02/Apr/2021:17:37:08 +0000] "POST /api/medicine/save-details HTTP/1.1" 201 34 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"

@@ -7,6 +7,7 @@ import Medicine from '../../build/Medicine.json';
 import Transactions from '../../build/Transactions.json';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import CustomStepper from '../../main_dashboard/components/Stepper/Stepper';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -111,6 +112,25 @@ export default function DistributorMedicineInfo(props) {
             });
     }
 
+    async function saveMedicineDetails() {
+        isLoading(true);
+        let medicine = new web3.eth.Contract(Medicine.abi, medicineAddress);
+        let data = await medicine.methods.getMedicineInfo().call({ from: account });
+
+        axios.post('http://localhost:8000/api/medicine/save-details', {
+            'medicineAddress': medicineAddress,
+            'description': web3.utils.hexToUtf8(data[1]),
+            'quantity': Number(data[3]),
+            'rawMaterialAddress': data[2][0]
+        }).then((response) => {
+            isLoading(false);
+            console.log(response.data);
+        }).catch((e) => {
+            isLoading(false);
+            console.log(e);
+        })
+    }
+
     useEffect(() => {
         getMedicineData();
     }, []);
@@ -126,7 +146,7 @@ export default function DistributorMedicineInfo(props) {
                 <p>{details}</p>
                 <Button variant="contained" color="primary" ><Link to={{ pathname: `/distributor/view-requests/${medicineAddress}`, query: { address: medicineAddress, account: account, web3: web3, supplyChain: supplyChain } }}>View Requests</Link></Button>&nbsp;&nbsp;&nbsp;
                 <Button variant="contained" color="primary" onClick={sendPackage}>Send Package</Button>&nbsp;&nbsp;&nbsp;
-                <Button variant="contained" color="primary" onClick={sendPackage}>Save Medicine Info to Database</Button>
+                <Button variant="contained" color="primary" onClick={saveMedicineDetails}>Save Medicine Info to Database</Button>
             </div>
         );
     }
