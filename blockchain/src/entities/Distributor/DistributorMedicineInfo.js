@@ -124,8 +124,9 @@ export default function DistributorMedicineInfo(props) {
             <div>
                 <h1>Product Details</h1>
                 <p>{details}</p>
-                <Button variant="contained" color="primary" ><Link to={{ pathname: `/wholesaler/view-requests/${medicineAddress}`, query: { address: medicineAddress, account: account, web3: web3, supplyChain: supplyChain } }}>View Requests</Link></Button>&nbsp;&nbsp;&nbsp;
-                <Button variant="contained" color="primary" onClick={sendPackage}>Send Package</Button>
+                <Button variant="contained" color="primary" ><Link to={{ pathname: `/distributor/view-requests/${medicineAddress}`, query: { address: medicineAddress, account: account, web3: web3, supplyChain: supplyChain } }}>View Requests</Link></Button>&nbsp;&nbsp;&nbsp;
+                <Button variant="contained" color="primary" onClick={sendPackage}>Send Package</Button>&nbsp;&nbsp;&nbsp;
+                <Button variant="contained" color="primary" onClick={sendPackage}>Save Medicine Info to Database</Button>
             </div>
         );
     }
