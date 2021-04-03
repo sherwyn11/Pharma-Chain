@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Loader from '../../components/Loader';
+import RawMaterial from '../../build/RawMaterial.json';
 import Medicine from '../../build/Medicine.json';
 import Transactions from '../../build/Transactions.json';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -117,19 +118,33 @@ export default function DistributorMedicineInfo(props) {
         let medicine = new web3.eth.Contract(Medicine.abi, medicineAddress);
         let data = await medicine.methods.getMedicineInfo().call({ from: account });
 
+        let rawMaterial = new web3.eth.Contract(RawMaterial.abi, data[2][0]);
+        let rawMaterialInfoData = await rawMaterial.methods.getSuppliedRawMaterials().call({ from: account });
+
         axios.post('http://localhost:8000/api/medicine/save-details', {
             'medicineAddress': medicineAddress,
             'description': web3.utils.hexToUtf8(data[1]),
             'quantity': Number(data[3]),
             'rawMaterialAddress': data[2][0]
         }).then((response) => {
-            isLoading(false);
             console.log(response.data);
+            axios.post('http://localhost:8000/api/raw-material/save-details', {
+                'description': web3.utils.hexToUtf8(rawMaterialInfoData[1]),
+                'quantity': Number(rawMaterialInfoData[2]),
+                'rawMaterialAddress': data[2][0]
+            }).then((response) => {
+                isLoading(false);
+                console.log(response.data);
+            }).catch((e) => {
+                isLoading(false);
+                console.log(e);
+            })
         }).catch((e) => {
             isLoading(false);
             console.log(e);
         })
     }
+
 
     useEffect(() => {
         getMedicineData();

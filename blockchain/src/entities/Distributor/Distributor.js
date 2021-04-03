@@ -134,7 +134,6 @@ const routes = [
 const useStyles = makeStyles(styles);
 
 export default function Distributor({ ...rest }) {
-    console.log('bugggggg')
     const switchRoutes = (
         <Switch>
             {routes.map((prop, key) => {
