@@ -111,7 +111,6 @@ class App extends Component {
     const networkData = SupplyChain.networks[ networkId ];
     if (networkData) {
       const supplyChain = new web3.eth.Contract(SupplyChain.abi, networkData.address);
-      console.log("Check???");
       this.setState(
         {
           'supplyChain': supplyChain,
@@ -119,7 +118,6 @@ class App extends Component {
           'web3': web3
         }
       );
-      console.log("is it working ?");
       console.log(this.state.supplyChain);
 
     } else {

@@ -121,6 +121,26 @@ export default function DistributorMedicineInfo(props) {
         let rawMaterial = new web3.eth.Contract(RawMaterial.abi, data[2][0]);
         let rawMaterialInfoData = await rawMaterial.methods.getSuppliedRawMaterials().call({ from: account });
 
+        let transaction = new web3.eth.Contract(Transactions.abi, data[7]);
+        let txns = await transaction.methods.getAllTransactions().call({ from: account });
+
+        let fromAddresses = [];
+        let toAddresses = [];
+        let hash = [];
+        let previousHash = [];
+        let geoPoints = [];
+        let timestamps = [];
+
+        for (let txn of txns) {
+            fromAddresses.push(txn[1]);
+            toAddresses.push(txn[2]);
+            hash.push(txn[0]);
+            previousHash.push(txn[3]);
+            geoPoints.push([Number(txn[4]), Number(txn[5])]);
+            timestamps.push(Number(txn[6]));
+        }
+
+
         axios.post('http://localhost:8000/api/medicine/save-details', {
             'medicineAddress': medicineAddress,
             'description': web3.utils.hexToUtf8(data[1]),
@@ -133,8 +153,23 @@ export default function DistributorMedicineInfo(props) {
                 'quantity': Number(rawMaterialInfoData[2]),
                 'rawMaterialAddress': data[2][0]
             }).then((response) => {
-                isLoading(false);
                 console.log(response.data);
+                axios.post('http://localhost:8000/api/transaction/save-details', {
+                    'medicineAddress': medicineAddress,
+                    'fromAddresses': fromAddresses,
+                    'toAddresses': toAddresses,
+                    'hash': hash,
+                    'previousHash': previousHash,
+                    'geoPoints': geoPoints,
+                    'timestamps': timestamps,
+                }).then((response) => {
+                    isLoading(false);
+                    alert('Medicine Info is saved to Database successfully!');
+                    console.log(response.data);
+                }).catch((e) => {
+                    isLoading(false);
+                    console.log(e);
+                })
             }).catch((e) => {
                 isLoading(false);
                 console.log(e);
@@ -149,6 +184,7 @@ export default function DistributorMedicineInfo(props) {
     useEffect(() => {
         getMedicineData();
     }, []);
+
 
     if (loading) {
         return (
