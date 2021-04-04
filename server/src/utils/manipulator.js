@@ -11,7 +11,7 @@ const manipulateGeopoints = (geoPoints) => {
 const manipulateTimestamps = (timestamps) => {
     let newTimestamps = [];
     for (let timestamp of timestamps) {
-        newTimestamps.push(admin.firestore.Timestamp.fromDate(new Date(timestamp)));
+        newTimestamps.push(admin.firestore.Timestamp.fromDate(new Date(timestamp * 1000)));
     }
     return newTimestamps;
 }
