@@ -118,9 +118,6 @@ export default function DistributorMedicineInfo(props) {
         let medicine = new web3.eth.Contract(Medicine.abi, medicineAddress);
         let data = await medicine.methods.getMedicineInfo().call({ from: account });
 
-        let rawMaterial = new web3.eth.Contract(RawMaterial.abi, data[2][0]);
-        let rawMaterialInfoData = await rawMaterial.methods.getSuppliedRawMaterials().call({ from: account });
-
         let transaction = new web3.eth.Contract(Transactions.abi, data[7]);
         let txns = await transaction.methods.getAllTransactions().call({ from: account });
 
@@ -140,7 +137,6 @@ export default function DistributorMedicineInfo(props) {
             timestamps.push(Number(txn[6]));
         }
 
-
         axios.post('http://localhost:8000/api/medicine/save-details', {
             'medicineAddress': medicineAddress,
             'description': web3.utils.hexToUtf8(data[1]),
@@ -148,32 +144,22 @@ export default function DistributorMedicineInfo(props) {
             'rawMaterialAddress': data[2][0]
         }).then((response) => {
             console.log(response.data);
-            axios.post('http://localhost:8000/api/raw-material/save-details', {
-                'description': web3.utils.hexToUtf8(rawMaterialInfoData[1]),
-                'quantity': Number(rawMaterialInfoData[2]),
-                'rawMaterialAddress': data[2][0]
+            axios.post('http://localhost:8000/api/transaction/save-details', {
+                'medicineAddress': medicineAddress,
+                'fromAddresses': fromAddresses,
+                'toAddresses': toAddresses,
+                'hash': hash,
+                'previousHash': previousHash,
+                'geoPoints': geoPoints,
+                'timestamps': timestamps,
             }).then((response) => {
+                isLoading(false);
+                alert('Medicine Info is saved to Database successfully!');
                 console.log(response.data);
-                axios.post('http://localhost:8000/api/transaction/save-details', {
-                    'medicineAddress': medicineAddress,
-                    'fromAddresses': fromAddresses,
-                    'toAddresses': toAddresses,
-                    'hash': hash,
-                    'previousHash': previousHash,
-                    'geoPoints': geoPoints,
-                    'timestamps': timestamps,
-                }).then((response) => {
-                    isLoading(false);
-                    alert('Medicine Info is saved to Database successfully!');
-                    console.log(response.data);
-                }).catch((e) => {
-                    isLoading(false);
-                    console.log(e);
-                })
             }).catch((e) => {
                 isLoading(false);
                 console.log(e);
-            })
+            })            
         }).catch((e) => {
             isLoading(false);
             console.log(e);

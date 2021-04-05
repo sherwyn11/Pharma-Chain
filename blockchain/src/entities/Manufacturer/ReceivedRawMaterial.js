@@ -4,8 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Loader from '../../components/Loader';
 import RawMaterial from '../../build/RawMaterial.json';
+import Transactions from '../../build/Transactions.json';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import CustomStepper from '../../main_dashboard/components/Stepper/Stepper';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,6 +68,58 @@ export default function ReceivedRawMaterial(props) {
         return 'Unknown stepIndex';
     }
   }
+
+  async function saveRawMaterialDetails() {
+    isLoading(true);
+    let rawMaterial = new web3.eth.Contract(RawMaterial.abi, rawMaterialAddress);
+    let rawMaterialInfoData = await rawMaterial.methods.getSuppliedRawMaterials().call({ from: account });
+
+    let transaction = new web3.eth.Contract(Transactions.abi, rawMaterialInfoData[6]);
+    let txns = await transaction.methods.getAllTransactions().call({ from: account });
+
+    let fromAddresses = [];
+    let toAddresses = [];
+    let hash = [];
+    let previousHash = [];
+    let geoPoints = [];
+    let timestamps = [];
+
+    for (let txn of txns) {
+      fromAddresses.push(txn[1]);
+      toAddresses.push(txn[2]);
+      hash.push(txn[0]);
+      previousHash.push(txn[3]);
+      geoPoints.push([Number(txn[4]), Number(txn[5])]);
+      timestamps.push(Number(txn[6]));
+    }
+
+    axios.post('http://localhost:8000/api/raw-material/save-details', {
+      'description': web3.utils.hexToUtf8(rawMaterialInfoData[1]),
+      'quantity': Number(rawMaterialInfoData[2]),
+      'rawMaterialAddress': rawMaterialAddress
+    }).then((response) => {
+      console.log(response.data);
+      axios.post('http://localhost:8000/api/transaction/save-details', {
+        'medicineAddress': rawMaterialAddress,
+        'fromAddresses': fromAddresses,
+        'toAddresses': toAddresses,
+        'hash': hash,
+        'previousHash': previousHash,
+        'geoPoints': geoPoints,
+        'timestamps': timestamps,
+      }).then((response) => {
+        isLoading(false);
+        alert('Raw Material Info is saved to Database successfully!');
+        console.log(response.data);
+      }).catch((e) => {
+        isLoading(false);
+        console.log(e);
+      })
+    }).catch((e) => {
+      isLoading(false);
+      console.log(e);
+    })
+  }
   
     if(loading) {
       getRawMaterialData();
@@ -75,8 +129,9 @@ export default function ReceivedRawMaterial(props) {
     } else {
       return (
         <div>
-        <h1>Product Details</h1>
-        <p>{details}</p>
+          <h1>Product Details</h1>
+          <p>{details}</p>
+          <Button variant="contained" color="primary" onClick={saveRawMaterialDetails}>Save Raw Material Info to Database</Button>
         </div>
       );
     }
