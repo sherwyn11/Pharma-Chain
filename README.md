@@ -11,7 +11,7 @@ At present, counterfeit drugs pose a serious threat as it is difficult for peopl
 
 ## System Overview
 
-![System Overview](assets/sys_overview.png)
+<img src="assets/sys_overview.png" height="300px" width="350px"/>
 
 <ol>
   <li>Owner</li>
@@ -42,6 +42,7 @@ At present, counterfeit drugs pose a serious threat as it is difficult for peopl
   <ol>
     <li>Receive the medicine from the manufacturer through the Transporter.</li>
     <li>Verify the source of the medicine.</li>
+    <li>Transfer the ownership of the medicine.</li>
   </ol>
   <li>Distributor</li>
   <ol>
@@ -60,6 +61,10 @@ At present, counterfeit drugs pose a serious threat as it is difficult for peopl
 
 ## Contributors
 
-- <a href="https://github.com/sherwyn11">Sherwyn D'souza</a>
-- <a href="https://github.com/Darlene-Naz">Darlene Nazareth</a>
-- <a href="https://github.com/CassiaVaz">Cassia Vaz</a>
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/sherwyn11"><img src="https://avatars.githubusercontent.com/u/43489167?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Sherwyn D'souza</b></sub></a><br /><a href="" title="">:octocat:</a></td>
+    <td align="center"><a href="https://github.com/Darlene-Naz"><img src="https://avatars.githubusercontent.com/u/46684660?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Darlene Nazareth</b></sub></a><br /><a href="" title="">:snowflake:</a></td>
+    <td align="center"><a href="https://github.com/CassiaVaz"><img src="https://avatars.githubusercontent.com/u/54650944?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Cassia Vaz</b></sub></a><br /><a href="" title="">:sparkles:</a></td></td>
+  </tr>
+ </table>
