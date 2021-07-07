@@ -1,11 +1,11 @@
-# Medicine-Supply-Chain
+# Medicine-Supply-Chain :pill:
 
 A supply chain for the safe distribution of medicines using Blockchain and AI.
 
 ## Explanation + Demo
 [![Blockchain and AI in Pharmaceutical Supply Chain](https://img.youtube.com/vi/uQZH6UH1lyY/0.jpg)](https://www.youtube.com/watch?v=uQZH6UH1lyY)
 
-## Importance
+## Motivation
 <p align="justify">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;At present, counterfeit drugs pose a serious threat as it is difficult for people to know the true value of purchased medicines due to a significant lack of transparency in the current system. Also, tampering within the supply chain is difficult to investigate when suspicion of illegal or unethical practices. 
 </p>
@@ -67,6 +67,14 @@ A supply chain for the safe distribution of medicines using Blockchain and AI.
     <li>Get medical drug information.</li>
   </ol>
 </ol>
+
+## Project GitHub Links:
+- https://github.com/sherwyn11/Medicine-Supply-Chain (Smart Contracts for Blockchain + Frontend + Backend)
+- https://github.com/Darlene-Naz/pharma-assistant (RASA Chatbot)
+- https://github.com/Darlene-Naz/MediBot (Flutter Application)
+
+## Published Paper Link:
+https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3852034
 
 ## Contributors
 
