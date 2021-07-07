@@ -77,3 +77,9 @@ A supply chain for the safe distribution of medicines using Blockchain and AI.
     <td align="center"><a href="https://github.com/CassiaVaz"><img src="https://avatars.githubusercontent.com/u/54650944?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Cassia Vaz</b></sub></a><br /><a href="" title="">:sparkles:</a></td></td>
   </tr>
  </table>
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+[MIT License Link](https://github.com/sherwyn11/Todos-VSCode-Extension/blob/master/LICENSE)
