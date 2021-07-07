@@ -17,7 +17,6 @@ A supply chain for the safe distribution of medicines using Blockchain and AI.
 </p>
 
 
-
 ## System Overview
 
 <img src="assets/sys_overview.png" height="300px" width="350px"/>
@@ -67,6 +66,29 @@ A supply chain for the safe distribution of medicines using Blockchain and AI.
     <li>Get medical drug information.</li>
   </ol>
 </ol>
+
+## Getting Started
+
+### To deploy the Smart Contract
+
+1. Install Ganache and create a workspace.
+2. Install Truffle npm package globally by running ```npm install -g truffle```.
+3. Run ```truffle migrate --reset``` from the command line to deploy the smart contract to the blockchain.
+4. Download Metamask Chrome extension for the browser to help interaction between the application and the blockchain.
+
+### To run React development server
+
+```bash
+cd blockchain
+npm start
+```
+
+### To run Node.js server
+```bash
+cd server
+npm start
+```
+
 
 ## Project GitHub Links:
 - https://github.com/sherwyn11/Medicine-Supply-Chain (Smart Contracts for Blockchain + Frontend + Backend)
