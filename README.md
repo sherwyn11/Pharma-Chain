@@ -46,7 +46,7 @@ npm start
 
 
 ## :octocat: Project GitHub Links:
-- <a href="https://github.com/sherwyn11/Medicine-Supply-Chain">Smart Contracts for Blockchain + Frontend + Backend)</a>
+- <a href="https://github.com/sherwyn11/Medicine-Supply-Chain">Smart Contracts for Blockchain + Frontend + Backend</a>
 - <a href="https://github.com/Darlene-Naz/pharma-assistant">RASA Chatbot</a>
 - <a href="https://github.com/Darlene-Naz/MediBot">Flutter Application</a>
 
