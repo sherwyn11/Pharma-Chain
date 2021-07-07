@@ -1,4 +1,4 @@
-# Pharmaceutical-Supply-Chain
+# Medicine-Supply-Chain
 
 A supply chain for the safe distribution of medicines using Blockchain and AI.
 
@@ -82,4 +82,4 @@ A supply chain for the safe distribution of medicines using Blockchain and AI.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-[MIT License Link](https://github.com/sherwyn11/Todos-VSCode-Extension/blob/master/LICENSE)
+[MIT License Link](https://github.com/sherwyn11/Medicine-Supply-Chain/blob/master/LICENSE)
