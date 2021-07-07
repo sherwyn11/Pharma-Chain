@@ -46,9 +46,9 @@ npm start
 
 
 ## :octocat: Project GitHub Links:
-- https://github.com/sherwyn11/Medicine-Supply-Chain (Smart Contracts for Blockchain + Frontend + Backend)
-- https://github.com/Darlene-Naz/pharma-assistant (RASA Chatbot)
-- https://github.com/Darlene-Naz/MediBot (Flutter Application)
+- <a href="https://github.com/sherwyn11/Medicine-Supply-Chain">Smart Contracts for Blockchain + Frontend + Backend)</a>
+- <a href="https://github.com/Darlene-Naz/pharma-assistant">RASA Chatbot</a>
+- <a href="https://github.com/Darlene-Naz/MediBot">Flutter Application</a>
 
 ## 🔥 Our Published Paper Link:
 https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3852034
