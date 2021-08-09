@@ -51,7 +51,7 @@ npm start
 - <a href="https://github.com/Darlene-Naz/MediBot">Flutter Application</a>
 
 ## 🔥 Our Published Paper Link:
-https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3852034
+<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3852034" target="_blank">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3852034</a>
 
 ## :busts_in_silhouette: Contributors
 
