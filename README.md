@@ -35,12 +35,14 @@ This project proposes a system that uses blockchain and AI for the safe supply o
 
 ```bash
 cd blockchain
+npm install
 npm start
 ```
 
 ### To run Node.js server
 ```bash
 cd server
+npm install
 npm start
 ```
 
