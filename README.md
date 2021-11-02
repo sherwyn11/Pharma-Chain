@@ -1,4 +1,4 @@
-# Medicine-Supply-Chain :pill:
+# Pharma-Chain :pill:
 
 A supply chain for the safe distribution of medicines using Blockchain and AI.
 
@@ -48,7 +48,7 @@ npm start
 
 
 ## :octocat: Project GitHub Links:
-- <a href="https://github.com/sherwyn11/Medicine-Supply-Chain">Smart Contracts for Blockchain + Frontend + Backend</a>
+- <a href="https://github.com/sherwyn11/Pharma-Chain">Smart Contracts for Blockchain + Frontend + Backend</a>
 - <a href="https://github.com/Darlene-Naz/pharma-assistant">RASA Chatbot</a>
 - <a href="https://github.com/Darlene-Naz/MediBot">Flutter Application</a>
 
@@ -69,4 +69,4 @@ npm start
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-[MIT License Link](https://github.com/sherwyn11/Medicine-Supply-Chain/blob/master/LICENSE)
+[MIT License Link](https://github.com/sherwyn11/Pharma-Chain/blob/master/LICENSE)
